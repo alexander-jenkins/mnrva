@@ -5,7 +5,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-
+//TODO: Reconfiguring theme to new colors added to Color.kt
 private val DarkColorPalette = darkColors(
     primary = Purple200,
     primaryVariant = Purple700,
