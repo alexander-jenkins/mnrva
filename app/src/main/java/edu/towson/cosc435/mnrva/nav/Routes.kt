@@ -1,4 +1,4 @@
-package nav
+package edu.towson.cosc435.mnrva.nav
 
 sealed class Routes(val route: String) {
     //First view the user sees; summary of entries for the week
@@ -11,8 +11,11 @@ sealed class Routes(val route: String) {
     object CalendarView : Routes("CalendarView")
 
     //View where user can alter their settings
-    object SettingsView : Routes ("SettingsView")
+    object SettingsView : Routes("SettingsView")
 
     //view of a specific entry when a user clicks on it
     object EntryView : Routes("EntryView")
+
+    //view for creating a new entry
+    object NewEntryView : Routes("NewEntryView")
 }
