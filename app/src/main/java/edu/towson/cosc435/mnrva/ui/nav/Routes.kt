@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.nav
+package edu.towson.cosc435.mnrva.ui.nav
 
 sealed class Routes(val route: String) {
     //First view the user sees; summary of entries for the week

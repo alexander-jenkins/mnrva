@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.nav
+package edu.towson.cosc435.mnrva.ui.nav
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHost
