@@ -10,9 +10,14 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import edu.towson.cosc435.mnrva.ui.theme.Envy
+import edu.towson.cosc435.mnrva.ui.theme.FringyFlower
+import edu.towson.cosc435.mnrva.ui.theme.Scandal
+import edu.towson.cosc435.mnrva.ui.theme.Submarine
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -61,41 +66,65 @@ fun TaskCard(
     dateTime: LocalDateTime,
     tag: String
 ){
+    val horizontalGradientBrush = Brush.horizontalGradient(
+        colors = listOf(
+            FringyFlower,
+            Envy
+        )
+    )
     val formatter = DateTimeFormatter.ofPattern("MMMM d, HH:mm", Locale.ENGLISH)
 
     Card(
-        shape = RoundedCornerShape(5.dp),
+
+        shape = RoundedCornerShape(15.dp),
         elevation = 16.dp,
         modifier = Modifier
             .padding(start = 16.dp, end = 16.dp, top = 5.dp, bottom = 5.dp)
             .fillMaxWidth()
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceEvenly
+        Box(
+            modifier = Modifier
+                .background(brush = horizontalGradientBrush)
         ) {
-            Column(
-                modifier = Modifier.weight(1.5f)
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Row(
-                    modifier = Modifier.padding(10.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                Column(
+                    modifier = Modifier.weight(1.5f)
                 ) {
-                    Text("$taskName", fontSize = 36.sp,
-                        modifier = Modifier.weight(1.0f))
-                }
-                Row(
-                    modifier = Modifier
-                        .padding(5.dp)
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
+                    Row(
+                        modifier = Modifier.padding(10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            "$taskName", fontSize = 36.sp,
+                            modifier = Modifier.weight(1.0f)
+                        )
+                    }
+                    Row(
+                        modifier = Modifier
+                            .padding(5.dp)
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
 //                    horizontalArrangement = Arrangement.End
-                ) {
-                    Text("${dateTime.format(formatter)}", modifier = Modifier.weight(1.0f))
-                    Card(
-                        modifier = Modifier.background(Color(25))
-                    ){
-                        Text(tag.toString(), modifier = Modifier.weight(1.0f))
+                    ) {
+                        Text("${dateTime.format(formatter)}", modifier = Modifier.weight(1.0f))
+
+                    }
+                    Row(
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        Spacer(
+                            modifier = Modifier
+                                .padding(5.dp)
+                        )
+
+                        Card(
+                            modifier = Modifier.background(Color(25))
+                        ) {
+                            Text(tag.toString(), modifier = Modifier.weight(1.0f))
+                        }
                     }
 
                 }
@@ -103,4 +132,4 @@ fun TaskCard(
             }
         }
     }
-}
+    }
