@@ -22,17 +22,11 @@ fun MainScreen() {
 
     // Scaffolding for the app
     Scaffold(
-        topBar = { TopBar() },
         bottomBar = { BottomBar(nav) }
     ) {
         MnrvaNavGraph(nav)
     }
 
-}
-
-@Composable
-private fun TopBar() {
-    Text(stringResource(R.string.app_name))
 }
 
 @Composable

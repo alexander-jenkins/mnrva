@@ -4,8 +4,8 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ExperimentalComposeApi
-import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
@@ -20,9 +20,29 @@ fun MnrvaNavGraph(
         startDestination = Routes.HomeView.route
     ) {
 
-        // home screen
+        // Home
         composable(Routes.HomeView.route) {
             Text("Home Screen")
+        }
+
+        // Schedule
+        composable(Routes.ScheduleView.route) {
+            Text("Schedule")
+        }
+
+        // New Item
+        composable(Routes.NewEntryView.route) {
+            Text("New Item")
+        }
+
+        // Calendar
+        composable(Routes.NewEntryView.route) {
+            Text("Calendar")
+        }
+
+        // Settings
+        composable(Routes.SettingsView.route) {
+            Text("Settings")
         }
 
     }
