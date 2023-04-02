@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import edu.towson.cosc435.mnrva.ui.settings.SettingsView
 import edu.towson.cosc435.mnrva.ui.schedule.ScheduleView
 import edu.towson.cosc435.mnrva.ui.calenderView.Calendar
+import edu.towson.cosc435.mnrva.ui.home.HomeView
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalComposeApi::class)
@@ -28,7 +29,7 @@ fun MnrvaNavGraph(
 
         // Home
         composable(Routes.HomeView.route) {
-            Text("Home Screen")
+            HomeView()
         }
 
         // Schedule

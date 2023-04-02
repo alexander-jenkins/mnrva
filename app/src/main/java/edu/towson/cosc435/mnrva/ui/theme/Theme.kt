@@ -16,6 +16,8 @@ private val ColorPalette = darkColors(
 
 )
 
+
+
     /* Other default colors to override
     background = Color.White,
     surface = Color.White,
@@ -35,4 +37,5 @@ fun MNRVATheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable 
         shapes = Shapes,
         content = content
     )
+
 }
