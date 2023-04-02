@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">MNRVA</string>
+    <string name="settingsHeader">Settings</string>
+    <string name="account">Account</string>
+    <string name="notifications">Notifications</string>
+    <string name="system">System</string>
+    <string name="accountSettingsDesc">Logout, Change password, Privacy settings</string>
+    <string name="notificationSettingsDesc">Notification settings</string>
+    <string name="systemSettingsDesc">System settings</string>
+
 </resources>

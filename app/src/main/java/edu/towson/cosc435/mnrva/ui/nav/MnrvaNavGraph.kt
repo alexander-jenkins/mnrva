@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import edu.towson.cosc435.mnrva.ui.settings.SettingsView
 
 @OptIn(ExperimentalComposeApi::class)
 @ExperimentalFoundationApi
@@ -42,7 +43,7 @@ fun MnrvaNavGraph(
 
         // Settings
         composable(Routes.SettingsView.route) {
-            Text("Settings")
+            SettingsView()
         }
 
     }
