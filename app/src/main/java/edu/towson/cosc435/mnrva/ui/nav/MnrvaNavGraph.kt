@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import edu.towson.cosc435.mnrva.ui.settings.SettingsView
 import edu.towson.cosc435.mnrva.ui.schedule.ScheduleView
+import edu.towson.cosc435.mnrva.ui.calenderView.Calendar
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalComposeApi::class)
@@ -46,6 +47,7 @@ fun MnrvaNavGraph(
         // Calendar
         composable(Routes.CalendarView.route) {
             Text("Calendar")
+            Calendar()
         }
 
         // Settings
