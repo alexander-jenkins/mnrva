@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import edu.towson.cosc435.mnrva.R
 import edu.towson.cosc435.mnrva.ui.nav.MnrvaNavGraph
+import edu.towson.cosc435.mnrva.ui.nav.Routes
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -31,7 +32,7 @@ fun MainScreen() {
 
 @Composable
 private fun BottomBar(
-    navHost: NavHostController,
+    nav: NavHostController,
 ) {
     BottomNavigation(elevation = 16.dp) {
 
@@ -40,7 +41,12 @@ private fun BottomBar(
             selected = false,
             icon = { Icon(Icons.Default.Home, "") },
             label = { Text("Home") },
-            onClick = {}
+            onClick = {
+                nav.navigate(Routes.HomeView.route) {
+                    launchSingleTop = true
+                    popUpTo(Routes.HomeView.route) { inclusive = false }
+                }
+            }
         )
 
         // Schedule Button
@@ -48,7 +54,9 @@ private fun BottomBar(
             selected = false,
             icon = { Icon(Icons.Default.List, "") },
             label = { Text("Schedule") },
-            onClick = {}
+            onClick = {
+                nav.navigate(Routes.ScheduleView.route) { }
+            }
         )
 
         // Add Item Button
@@ -56,7 +64,7 @@ private fun BottomBar(
             selected = false,
             icon = { Icon(Icons.Default.Add, "") },
             label = { Text("New") },
-            onClick = {}
+            onClick = { nav.navigate(Routes.NewEntryView.route) { } }
         )
 
         // Calendar Button
@@ -64,7 +72,7 @@ private fun BottomBar(
             selected = false,
             icon = { Icon(Icons.Default.DateRange, "") },
             label = { Text("Calendar") },
-            onClick = {}
+            onClick = { nav.navigate(Routes.CalendarView.route) }
         )
 
         // Settings Button
@@ -72,7 +80,7 @@ private fun BottomBar(
             selected = false,
             icon = { Icon(Icons.Default.Settings, "") },
             label = { Text("Settings") },
-            onClick = {}
+            onClick = { nav.navigate(Routes.SettingsView.route) }
         )
 
 

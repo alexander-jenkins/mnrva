@@ -36,7 +36,7 @@ fun MnrvaNavGraph(
         }
 
         // Calendar
-        composable(Routes.NewEntryView.route) {
+        composable(Routes.CalendarView.route) {
             Text("Calendar")
         }
 
