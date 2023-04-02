@@ -8,10 +8,10 @@ import kotlinx.datetime.LocalDate
 
 
 @Composable
-fun Calender(){
-    var event1 = KalendarEvent(LocalDate(2023, 4,4), "", "")
+fun Calendar(){
+    val event1 = KalendarEvent(LocalDate(2023, 4,4), "", "")
 
-    var kalenderEvents: List<KalendarEvent> = listOf(event1)
+    val kalenderEvents: List<KalendarEvent> = listOf(event1)
 
     Kalendar(
         onCurrentDayClick={kDay,kEvents->
