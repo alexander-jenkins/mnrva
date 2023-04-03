@@ -14,6 +14,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
+import edu.towson.cosc435.mnrva.ui.nav.Routes
 import edu.towson.cosc435.mnrva.ui.theme.Envy
 import edu.towson.cosc435.mnrva.ui.theme.FringyFlower
 import edu.towson.cosc435.mnrva.ui.theme.Scandal
@@ -28,6 +30,8 @@ import java.util.*
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeView() {
+
+
     Box(contentAlignment = Alignment.Center) {
         Column(modifier = Modifier.padding(20.dp)) {
             Text(
@@ -59,6 +63,7 @@ fun HomeView() {
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TaskCard(
@@ -73,11 +78,13 @@ fun TaskCard(
         )
     )
     val formatter = DateTimeFormatter.ofPattern("MMMM d, HH:mm", Locale.ENGLISH)
+    val nav = rememberNavController()
 
     Card(
 
         shape = RoundedCornerShape(15.dp),
         elevation = 16.dp,
+        onClick = { nav.navigate(Routes.NewEntryView.route) },
         modifier = Modifier
             .padding(start = 16.dp, end = 16.dp, top = 5.dp, bottom = 5.dp)
             .fillMaxWidth()

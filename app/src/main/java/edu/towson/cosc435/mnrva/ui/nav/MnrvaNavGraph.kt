@@ -14,6 +14,7 @@ import edu.towson.cosc435.mnrva.ui.settings.SettingsView
 import edu.towson.cosc435.mnrva.ui.schedule.ScheduleView
 import edu.towson.cosc435.mnrva.ui.calenderView.Calendar
 import edu.towson.cosc435.mnrva.ui.home.HomeView
+import edu.towson.cosc435.mnrva.ui.newEntry.NewEntryView
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalComposeApi::class)
@@ -54,6 +55,11 @@ fun MnrvaNavGraph(
         // Settings
         composable(Routes.SettingsView.route) {
             SettingsView()
+        }
+
+        //NewEntry
+        composable(Routes.NewEntryView.route) {
+            NewEntryView()
         }
 
     }
