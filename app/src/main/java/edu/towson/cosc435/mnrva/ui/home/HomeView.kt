@@ -99,6 +99,7 @@ fun TaskCard(
 
         shape = RoundedCornerShape(15.dp),
         elevation = 16.dp,
+        onClick = { nav.navigate(Routes.NewEntryView.route) },
         modifier = Modifier
             .padding(start = 16.dp, end = 16.dp, top = 5.dp, bottom = 5.dp)
             .fillMaxWidth()

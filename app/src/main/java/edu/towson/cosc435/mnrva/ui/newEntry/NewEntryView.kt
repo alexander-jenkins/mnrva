@@ -28,6 +28,7 @@ import java.time.Month
 import java.time.format.DateTimeFormatter
 import java.util.*
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NewEntryView () {
     val title : MutableState<String> = remember { mutableStateOf("") }
