@@ -1,5 +1,7 @@
 package edu.towson.cosc435.mnrva.ui.nav
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -9,7 +11,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import edu.towson.cosc435.mnrva.ui.settings.SettingsView
+import edu.towson.cosc435.mnrva.ui.schedule.ScheduleView
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalComposeApi::class)
 @ExperimentalFoundationApi
 @Composable
@@ -28,7 +32,8 @@ fun MnrvaNavGraph(
 
         // Schedule
         composable(Routes.ScheduleView.route) {
-            Text("Schedule")
+//            Text("Schedule")
+            ScheduleView()
         }
 
         // New Item
