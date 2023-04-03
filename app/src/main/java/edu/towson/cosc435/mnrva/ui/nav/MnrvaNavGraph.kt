@@ -33,7 +33,9 @@ fun MnrvaNavGraph(
         // Schedule
         composable(Routes.ScheduleView.route) {
 //            Text("Schedule")
-            ScheduleView()
+            ScheduleView(
+                onTaskPress = {}
+            )
         }
 
         // New Item

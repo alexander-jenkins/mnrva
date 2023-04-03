@@ -2,7 +2,7 @@ package edu.towson.cosc435.mnrva.ui.schedule
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -19,11 +19,12 @@ val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("ha")
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ScheduleView(
-
+onTaskPress: () -> Unit
 ){
     val scrollState = rememberScrollState()
     Column(
-        modifier = Modifier.verticalScroll(scrollState)
+        modifier = Modifier.verticalScroll(scrollState).
+                padding(bottom = 24.dp)
     ) {
         for (i in 0..23){
             val timeIndex = LocalTime.of(i, 0)
@@ -32,7 +33,7 @@ fun ScheduleView(
                 time = timeIndex,
                 description = "my Desc",
                 tag = "my Tag",
-                onTaskPress = {}
+                onTaskPress = onTaskPress
             )
         }
     }
@@ -47,13 +48,24 @@ fun TaskView_Schedule(
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .fillMaxSize()
             .padding(all = 16.dp)
             .padding(start = 30.dp)
+            .clickable {
+                onTaskPress
+            }
     )
     {
         Column() {
-            Text(text = description)
-            Row(horizontalArrangement = Arrangement.End) {
+            Text(
+                modifier = Modifier.padding(all=8.dp),
+                text = description
+            )
+            Row(
+                modifier = Modifier.fillMaxSize().
+                padding(all=8.dp),
+                horizontalArrangement = Arrangement.End
+            ) {
                 Text(text = tag)
             }
         }
