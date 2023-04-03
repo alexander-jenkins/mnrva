@@ -29,8 +29,7 @@ import java.util.*
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HomeView() {
-
+fun HomeView(onTaskPress:() -> Unit) {
 
     Box(contentAlignment = Alignment.Center) {
         Column(modifier = Modifier.padding(20.dp)) {
@@ -57,7 +56,7 @@ fun HomeView() {
             val time = LocalTime.of(12, 30, 0)
             val dateTime = LocalDateTime.of(date, time)
 
-            TaskCard(taskName = "Job Interview", dateTime = dateTime , tag = "WORK")
+            TaskCard(taskName = "Job Interview", dateTime = dateTime , tag = "WORK", onTaskPress = onTaskPress)
 
         }
     }
@@ -67,6 +66,7 @@ fun HomeView() {
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TaskCard(
+    onTaskPress:() -> Unit,
     taskName: String,
     dateTime: LocalDateTime,
     tag: String
@@ -84,7 +84,7 @@ fun TaskCard(
 
         shape = RoundedCornerShape(15.dp),
         elevation = 16.dp,
-        onClick = { nav.navigate(Routes.NewEntryView.route) },
+        onClick = onTaskPress,
         modifier = Modifier
             .padding(start = 16.dp, end = 16.dp, top = 5.dp, bottom = 5.dp)
             .fillMaxWidth()
