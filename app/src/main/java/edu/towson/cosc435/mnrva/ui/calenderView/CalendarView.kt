@@ -1,77 +1,63 @@
 package edu.towson.cosc435.mnrva.ui.calenderView
 
-import android.util.Log
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import com.google.gson.Gson
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import com.himanshoe.kalendar.Kalendar
-import com.himanshoe.kalendar.model.KalendarEvent
 import com.himanshoe.kalendar.model.KalendarType
 import edu.towson.cosc435.mnrva.model.Entry
+import edu.towson.cosc435.mnrva.ui.home.TaskCard
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Calendar(){
-    val event1 = KalendarEvent(
-        LocalDate(2023, 4,4),
-        "NAME HERE",
-        "DESC HERE"
+
+    val entry = Entry(
+        id=0,
+        title = "my title",
+        date = LocalDateTime(2023,4,4,23,1).toString(),
+        start_time = "",
+        end_time = "",
+        description = "my Description",
+        tag = "my tag"
     )
 
-    val kalenderEvents: List<KalendarEvent> = listOf(event1)
+    val entries = listOf(entry, entry, entry, entry, entry)
 
-    Kalendar(
-        onCurrentDayClick={kDay,kEvents->
-            println("${kDay.localDate} has the following events: ${kEvents}")
-    },
-        kalendarType=KalendarType.Firey,
-        kalendarEvents = kalenderEvents
-    )
-    Text(text = "List")
-    LazyColumn{
-        items(kalenderEvents){
-            event ->
-            Log.d("LOG", "Hello world $event")
-            val entry: Entry? = parseEntryJson(event.eventDescription)
-            if (entry != null){
-                Column() {
-                    Text(text = entry.title)
-                    Text(text = entry.description)
-                    Text(text = entry.tag)
-                    Text(text = entry.start_time)
-                    Text(text = entry.end_time)
-                    Text(text = entry.date.toString())
+    val myEntriesToShow: List<Entry> = emptyList()
+    var entriesToShow by rememberSaveable { mutableStateOf(myEntriesToShow) }
+
+    //Note that selectedDay cant utilize 'rememberSaveable' because it'll crash when rotating
+    //the screen.  --TODO fix this problem?
+    var selectedDay: LocalDate?
+
+    Column {
+        Kalendar(
+            onCurrentDayClick={kDay,kEvents->
+                println("${kDay.localDate} has the following events: $kEvents")
+                selectedDay = kDay.localDate
+                entriesToShow = entries.filter { event -> LocalDateTime.parse(event.date).date == selectedDay }
+            },
+            kalendarType=KalendarType.Firey,
+            kalendarEvents = emptyList()
+
+        )
+        if (entriesToShow.isNotEmpty()){
+            Text(text = "Scheduled Events")
+            LazyColumn{
+                items(entriesToShow){
+                        event ->
+                    TaskCard(taskName = event.title, dateTime = java.time.LocalDateTime.parse(event.date), tag = event.tag)
                 }
-            }
-            else{
-                Log.d("LOG", "entry didnt parse correctly")
             }
         }
     }
 }
-
-fun entryToKalendarEvent(entry: Entry): KalendarEvent?{
-
-    val date: LocalDate = entry.date.date
-    val eventName = entry.title
-    val eventDesc = entry.description
-
-    return KalendarEvent(date, eventName, eventDesc)
-}
-
-fun parseEntryJson(jsonString: String?): Entry? {
-    val gson: Gson = Gson()
-    try{
-        val myVal = gson.fromJson(jsonString, Entry::class.java)
-        return myVal
-    }
-    catch (e: Exception){
-        Log.d("LOG", e.toString())
-    }
-    return null
-}
-

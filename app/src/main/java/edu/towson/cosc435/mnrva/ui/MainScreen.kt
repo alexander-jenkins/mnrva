@@ -1,6 +1,8 @@
 package edu.towson.cosc435.mnrva.ui
 
 import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -16,6 +18,7 @@ import edu.towson.cosc435.mnrva.ui.nav.MnrvaNavGraph
 import edu.towson.cosc435.mnrva.ui.nav.Routes
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
