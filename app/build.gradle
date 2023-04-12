@@ -49,6 +49,7 @@ android {
 dependencies {
     //For Kalender component (https://github.com/hi-manshu/Kalendar/blob/main/docs/Kalendar.md)
     implementation "com.himanshoe:kalendar:1.1.0"
+    implementation "com.google.code.gson:gson:2.10.1"
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
