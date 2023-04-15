@@ -3,11 +3,17 @@ package edu.towson.cosc435.mnrva.ui.calenderView
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import com.himanshoe.kalendar.Kalendar
 import com.himanshoe.kalendar.model.KalendarType
 import edu.towson.cosc435.mnrva.model.Entry
@@ -23,11 +29,11 @@ fun Calendar(){
 
     val entry = Entry(
         id=0,
-        title = "my title",
+        title = "Job Interview",
         date = LocalDateTime.of(2023,4,4,23,1),
         start_time = null,
         end_time = null,
-        description = "my Description",
+        description = "interview with the best company ever",
         tag = "my tag"
     )
 
@@ -52,11 +58,23 @@ fun Calendar(){
 
         )
         if (entriesToShow.isNotEmpty()){
-            Text(text = "Scheduled Events")
-            LazyColumn{
+            Text(
+            text = "Scheduled Events",
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight(500),
+            )
+            LazyColumn(
+                contentPadding = PaddingValues(bottom = 64.dp)
+            ){
                 items(entriesToShow){
                         event ->
-                    TaskCard(taskName = event.title, dateTime = event.date, tag = event.tag)
+                    TaskCard(
+                        taskName = event.title,
+                        dateTime = event.date,
+                        tag = event.tag,
+                        taskDescription = event.description
+                    )
                 }
             }
         }
