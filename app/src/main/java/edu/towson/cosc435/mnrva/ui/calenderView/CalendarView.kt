@@ -12,8 +12,9 @@ import com.himanshoe.kalendar.Kalendar
 import com.himanshoe.kalendar.model.KalendarType
 import edu.towson.cosc435.mnrva.model.Entry
 import edu.towson.cosc435.mnrva.ui.home.TaskCard
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.toJavaLocalDate
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -23,9 +24,9 @@ fun Calendar(){
     val entry = Entry(
         id=0,
         title = "my title",
-        date = LocalDateTime(2023,4,4,23,1).toString(),
-        start_time = "",
-        end_time = "",
+        date = LocalDateTime.of(2023,4,4,23,1),
+        start_time = null,
+        end_time = null,
         description = "my Description",
         tag = "my tag"
     )
@@ -43,8 +44,8 @@ fun Calendar(){
         Kalendar(
             onCurrentDayClick={kDay,kEvents->
                 println("${kDay.localDate} has the following events: $kEvents")
-                selectedDay = kDay.localDate
-                entriesToShow = entries.filter { event -> LocalDateTime.parse(event.date).date == selectedDay }
+                selectedDay = kDay.localDate.toJavaLocalDate()
+                entriesToShow = entries.filter { event -> event.date.toLocalDate() == selectedDay }
             },
             kalendarType=KalendarType.Firey,
             kalendarEvents = emptyList()
@@ -55,7 +56,7 @@ fun Calendar(){
             LazyColumn{
                 items(entriesToShow){
                         event ->
-                    TaskCard(taskName = event.title, dateTime = java.time.LocalDateTime.parse(event.date), tag = event.tag)
+                    TaskCard(taskName = event.title, dateTime = event.date, tag = event.tag)
                 }
             }
         }
