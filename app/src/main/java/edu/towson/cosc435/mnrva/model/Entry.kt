@@ -2,14 +2,15 @@ package edu.towson.cosc435.mnrva.model
 
 import android.util.Log
 import com.google.gson.Gson
+import java.time.LocalDateTime
 
 data class Entry(
     //TODO: change data types if necessary
    val id: Int,
    val title: String,
-   val date: String,
-   val start_time: String,
-   val end_time: String,
+   val date: LocalDateTime,
+   val start_time: LocalDateTime?,
+   val end_time: LocalDateTime?,
    val description: String,
    val tag: String,
 ) {
