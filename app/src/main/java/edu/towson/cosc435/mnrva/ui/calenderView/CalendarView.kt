@@ -70,10 +70,8 @@ fun Calendar(){
                 items(entriesToShow){
                         event ->
                     TaskCard(
-                        taskName = event.title,
-                        dateTime = event.date,
-                        tag = event.tag,
-                        taskDescription = event.description
+                        event,
+                        onClick = {}
                     )
                 }
             }

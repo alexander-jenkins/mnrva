@@ -3,7 +3,7 @@ package edu.towson.cosc435.mnrva.ui.home
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -70,10 +70,8 @@ fun HomeView(onTaskPress:() -> Unit) {
                 items(entries){
                     entry ->
                     TaskCard(
-                        taskName = entry.title,
-                        dateTime = entry.date,
-                        tag = entry.tag,
-                        taskDescription = entry.description
+                        entry,
+                        onClick = {}//TODO -- implement somthing on click
                         )
                 }
             }
@@ -85,11 +83,8 @@ fun HomeView(onTaskPress:() -> Unit) {
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TaskCard(
-    onTaskPress:() -> Unit,
-    taskName: String,
-    dateTime: LocalDateTime,
-    tag: String,
-    taskDescription: String? = null
+    entry: Entry,
+    onClick: (Entry) -> Unit
 ){
     val horizontalGradientBrush = Brush.horizontalGradient(
         colors = listOf(
@@ -108,6 +103,7 @@ fun TaskCard(
         modifier = Modifier
             .padding(start = 16.dp, end = 16.dp, top = 5.dp, bottom = 5.dp)
             .fillMaxWidth()
+            .clickable { onClick(entry) }
     ) {
         Box(
             modifier = Modifier
@@ -125,17 +121,17 @@ fun TaskCard(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            taskName, fontSize = 36.sp,
+                            entry.title, fontSize = 36.sp,
                             modifier = Modifier.weight(1.0f)
                         )
                     }
-                    if (taskDescription != null){
+                    if (entry.description != null){
                         Row(
                             modifier = Modifier.padding(10.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                "$taskDescription", fontSize = 18.sp,
+                                "${entry.description}", fontSize = 18.sp,
                                 modifier = Modifier.weight(1.0f)
                             )
                         }
@@ -148,7 +144,7 @@ fun TaskCard(
                         verticalAlignment = Alignment.CenterVertically,
 //                    horizontalArrangement = Arrangement.End
                     ) {
-                        Text("${dateTime.format(formatter)}", modifier = Modifier.weight(1.0f))
+                        Text("${entry.date.format(formatter)}", modifier = Modifier.weight(1.0f))
 
                     }
                     Row(
@@ -166,7 +162,7 @@ fun TaskCard(
                                 .padding(bottom = 10.dp)
 
                         ) {
-                            Text(tag.toString(), modifier = Modifier
+                            Text(entry.tag, modifier = Modifier
                                 .weight(1.0f)
                                 .padding(all = 2.dp))
                         }

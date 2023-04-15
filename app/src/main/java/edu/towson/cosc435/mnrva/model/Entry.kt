@@ -16,6 +16,7 @@ data class Entry(
 ) {
    fun toJson(): String {
       val gson = Gson()
+      //todo -- IF we need to jsonify this object, make sure gson will serialize LocalDateTime and if it doesnt then implement it
       return gson.toJson(this)
    }
    companion object{//static functions of Entry
