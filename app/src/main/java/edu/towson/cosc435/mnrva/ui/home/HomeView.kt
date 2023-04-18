@@ -27,7 +27,7 @@ import java.util.*
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HomeView(onTaskPress:() -> Unit) {
+fun HomeView() {
 
     Box(contentAlignment = Alignment.Center) {
         Column(modifier = Modifier.padding(20.dp)) {
@@ -71,7 +71,7 @@ fun HomeView(onTaskPress:() -> Unit) {
                     entry ->
                     TaskCard(
                         entry,
-                        onClick = {}//TODO -- implement somthing on click
+                        onClick = {}//TODO -- implement something on click
                         )
                 }
             }
@@ -99,7 +99,6 @@ fun TaskCard(
 
         shape = RoundedCornerShape(15.dp),
         elevation = 16.dp,
-        onClick = onTaskPress,
         modifier = Modifier
             .padding(start = 16.dp, end = 16.dp, top = 5.dp, bottom = 5.dp)
             .fillMaxWidth()

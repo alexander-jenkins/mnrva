@@ -31,7 +31,7 @@ fun MnrvaNavGraph(
 
         // Home
         composable(Routes.HomeView.route) {
-            HomeView(onTaskPress = {})
+            HomeView()
         }
 
         // Schedule
