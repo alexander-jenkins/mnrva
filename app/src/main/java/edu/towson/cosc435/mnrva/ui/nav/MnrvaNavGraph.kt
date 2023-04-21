@@ -10,12 +10,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navOptions
-import edu.towson.cosc435.mnrva.ui.settings.SettingsView
-import edu.towson.cosc435.mnrva.ui.schedule.ScheduleView
 import edu.towson.cosc435.mnrva.ui.calenderView.Calendar
 import edu.towson.cosc435.mnrva.ui.home.HomeView
 import edu.towson.cosc435.mnrva.ui.newEntry.NewEntryView
+import edu.towson.cosc435.mnrva.ui.schedule.ScheduleView
+import edu.towson.cosc435.mnrva.ui.settings.SettingsView
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalComposeApi::class)
@@ -25,8 +24,7 @@ fun MnrvaNavGraph(
     navController: NavHostController = rememberNavController()
 ) {
     NavHost(
-        navController = navController,
-        startDestination = Routes.HomeView.route
+        navController = navController, startDestination = Routes.HomeView.route
     ) {
 
         // Home
@@ -36,12 +34,9 @@ fun MnrvaNavGraph(
 
         // Schedule
         composable(Routes.ScheduleView.route) {
-//            Text("Schedule")
             ScheduleView(
                 //TODO implement a way to edit clickedEntry
-                onTaskPress = {clickedEntry ->
-                    navController.navigate(Routes.NewEntryView.route)}
-            )
+                onTaskPress = { navController.navigate(Routes.NewEntryView.route) })
         }
 
         // New Item

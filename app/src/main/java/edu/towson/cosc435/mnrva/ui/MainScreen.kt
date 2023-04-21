@@ -9,14 +9,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import edu.towson.cosc435.mnrva.R
 import edu.towson.cosc435.mnrva.ui.nav.MnrvaNavGraph
 import edu.towson.cosc435.mnrva.ui.nav.Routes
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -38,7 +35,7 @@ fun MainScreen() {
 private fun BottomBar(
     nav: NavHostController,
 ) {
-    BottomNavigation( backgroundColor = Color(0xFF2F3B52), elevation = 20.dp) {
+    BottomNavigation(backgroundColor = Color(0xFF2F3B52), elevation = 20.dp) {
 
         // Home Button
         BottomNavigationItem(
