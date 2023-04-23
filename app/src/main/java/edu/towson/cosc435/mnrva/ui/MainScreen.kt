@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import edu.towson.cosc435.mnrva.ui.authentication.AuthenticationViewModel
 import edu.towson.cosc435.mnrva.ui.nav.MnrvaNavGraph
 import edu.towson.cosc435.mnrva.ui.nav.Routes
 
@@ -23,9 +24,7 @@ fun MainScreen() {
     val nav = rememberNavController()
 
     // Scaffolding for the app
-    Scaffold(
-        bottomBar = { BottomBar(nav) }
-    ) {
+    Scaffold(bottomBar = { BottomBar(nav) }) {
         MnrvaNavGraph(nav)
     }
 
@@ -35,55 +34,49 @@ fun MainScreen() {
 private fun BottomBar(
     nav: NavHostController,
 ) {
-    BottomNavigation(backgroundColor = Color(0xFF2F3B52), elevation = 20.dp) {
+    val authenticated = true
+    if (authenticated) {
+        BottomNavigation(backgroundColor = Color(0xFF2F3B52), elevation = 20.dp) {
 
-        // Home Button
-        BottomNavigationItem(
-            selected = false,
-            icon = { Icon(Icons.Default.Home, "") },
-            label = { Text("Home") },
-            onClick = {
-                nav.navigate(Routes.HomeView.route) {
-                    launchSingleTop = true
-                    popUpTo(Routes.HomeView.route) { inclusive = false }
-                }
-            }
-        )
 
-        // Schedule Button
-        BottomNavigationItem(
-            selected = false,
-            icon = { Icon(Icons.Default.List, "") },
-            label = { Text("Schedule") },
-            onClick = {
-                nav.navigate(Routes.ScheduleView.route) { }
-            }
-        )
+            // Home Button
+            BottomNavigationItem(selected = false,
+                icon = { Icon(Icons.Default.Home, "") },
+                label = { Text("Home") },
+                onClick = {
+                    nav.navigate(Routes.HomeView.route) {
+                        launchSingleTop = true
+                        popUpTo(Routes.HomeView.route) { inclusive = false }
+                    }
+                })
 
-        // Add Item Button
-        BottomNavigationItem(
-            selected = false,
-            icon = { Icon(Icons.Default.Add, "") },
-            label = { Text("New") },
-            onClick = { nav.navigate(Routes.NewEntryView.route) { } }
-        )
+            // Schedule Button
+            BottomNavigationItem(selected = false,
+                icon = { Icon(Icons.Default.List, "") },
+                label = { Text("Schedule") },
+                onClick = {
+                    nav.navigate(Routes.ScheduleView.route) { }
+                })
 
-        // Calendar Button
-        BottomNavigationItem(
-            selected = false,
-            icon = { Icon(Icons.Default.DateRange, "") },
-            label = { Text("Calendar") },
-            onClick = { nav.navigate(Routes.CalendarView.route) }
-        )
+            // Add Item Button
+            BottomNavigationItem(selected = false,
+                icon = { Icon(Icons.Default.Add, "") },
+                label = { Text("New") },
+                onClick = { nav.navigate(Routes.NewEntryView.route) { } })
 
-        // Settings Button
-        BottomNavigationItem(
-            selected = false,
-            icon = { Icon(Icons.Default.Settings, "") },
-            label = { Text("Settings") },
-            onClick = { nav.navigate(Routes.SettingsView.route) }
-        )
+            // Calendar Button
+            BottomNavigationItem(selected = false,
+                icon = { Icon(Icons.Default.DateRange, "") },
+                label = { Text("Calendar") },
+                onClick = { nav.navigate(Routes.CalendarView.route) })
 
+            // Settings Button
+            BottomNavigationItem(selected = false,
+                icon = { Icon(Icons.Default.Settings, "") },
+                label = { Text("Settings") },
+                onClick = { nav.navigate(Routes.SettingsView.route) })
+
+        }
 
     }
 }
