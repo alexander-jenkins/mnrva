@@ -9,9 +9,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import edu.towson.cosc435.mnrva.ui.authentication.AuthenticationViewModel
-import edu.towson.cosc435.mnrva.ui.authentication.LoginView
-import edu.towson.cosc435.mnrva.ui.authentication.RegisterView
 import edu.towson.cosc435.mnrva.ui.calenderView.Calendar
 import edu.towson.cosc435.mnrva.ui.home.HomeView
 import edu.towson.cosc435.mnrva.ui.newEntry.NewEntryView
@@ -24,18 +21,9 @@ import edu.towson.cosc435.mnrva.ui.settings.SettingsView
 fun MnrvaNavGraph(
     navController: NavHostController = rememberNavController()
 ) {
-    val authViewModel = AuthenticationViewModel()
-
     NavHost(
-        navController = navController, startDestination = Routes.RegisterView.route
+        navController = navController, startDestination = Routes.HomeView.route
     ) {
-
-        // Login
-        composable(Routes.LoginView.route) { LoginView(authViewModel) }
-
-        // Register
-        composable(Routes.RegisterView.route) { RegisterView(authViewModel) }
-
         // Home
         composable(Routes.HomeView.route) { HomeView() }
 
