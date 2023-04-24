@@ -1,13 +1,9 @@
 package edu.towson.cosc435.mnrva.ui.authentication
 
-import android.content.Context
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModel
-import java.util.prefs.Preferences
 
 class AuthenticationViewModel : ViewModel() {
 

@@ -1,7 +1,6 @@
 package edu.towson.cosc435.mnrva.ui
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -37,8 +36,7 @@ private fun BottomBar(
     val authenticated = true
     if (authenticated) {
         BottomNavigation(backgroundColor = Color(0xFF2F3B52), elevation = 20.dp) {
-
-
+            
             // Home Button
             BottomNavigationItem(selected = false,
                 icon = { Icon(Icons.Default.Home, "") },

@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.datastore.*
@@ -27,8 +25,8 @@ val Context.dataStore by preferencesDataStore(PREFS_KEY)
 
 class MainActivity : ComponentActivity() {
 
-    val authenticationViewModel = AuthenticationViewModel()
-    val authenticated = authenticationViewModel.authenticated
+    private val authenticationViewModel = AuthenticationViewModel()
+    private val authenticated = authenticationViewModel.authenticated
 
 
     @RequiresApi(Build.VERSION_CODES.O)
