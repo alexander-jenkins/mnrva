@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.himanshoe.kalendar.Kalendar
 import com.himanshoe.kalendar.model.KalendarType
 import edu.towson.cosc435.mnrva.model.Entry
@@ -25,14 +26,14 @@ import java.time.LocalDateTime
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun Calendar(){
+fun Calendar(nav: NavHostController){
 
     val entry = Entry(
         id=0,
         title = "Job Interview",
         date = LocalDateTime.of(2023,4,4,23,1),
-        start_time = null,
-        end_time = null,
+        startTime = null,
+        endTime = null,
         description = "interview with the best company ever",
         tag = "my tag"
     )
@@ -42,7 +43,7 @@ fun Calendar(){
     val myEntriesToShow: List<Entry> = emptyList()
     var entriesToShow by rememberSaveable { mutableStateOf(myEntriesToShow) }
 
-    //Note that selectedDay cant utilize 'rememberSaveable' because it'll crash when rotating
+    //Note that selectedDay cant utilize 'rememberSavable' because it'll crash when rotating
     //the screen.  --TODO fix this problem?
     var selectedDay: LocalDate?
 
@@ -71,7 +72,7 @@ fun Calendar(){
                         event ->
                     TaskCard(
                         event,
-                        onClick = {}
+                        nav
                     )
                 }
             }

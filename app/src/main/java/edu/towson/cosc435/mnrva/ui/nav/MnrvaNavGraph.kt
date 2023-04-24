@@ -3,7 +3,6 @@ package edu.towson.cosc435.mnrva.ui.nav
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -18,33 +17,23 @@ import edu.towson.cosc435.mnrva.ui.settings.SettingsView
 @RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalFoundationApi
 @Composable
-fun MnrvaNavGraph(
-    navController: NavHostController = rememberNavController()
-) {
-    NavHost(
-        navController = navController, startDestination = Routes.HomeView.route
-    ) {
+fun MnrvaNavGraph(navController: NavHostController = rememberNavController()) {
+    NavHost(navController = navController, startDestination = Routes.HomeView.route) {
         // Home
-        composable(Routes.HomeView.route) { HomeView() }
+        composable(Routes.HomeView.route) { HomeView(navController) }
 
         // Schedule
-        composable(Routes.ScheduleView.route) {
-            ScheduleView(onTaskPress = { navController.navigate(Routes.NewEntryView.route) })
-        }
+        composable(Routes.ScheduleView.route) { ScheduleView(navController) }
 
-        // New Item
-        composable(Routes.NewEntryView.route) { Text("New Item") }
+        // New Entry
+        composable(Routes.NewEntryView.route) { NewEntryView() }
 
         // Calendar
-        composable(Routes.CalendarView.route) {
-            Calendar()
-        }
+        composable(Routes.CalendarView.route) { Calendar(navController) }
 
         // Settings
         composable(Routes.SettingsView.route) { SettingsView() }
 
-        //NewEntry
-        composable(Routes.NewEntryView.route) { NewEntryView() }
 
     }
 }
