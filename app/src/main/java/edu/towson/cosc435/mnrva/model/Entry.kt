@@ -9,8 +9,8 @@ data class Entry(
    val id: Int,
    val title: String,
    val date: LocalDateTime,
-   val start_time: LocalDateTime?,
-   val end_time: LocalDateTime?,
+   val startTime: LocalDateTime?,
+   val endTime: LocalDateTime?,
    val description: String,
    val tag: String,
 ) {
