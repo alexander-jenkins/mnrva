@@ -1,11 +1,22 @@
 package edu.towson.cosc435.mnrva.ui.authentication
 
+import android.content.Context
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModel
+import java.util.prefs.Preferences
 
 class AuthenticationViewModel : ViewModel() {
+
+    // for development - is authenticated?
+    private val _authenticated: MutableState<Boolean> = mutableStateOf(false)
+    val authenticated = _authenticated
+    fun setAuthenticated(state: Boolean) {
+        _authenticated.value = state
+    }
 
     // User's name
     private val _name: MutableState<String> = mutableStateOf("")
@@ -13,7 +24,6 @@ class AuthenticationViewModel : ViewModel() {
     fun setName(name: String) {
         _name.value = name
     }
-
 
     // User's email
     private val _email: MutableState<String> = mutableStateOf("")

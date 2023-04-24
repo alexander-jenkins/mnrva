@@ -53,8 +53,10 @@ fun LoginView(vm: AuthenticationViewModel) {
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
         )
+
+        // Submit
         Spacer(Modifier.height(8.dp))
-        Button(onClick = {}) {
+        Button(onClick = {vm.setAuthenticated(true)}) {
             Text("Login")
         }
     }

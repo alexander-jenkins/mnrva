@@ -75,9 +75,11 @@ fun RegisterView(vm: AuthenticationViewModel) {
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
         )
 
+        // Submit
         Spacer(Modifier.height(8.dp))
-        Button(onClick = {}) {
+        Button(onClick = {vm.setAuthenticated(true)}) {
             Text("Register")
         }
+
     }
 }
