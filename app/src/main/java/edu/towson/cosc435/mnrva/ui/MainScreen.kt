@@ -1,6 +1,7 @@
 package edu.towson.cosc435.mnrva.ui
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -12,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import edu.towson.cosc435.mnrva.ui.authentication.AuthenticationViewModel
 import edu.towson.cosc435.mnrva.ui.nav.MnrvaNavGraph
 import edu.towson.cosc435.mnrva.ui.nav.Routes
 
