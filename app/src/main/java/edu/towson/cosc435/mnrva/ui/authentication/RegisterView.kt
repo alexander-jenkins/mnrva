@@ -3,8 +3,7 @@ package edu.towson.cosc435.mnrva.ui.authentication
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -27,7 +26,7 @@ fun RegisterView(vm: AuthenticationViewModel) {
     val focusManager = LocalFocusManager.current
 
     Column(
-        modifier = Modifier.fillMaxHeight(.8f).fillMaxWidth(),
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -77,7 +76,7 @@ fun RegisterView(vm: AuthenticationViewModel) {
 
         // Submit
         Spacer(Modifier.height(8.dp))
-        Button(onClick = {vm.setAuthenticated(true)}) {
+        Button(onClick = { vm.setAuthenticated(true) }) {
             Text("Register")
         }
 
