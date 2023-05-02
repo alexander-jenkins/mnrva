@@ -29,12 +29,16 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Log.d("MNRVA", "onCreate")
+            Log.d("MNRVA", "Setting app content.")
             MNRVATheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-
-                    if (authenticated.value) MainScreen()
-                    else AuthScreen(authenticationViewModel)
+                    if (authenticated.value) {
+                        Log.d("MNRVA", "User is authenticated, showing MainScreen.")
+                        MainScreen()
+                    } else {
+                        Log.d("MNRVA", "User is not authenticated, showing AuthScreen.")
+                        AuthScreen(authenticationViewModel)
+                    }
                 }
             }
         }
