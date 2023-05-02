@@ -26,12 +26,12 @@ import java.time.LocalDateTime
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun Calendar(nav: NavHostController){
+fun Calendar(nav: NavHostController) {
 
     val entry = Entry(
-        id=0,
+        id = 0,
         title = "Job Interview",
-        date = LocalDateTime.of(2023,4,4,23,1),
+        date = LocalDateTime.of(2023, 4, 26, 23, 1),
         startTime = null,
         endTime = null,
         description = "interview with the best company ever",
@@ -49,33 +49,23 @@ fun Calendar(nav: NavHostController){
 
     Column {
         Kalendar(
-            onCurrentDayClick={kDay,kEvents->
+            onCurrentDayClick = { kDay, kEvents ->
                 println("${kDay.localDate} has the following events: $kEvents")
                 selectedDay = kDay.localDate.toJavaLocalDate()
                 entriesToShow = entries.filter { event -> event.date.toLocalDate() == selectedDay }
-            },
-            kalendarType=KalendarType.Firey,
-            kalendarEvents = emptyList()
+            }, kalendarType = KalendarType.Firey, kalendarEvents = emptyList()
 
         )
-        if (entriesToShow.isNotEmpty()){
+        if (entriesToShow.isNotEmpty()) {
             Text(
-            text = "Scheduled Events",
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight(500),
+                text = "Scheduled Events",
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight(500),
             )
             LazyColumn(
                 contentPadding = PaddingValues(bottom = 64.dp)
-            ){
-                items(entriesToShow){
-                        event ->
-                    TaskCard(
-                        event,
-                        nav
-                    )
-                }
-            }
+            ) { items(entriesToShow) { TaskCard(it, nav) } }
         }
     }
 }
