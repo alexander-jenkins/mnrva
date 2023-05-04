@@ -1,11 +1,10 @@
 package edu.towson.cosc435.mnrva.ui.schedule
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -14,13 +13,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import edu.towson.cosc435.mnrva.model.Entry
 import edu.towson.cosc435.mnrva.ui.home.TaskCard
-import java.time.*
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-@RequiresApi(Build.VERSION_CODES.O)
 val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("ha")
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ScheduleView(nav: NavHostController) {
     //TODO -- Get entry list from main and replace this test code

@@ -1,7 +1,5 @@
 package edu.towson.cosc435.mnrva.ui.nav
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -14,7 +12,6 @@ import edu.towson.cosc435.mnrva.ui.newEntry.NewEntryView
 import edu.towson.cosc435.mnrva.ui.schedule.ScheduleView
 import edu.towson.cosc435.mnrva.ui.settings.SettingsView
 
-@RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalFoundationApi
 @Composable
 fun MnrvaNavGraph(navController: NavHostController = rememberNavController()) {

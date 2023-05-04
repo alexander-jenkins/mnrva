@@ -1,8 +1,6 @@
 package edu.towson.cosc435.mnrva.ui
 
 import android.annotation.SuppressLint
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -15,7 +13,6 @@ import androidx.navigation.compose.rememberNavController
 import edu.towson.cosc435.mnrva.ui.nav.MnrvaNavGraph
 import edu.towson.cosc435.mnrva.ui.nav.Routes
 
-@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -36,7 +33,7 @@ private fun BottomBar(
     val authenticated = true
     if (authenticated) {
         BottomNavigation(backgroundColor = Color(0xFF2F3B52), elevation = 20.dp) {
-            
+
             // Home Button
             BottomNavigationItem(selected = false,
                 icon = { Icon(Icons.Default.Home, "") },

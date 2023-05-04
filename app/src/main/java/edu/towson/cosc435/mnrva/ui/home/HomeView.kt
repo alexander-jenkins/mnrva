@@ -1,13 +1,21 @@
 package edu.towson.cosc435.mnrva.ui.home
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,11 +28,10 @@ import edu.towson.cosc435.mnrva.model.Entry
 import edu.towson.cosc435.mnrva.ui.nav.Routes
 import edu.towson.cosc435.mnrva.ui.theme.Envy
 import edu.towson.cosc435.mnrva.ui.theme.FringyFlower
-import java.time.*
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeView(nav: NavHostController) {
 
@@ -37,9 +44,7 @@ fun HomeView(nav: NavHostController) {
             Text("This week:", fontSize = 15.sp)
 
             //Example Date for the following TaskCard
-            val date = LocalDate.of(2023, Month.APRIL, 2)
-            val time = LocalTime.of(12, 30, 0)
-            val dateTime = LocalDateTime.of(date, time)
+            val dateTime = LocalDateTime.of(2023, 4, 23, 12, 30, 0)
 
             val entry01 = Entry(
                 0,
@@ -57,7 +62,6 @@ fun HomeView(nav: NavHostController) {
 }
 
 @OptIn(ExperimentalMaterialApi::class)
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TaskCard(entry: Entry, nav: NavHostController) {
     val horizontalGradientBrush = Brush.horizontalGradient(colors = listOf(FringyFlower, Envy))
