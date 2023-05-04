@@ -4,21 +4,25 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import edu.towson.cosc435.mnrva.network.AuthRequests
-import kotlinx.coroutines.launch
 
-class AuthenticationViewModel() : ViewModel() {
+class AuthenticationViewModel(setToken: (String) -> Unit) : ViewModel() {
+    private lateinit var setToken: (String) -> Unit
+
+    init {
+        this.setToken = setToken
+    }
 
     private val authClient = AuthRequests()
-    val testAuth = viewModelScope.launch {
-        val test = authClient.testAuthenticated()
-    }
+//    val testAuth = viewModelScope.launch {
+//        val test = authClient.testAuthenticated()
+//    }
 
     // for development - is authenticated?
     private val _authenticated: MutableState<Boolean> = mutableStateOf(false)
     val authenticated = _authenticated
     fun setAuthenticated(state: Boolean) {
+        setToken("Testing")
         _authenticated.value = state
     }
 

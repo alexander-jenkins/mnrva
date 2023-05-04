@@ -26,7 +26,7 @@ class AuthRequests : IAuthRequests {
 
     override suspend fun testAuthenticated(): Boolean {
         return withContext(Dispatchers.IO) {
-            val request = Request.Builder().get().url(Endpoints.TEST_AUTH).build()
+            val request = Request.Builder().get().url(TEST_AUTH).build()
             val response = client.newCall(request).execute()
             val responseBody = response.body
             val status = if (responseBody != null) {
