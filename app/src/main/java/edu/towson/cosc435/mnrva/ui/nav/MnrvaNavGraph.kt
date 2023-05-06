@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import edu.towson.cosc435.mnrva.ui.calenderView.Calendar
+import edu.towson.cosc435.mnrva.ui.entryView.EntryView
 import edu.towson.cosc435.mnrva.ui.home.HomeView
 import edu.towson.cosc435.mnrva.ui.newEntry.NewEntryView
 import edu.towson.cosc435.mnrva.ui.schedule.ScheduleView
@@ -22,6 +23,9 @@ fun MnrvaNavGraph(navController: NavHostController = rememberNavController()) {
 
         // New Entry
         composable(Routes.NewEntryView.route) { NewEntryView() }
+
+        //View Specific Entry
+        composable(Routes.entryView.route) { EntryView() }
 
         // Calendar
         composable(Routes.CalendarView.route) { Calendar(navController) }
