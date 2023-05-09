@@ -1,14 +1,13 @@
 package edu.towson.cosc435.mnrva.data
 
-import android.app.Application
 import android.content.Context
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 
-class MnrvaSettingsRepository(app: Application) {
+class SettingsRepository(context: Context) {
 
     // References to the preferences
-    private val preferences = app.getSharedPreferences(REPO_KEY, Context.MODE_PRIVATE)
+    private val preferences = context.getSharedPreferences(REPO_KEY, Context.MODE_PRIVATE)
     private val editor = preferences.edit()
 
     // JWT Auth
