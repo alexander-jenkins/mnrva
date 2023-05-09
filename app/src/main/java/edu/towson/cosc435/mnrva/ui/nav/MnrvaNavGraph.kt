@@ -16,8 +16,6 @@ import edu.towson.cosc435.mnrva.ui.settings.SettingsView
 @Composable
 fun MnrvaNavGraph(navController: NavHostController = rememberNavController()) {
     NavHost(navController = navController, startDestination = Routes.HomeView.route) {
-        // Home
-        composable(Routes.HomeView.route) { HomeView(navController) }
 
         // Schedule
         composable(Routes.ScheduleView.route) { ScheduleView(navController) }
@@ -31,6 +29,7 @@ fun MnrvaNavGraph(navController: NavHostController = rememberNavController()) {
         // Settings
         composable(Routes.SettingsView.route) { SettingsView() }
 
-
+        // Home
+        composable(Routes.HomeView.route) { HomeView(navController) }
     }
 }

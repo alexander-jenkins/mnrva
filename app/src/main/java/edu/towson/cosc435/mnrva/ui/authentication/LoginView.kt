@@ -55,7 +55,7 @@ fun LoginView(vm: AuthenticationViewModel) {
 
         // Submit
         Spacer(Modifier.height(8.dp))
-        Button(onClick = { vm.setAuthenticated(true) }) {
+        Button(onClick = vm::login) {
             Text("Login")
         }
     }

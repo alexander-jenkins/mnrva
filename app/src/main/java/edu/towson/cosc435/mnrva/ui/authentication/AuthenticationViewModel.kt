@@ -4,19 +4,13 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import edu.towson.cosc435.mnrva.network.AuthRequests
+import edu.towson.cosc435.mnrva.DependencyGraph
+import edu.towson.cosc435.mnrva.data.SettingsRepository
 
-class AuthenticationViewModel(setToken: (String) -> Unit) : ViewModel() {
-    private lateinit var setToken: (String) -> Unit
-
-    init {
-        this.setToken = setToken
-    }
-
-    private val authClient = AuthRequests()
-//    val testAuth = viewModelScope.launch {
-//        val test = authClient.testAuthenticated()
-//    }
+class AuthenticationViewModel(
+    private val settingsRepository: SettingsRepository = DependencyGraph.settingsRepository
+) : ViewModel() {
+    private val setToken = settingsRepository::setJwt
 
     // for development - is authenticated?
     private val _authenticated: MutableState<Boolean> = mutableStateOf(false)
@@ -52,6 +46,14 @@ class AuthenticationViewModel(setToken: (String) -> Unit) : ViewModel() {
     val confirmPassword: State<String> = _confirmPassword
     fun setConfirmPassword(password: String) {
         _confirmPassword.value = password
+    }
+
+    // login
+    fun login() {
+        setName("")
+        setEmail("")
+        setPassword("")
+        setConfirmPassword("")
     }
 
 }

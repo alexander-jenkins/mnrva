@@ -1,6 +1,7 @@
 package edu.towson.cosc435.mnrva.data
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 
@@ -16,6 +17,7 @@ class SettingsRepository(context: Context) {
     fun setJwt(token: String) {
         _jwt.value = token
         editor.putString(JWT_PREF_KEY, token).apply()
+        Log.d("MNRVA", "JWT changed to {${_jwt.value}}")
     }
 
     // Keys

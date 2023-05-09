@@ -43,9 +43,6 @@ fun HomeView(nav: NavHostController) {
             Spacer(modifier = Modifier.height(10.dp))
             Text("This week:", fontSize = 15.sp)
 
-            //Example Date for the following TaskCard
-            val dateTime = LocalDateTime.of(2023, 4, 23, 12, 30, 0)
-
             val entry01 = Entry(
                 0,
                 "Job Interview",
@@ -55,7 +52,7 @@ fun HomeView(nav: NavHostController) {
                 description = "interview with Apples and Oranges",
                 tag = "Job Interview"
             )
-            val entries = listOf(entry01, entry01, entry01, entry01)
+            val entries = listOf(entry01)
             LazyColumn(contentPadding = PaddingValues(bottom = 48.dp)) { items(entries) { TaskCard(it, nav) } }
         }
     }
@@ -71,7 +68,9 @@ fun TaskCard(entry: Entry, nav: NavHostController) {
         shape = RoundedCornerShape(15.dp),
         elevation = 16.dp,
         onClick = { nav.navigate(Routes.NewEntryView.route) },
-        modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 5.dp, bottom = 5.dp).fillMaxWidth()
+        modifier = Modifier
+            .padding(start = 16.dp, end = 16.dp, top = 5.dp, bottom = 5.dp)
+            .fillMaxWidth()
     ) {
         Box(modifier = Modifier.background(brush = horizontalGradientBrush)) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly) {
@@ -86,15 +85,21 @@ fun TaskCard(entry: Entry, nav: NavHostController) {
                     }
 
                     Row(
-                        modifier = Modifier.padding(5.dp).fillMaxWidth(),
+                        modifier = Modifier
+                            .padding(5.dp)
+                            .fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
                     ) { Text(entry.date.format(formatter), modifier = Modifier.weight(1.0f)) }
                     Row(horizontalArrangement = Arrangement.End) {
                         Spacer(modifier = Modifier.padding(5.dp))
                         Card(
                             shape = RoundedCornerShape(5.dp),
-                            modifier = Modifier.background(Color(25)).padding(bottom = 10.dp)
-                        ) { Text(entry.tag, modifier = Modifier.weight(1.0f).padding(all = 2.dp)) }
+                            modifier = Modifier
+                                .background(Color(25))
+                                .padding(bottom = 10.dp)
+                        ) { Text(entry.tag, modifier = Modifier
+                            .weight(1.0f)
+                            .padding(all = 2.dp)) }
                     }
                 }
             }

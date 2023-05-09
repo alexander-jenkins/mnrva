@@ -2,6 +2,8 @@ package edu.towson.cosc435.mnrva
 
 import android.content.Context
 import android.util.Log
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.room.Room
 import edu.towson.cosc435.mnrva.data.SettingsRepository
 import edu.towson.cosc435.mnrva.data.room.MnrvaLocalDatabase
@@ -20,7 +22,7 @@ object DependencyGraph {
     // Settings
     lateinit var settingsRepository: SettingsRepository
 
-    val authenticated = true // testing
+    val authenticated: MutableState<Boolean> = mutableStateOf(false) // testing
 
     // Add things to context
     fun provide(context: Context) {

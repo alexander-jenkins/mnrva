@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.ui
+package edu.towson.cosc435.mnrva.ui.authentication
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -11,14 +11,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import edu.towson.cosc435.mnrva.ui.authentication.AuthenticationViewModel
 import edu.towson.cosc435.mnrva.ui.nav.AuthNavGraph
 import edu.towson.cosc435.mnrva.ui.nav.Routes
 
 @Composable
-fun AuthScreen(vm: AuthenticationViewModel) {
+fun AuthScreen(vm: AuthenticationViewModel = viewModel()) {
     val authNav = rememberNavController()
 
     Scaffold(bottomBar = { AuthBottomBar(authNav) }) {
