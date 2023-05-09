@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import edu.towson.cosc435.mnrva.DependencyGraph
 import edu.towson.cosc435.mnrva.ui.nav.MnrvaNavGraph
 import edu.towson.cosc435.mnrva.ui.nav.Routes
 
@@ -30,12 +31,12 @@ fun MainScreen() {
 private fun BottomBar(
     nav: NavHostController,
 ) {
-    val authenticated = true
-    if (authenticated) {
+    if (DependencyGraph.authenticated) {
         BottomNavigation(backgroundColor = Color(0xFF2F3B52), elevation = 20.dp) {
 
             // Home Button
-            BottomNavigationItem(selected = false,
+            BottomNavigationItem(
+                selected = false,
                 icon = { Icon(Icons.Default.Home, "") },
                 label = { Text("Home") },
                 onClick = {
