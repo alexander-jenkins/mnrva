@@ -6,7 +6,9 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.room.Update
+import edu.towson.cosc435.mnrva.data.Converters
 import edu.towson.cosc435.mnrva.model.Event
 import java.time.LocalDateTime
 
@@ -26,7 +28,8 @@ interface EventsDao {
 }
 
 @Database(entities = [Event::class], version = 1)
-abstract class EventsDatabase : RoomDatabase() {
+@TypeConverters(Converters::class)
+abstract class MnrvaLocalDatabase : RoomDatabase() {
     abstract fun eventsDao(): EventsDao
 }
 
