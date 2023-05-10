@@ -7,18 +7,9 @@ import androidx.lifecycle.ViewModel
 import edu.towson.cosc435.mnrva.DependencyGraph
 import edu.towson.cosc435.mnrva.data.SettingsRepository
 
-class AuthenticationViewModel(
+class AuthenticationViewModel : ViewModel() {
     private val settingsRepository: SettingsRepository = DependencyGraph.settingsRepository
-) : ViewModel() {
     private val setToken = settingsRepository::setJwt
-
-    // for development - is authenticated?
-    private val _authenticated: MutableState<Boolean> = mutableStateOf(false)
-    val authenticated = _authenticated
-    fun setAuthenticated(state: Boolean) {
-        setToken("Testing")
-        _authenticated.value = state
-    }
 
     // User's name
     private val _name: MutableState<String> = mutableStateOf("")
@@ -49,11 +40,12 @@ class AuthenticationViewModel(
     }
 
     // login
-    fun login() {
+    fun bypass() {
         setName("")
         setEmail("")
         setPassword("")
         setConfirmPassword("")
+        settingsRepository.setJwt("{TESTING_TOKEN}")
     }
 
 }

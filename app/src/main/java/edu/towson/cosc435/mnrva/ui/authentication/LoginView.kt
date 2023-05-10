@@ -55,8 +55,6 @@ fun LoginView(vm: AuthenticationViewModel) {
 
         // Submit
         Spacer(Modifier.height(8.dp))
-        Button(onClick = vm::login) {
-            Text("Login")
-        }
+        Button(vm::bypass) { Text("Login") }
     }
 }

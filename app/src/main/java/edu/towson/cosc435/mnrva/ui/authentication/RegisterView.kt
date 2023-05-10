@@ -76,9 +76,7 @@ fun RegisterView(vm: AuthenticationViewModel) {
 
         // Submit
         Spacer(Modifier.height(8.dp))
-        Button(onClick = { vm.setAuthenticated(true) }) {
-            Text("Register")
-        }
+        Button(vm::bypass) { Text("Register") }
 
     }
 }

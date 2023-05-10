@@ -5,10 +5,10 @@ import android.app.TimePickerDialog
 import android.widget.DatePicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -26,18 +26,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import java.util.*
+import androidx.lifecycle.viewmodel.compose.viewModel
+import java.util.Calendar
+import java.util.Date
 
 @Composable
-fun NewEntryView () {
-    val title: MutableState<String> = remember { mutableStateOf("") }
+fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
     val date: MutableState<String> = remember { mutableStateOf("") }
-    val startTime: MutableState<String> = remember { mutableStateOf("") }
     val endTime: MutableState<String> = remember { mutableStateOf("") }
-    val description: MutableState<String> = remember { mutableStateOf("") }
-    val showStartTime: MutableState<Boolean> = remember { mutableStateOf(false) }
-    val showEndTime: MutableState<Boolean> = remember { mutableStateOf(false) }
-
 
     val mContext = LocalContext.current
     val mCalendar = Calendar.getInstance()
@@ -53,207 +49,144 @@ fun NewEntryView () {
 
     //declares date picker
     val mDatePickerDialog = DatePickerDialog(
-        mContext,
-        { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
+        mContext, { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
             date.value = "$mDayOfMonth/${mMonth + 1}/$mYear"
         }, mYear, mMonth, mDay
     )
 
     //declares start time picker
     val sTimePickerDialog = TimePickerDialog(
-            mContext,
-    {_, mHour : Int, mMinute: Int ->
-        startTime.value = "$mHour:$mMinute"
-    }, mHour, mMinute, false
+        mContext, { _, mHour: Int, mMinute: Int ->
+            vm.setStart("$mHour:$mMinute")
+        }, mHour, mMinute, false
     )
 
     //declares end time picker
     val eTimePickerDialog = TimePickerDialog(
-            mContext,
-    {_, mHour : Int, mMinute: Int ->
-        endTime.value = "$mHour:$mMinute"
-    }, mHour, mMinute, false
+        mContext, { _, mHour: Int, mMinute: Int ->
+            endTime.value = "$mHour:$mMinute"
+        }, mHour, mMinute, false
     )
 
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxWidth()
+    Column(
+        modifier = Modifier
+            .padding(50.dp)
+            .fillMaxSize(),
+        verticalArrangement = spacedBy(10.dp),
     ) {
-        Column(
-            modifier = Modifier.padding(50.dp),
-            verticalArrangement = spacedBy(10.dp),
+        Text(
+            "Make New Entry:", fontSize = 36.sp, modifier = Modifier.padding(5.dp)
         )
-        {
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+        //Entry Title Field*
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = vm.title.value,
+            onValueChange = vm::setTitle,
+            label = { Text("Title") },
+            singleLine = true
+        )
+
+        //Entry date Field*
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Button(
+                modifier = Modifier.width(130.dp),
+                onClick = mDatePickerDialog::show,
+                contentPadding = PaddingValues(
+                    start = 20.dp, top = 12.dp, end = 20.dp, bottom = 12.dp
+                )
             ) {
                 Text(
-                    "Make New Entry:",
-                    fontSize = 36.sp,
-                    modifier = Modifier.padding(5.dp)
-                )
-            }
-            //Entry Title Field*
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = title.value,
-                    onValueChange = { newValue: String ->
-                        title.value = newValue
-                    },
-                    label = { Text("Title") }
+                    "Select Date", fontSize = 15.sp
                 )
             }
 
-            //Entry date Field*
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Button(
-                    modifier = Modifier.width(130.dp),
-                    onClick = {mDatePickerDialog.show()},
+            Text(text = "    Date: ${date.value}", fontSize = 15.sp)
+        }
 
-                    contentPadding = PaddingValues(
-                        start = 20.dp,
-                        top = 12.dp,
-                        end = 20.dp,
-                        bottom = 12.dp
-                    )
-                ) {
-                    Text(
-                        "Select Date",
-                        fontSize = 15.sp
-                    )
+        //Checkboxes for showing start and end time
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Checkbox(checked = vm.showStart.value, onCheckedChange = {
+                vm.showStart.value = it
+                if (!vm.showStart.value && vm.showEnd.value) {
+                    vm.showEnd.value = it
                 }
-
-                Text(text = "    Date: ${date.value}", fontSize = 15.sp)
-            }
-
-            //Checkboxes for showing start and end time
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Checkbox(
-                    checked = showStartTime.value,
-                    onCheckedChange = {
-                        showStartTime.value = it
-
-
-                        if (!showStartTime.value && showEndTime.value) {
-                            showEndTime.value = it
-                        }
-                    }
-                )
-                Text(text = "Set Start Time")
-
-                if (showStartTime.value) {
-                    Checkbox(
-                        checked = showEndTime.value,
-                        onCheckedChange = {
-                            showEndTime.value = it
-
-                        }
-                    )
-                    Text(text = "Set End Time")
-                }
-
-            }
-
-            //set start time
-            if (showStartTime.value) {
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Button(
-                        modifier = Modifier.width(130.dp),
-                        onClick = {sTimePickerDialog.show()},
-
-                        contentPadding = PaddingValues(
-                            top = 12.dp,
-                            bottom = 12.dp
-                        )
-                    ) {
-                        Text(
-                            "Select Start",
-                            fontSize = 15.sp
-                        )
-                    }
-
-                    Text(text = "    Start: ${startTime.value}", fontSize = 15.sp)
-                }
-            }
-
-            //set end time
-            if (showStartTime.value && showEndTime.value) {
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Button(
-                        modifier = Modifier.width(130.dp),
-                        onClick = {eTimePickerDialog.show()},
-
-                        contentPadding = PaddingValues(
-                            top = 12.dp,
-                            bottom = 12.dp
-                        )
-                    ) {
-                        Text(
-                            "Select End",
-                            fontSize = 15.sp
-                        )
-                    }
-
-                    Text(text = "    End Time: ${endTime.value}", fontSize = 15.sp)
-                }
-            }
-
-
-            //set description
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                OutlinedTextField(
-                    modifier = Modifier.height(200.dp)
-                        .fillMaxWidth(),
-                    value = description.value,
-                    onValueChange = { newValue: String ->
-                        description.value = newValue
-                    },
-                    label = { Text("Description") }
-                )
-            }
-
-
-            //create button
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Button(
-                    modifier = Modifier.width(130.dp),
-                    onClick = {},
-
-                    contentPadding = PaddingValues(
-                        top = 12.dp,
-                        bottom = 12.dp
-                    )
-                ) {
-                    Text(
-                        "Create",
-                        fontSize = 15.sp
-                    )
-                }
+            })
+            Text(text = "Set Start Time")
+            if (vm.showStart.value) {
+                Checkbox(checked = vm.showEnd.value, onCheckedChange = vm::toggleShowEnd)
+                Text(text = "Set End Time")
             }
         }
+
+        //set start time
+        if (vm.showStart.value) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Button(
+                    modifier = Modifier.width(130.dp), onClick = { sTimePickerDialog.show() },
+
+                    contentPadding = PaddingValues(
+                        top = 12.dp, bottom = 12.dp
+                    )
+                ) {
+                    Text(
+                        "Select Start", fontSize = 15.sp
+                    )
+                }
+
+                Text(text = "    Start: ${vm.start.value}", fontSize = 15.sp)
+            }
+        }
+
+        //set end time
+        if (vm.showStart.value && vm.showEnd.value) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Button(
+                    modifier = Modifier.width(130.dp),
+                    onClick = { eTimePickerDialog.show() },
+                    contentPadding = PaddingValues(
+                        top = 12.dp, bottom = 12.dp
+                    )
+                ) {
+                    Text(
+                        "Select End", fontSize = 15.sp
+                    )
+                }
+                Text(text = "    End Time: ${vm.end.value}", fontSize = 15.sp)
+            }
+        }
+
+
+        //set description
+        OutlinedTextField(modifier = Modifier
+            .height(200.dp)
+            .fillMaxWidth(),
+            value = vm.description.value,
+            onValueChange = vm::setDescription,
+            label = { Text("Description") })
+
+        //create button
+        Button(
+            modifier = Modifier.width(130.dp),
+            onClick = vm::createEvent,
+            contentPadding = PaddingValues(
+                top = 12.dp, bottom = 12.dp
+            )
+        ) {
+            Text(
+                "Create", fontSize = 15.sp
+            )
+        }
+
     }
 }
 

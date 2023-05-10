@@ -2,8 +2,6 @@ package edu.towson.cosc435.mnrva
 
 import android.content.Context
 import android.util.Log
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.room.Room
 import edu.towson.cosc435.mnrva.data.EventRepository
 import edu.towson.cosc435.mnrva.data.SettingsRepository
@@ -30,13 +28,11 @@ object DependencyGraph {
         EventRepository(database.eventDao())
     }
 
-    val authenticated: MutableState<Boolean> = mutableStateOf(false) // testing
-
     // Coroutine stuff
-    private val mainDispatcher: CoroutineDispatcher
+    val mainDispatcher: CoroutineDispatcher
         get() = Dispatchers.Main
 
-    private val ioDispatcher: CoroutineDispatcher
+    val ioDispatcher: CoroutineDispatcher
         get() = Dispatchers.IO
 
 

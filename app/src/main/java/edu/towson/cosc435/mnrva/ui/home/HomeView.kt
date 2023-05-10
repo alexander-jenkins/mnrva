@@ -14,11 +14,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -37,26 +37,17 @@ import java.util.*
 
 @Composable
 fun HomeView(nav: NavHostController, vm: EventViewModel = viewModel()) {
+    val eventsList: List<Event> by vm.allEvents
+
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.padding(20.dp)) {
-
-            Button(onClick = { vm.addEvent() }) {
-                Text(text = "Add test event")
-            }
-
             Text("Hello Friend!", fontSize = 36.sp)
             Text("Here are your upcoming plans:", fontSize = 15.sp)
-
             Spacer(modifier = Modifier.height(10.dp))
             Text("This week:", fontSize = 15.sp)
-
-
             LazyColumn(contentPadding = PaddingValues(bottom = 48.dp)) {
-                items(vm.allEvents.value.orEmpty()) {
-                    TaskCard(
-                        it,
-                        nav
-                    )
+                items(eventsList) { event ->
+                    TaskCard(event, nav)
                 }
             }
         }
@@ -110,18 +101,21 @@ fun TaskCard(entry: Event, nav: NavHostController) {
                     ) { Text(entry.start.format(formatter), modifier = Modifier.weight(1.0f)) }
                     Row(horizontalArrangement = Arrangement.End) {
                         Spacer(modifier = Modifier.padding(5.dp))
-                        Card(
-                            shape = RoundedCornerShape(5.dp),
-                            modifier = Modifier
-                                .background(Color(25))
-                                .padding(bottom = 10.dp)
-                        ) {
-                            Text(
-                                entry.tags!!, modifier = Modifier
-                                    .weight(1.0f)
-                                    .padding(all = 2.dp)
-                            )
-                        }
+
+                        if (entry.tags != null)
+                            Card(
+                                shape = RoundedCornerShape(5.dp),
+                                modifier = Modifier
+                                    .background(Color(25))
+                                    .padding(bottom = 10.dp)
+                            ) {
+                                Text(
+                                    entry.tags,
+                                    modifier = Modifier
+                                        .weight(1.0f)
+                                        .padding(all = 2.dp)
+                                )
+                            }
                     }
                 }
             }

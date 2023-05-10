@@ -20,10 +20,27 @@ class SettingsRepository(context: Context) {
         Log.d("MNRVA", "JWT changed to {${_jwt.value}}")
     }
 
+    // User Name
+    private val _name = mutableStateOf(preferences.getString(USER_NAME, "MNRVA User"))
+    val name = _name
+    fun setName(name: String) {
+        _name.value = name
+        editor.putString(USER_NAME, name)
+    }
+
+    // Authentication status
+    private val _authenticated = mutableStateOf(false)
+    val authenticated: State<Boolean>
+        get() {
+            _authenticated.value = (_jwt.value != "")
+            return _authenticated
+        }
+
     // Keys
     companion object PreferenceKeys {
         const val REPO_KEY: String = "MNRVA_SETTINGS"
         const val JWT_PREF_KEY: String = "JTW_AUTH_TOKEN"
+        const val USER_NAME: String = "USER_NAME"
     }
 
 }
