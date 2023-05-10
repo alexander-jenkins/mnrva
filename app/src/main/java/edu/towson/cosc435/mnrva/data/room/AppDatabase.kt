@@ -3,7 +3,6 @@ package edu.towson.cosc435.mnrva.data.room
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import edu.towson.cosc435.mnrva.data.Converters
 import edu.towson.cosc435.mnrva.data.Event
 
 

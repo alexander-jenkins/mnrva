@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.data
+package edu.towson.cosc435.mnrva.data.room
 
 import androidx.room.TypeConverter
 import java.time.LocalDateTime
