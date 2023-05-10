@@ -25,7 +25,7 @@ fun MnrvaNavGraph(navController: NavHostController = rememberNavController()) {
         composable(Routes.NewEntryView.route) { NewEntryView() }
 
         //View Specific Entry
-        composable(Routes.entryView.route) { EntryView() }
+        composable(Routes.ViewEntryView.route) { EntryView() }
 
         // Calendar
         composable(Routes.CalendarView.route) { Calendar(navController) }
