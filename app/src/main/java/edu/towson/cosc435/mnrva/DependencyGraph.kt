@@ -5,8 +5,11 @@ import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.room.Room
+import edu.towson.cosc435.mnrva.data.EventRepository
 import edu.towson.cosc435.mnrva.data.SettingsRepository
-import edu.towson.cosc435.mnrva.data.room.MnrvaLocalDatabase
+import edu.towson.cosc435.mnrva.data.room.MnrvaDatabase
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import java.io.File
@@ -17,12 +20,25 @@ object DependencyGraph {
     lateinit var okHttpClient: OkHttpClient
 
     // Room Database
-    lateinit var database: MnrvaLocalDatabase
+    lateinit var database: MnrvaDatabase
 
     // Settings
     lateinit var settingsRepository: SettingsRepository
 
+    // Repository
+    val eventRepository by lazy {
+        EventRepository(database.eventDao())
+    }
+
     val authenticated: MutableState<Boolean> = mutableStateOf(false) // testing
+
+    // Coroutine stuff
+    private val mainDispatcher: CoroutineDispatcher
+        get() = Dispatchers.Main
+
+    private val ioDispatcher: CoroutineDispatcher
+        get() = Dispatchers.IO
+
 
     // Add things to context
     fun provide(context: Context) {
@@ -30,7 +46,7 @@ object DependencyGraph {
         settingsRepository = SettingsRepository(context)
         okHttpClient = OkHttpClient.Builder()
             .cache(Cache(File(context.cacheDir, "http_cache"), (20 * 1024 * 1024).toLong())).build()
-        database = Room.databaseBuilder(context, MnrvaLocalDatabase::class.java, "data.db")
+        database = Room.databaseBuilder(context, MnrvaDatabase::class.java, "data.db")
             .fallbackToDestructiveMigration().build()
     }
 }

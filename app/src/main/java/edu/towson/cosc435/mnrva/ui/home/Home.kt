@@ -22,7 +22,9 @@ fun Home() {
 
     // Scaffolding for the app
     Scaffold(bottomBar = { BottomBar(nav) }) {
-        Box(Modifier.padding(it)) { MnrvaNavGraph(nav) }
+        Box(Modifier.padding(it)) {
+            MnrvaNavGraph(nav)
+        }
     }
 }
 

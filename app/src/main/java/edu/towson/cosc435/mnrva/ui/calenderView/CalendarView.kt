@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.himanshoe.kalendar.Kalendar
 import com.himanshoe.kalendar.model.KalendarType
-import edu.towson.cosc435.mnrva.model.Entry
+import edu.towson.cosc435.mnrva.data.Event
 import edu.towson.cosc435.mnrva.ui.home.TaskCard
 import kotlinx.datetime.toJavaLocalDate
 import java.time.LocalDate
@@ -28,19 +28,19 @@ import java.time.LocalDateTime
 @Composable
 fun Calendar(nav: NavHostController) {
 
-    val entry = Entry(
-        id = 0,
+    val entry = Event(
+        id = "0",
+        owner = "me",
         title = "Job Interview",
-        date = LocalDateTime.of(2023, 4, 26, 23, 1),
-        startTime = null,
-        endTime = null,
+        start = LocalDateTime.of(2023, 4, 26, 23, 1),
+        end = null,
         description = "interview with the best company ever",
-        tag = "my tag"
+        tags = "my tag"
     )
 
     val entries = listOf(entry, entry, entry, entry, entry)
 
-    val myEntriesToShow: List<Entry> = emptyList()
+    val myEntriesToShow: List<Event> = emptyList()
     var entriesToShow by rememberSaveable { mutableStateOf(myEntriesToShow) }
 
     //Note that selectedDay cant utilize 'rememberSavable' because it'll crash when rotating
@@ -52,7 +52,7 @@ fun Calendar(nav: NavHostController) {
             onCurrentDayClick = { kDay, kEvents ->
                 println("${kDay.localDate} has the following events: $kEvents")
                 selectedDay = kDay.localDate.toJavaLocalDate()
-                entriesToShow = entries.filter { event -> event.date.toLocalDate() == selectedDay }
+                entriesToShow = entries.filter { event -> event.start.toLocalDate() == selectedDay }
             }, kalendarType = KalendarType.Firey, kalendarEvents = emptyList()
 
         )

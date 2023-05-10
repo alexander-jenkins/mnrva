@@ -14,7 +14,7 @@ class Converters {
     @TypeConverter
     fun toLocalDateTime(value: String?): LocalDateTime? {
         return value?.let {
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss.zzz")
+            val formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
             LocalDateTime.from(formatter.parse(value))
         }
     }

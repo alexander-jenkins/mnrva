@@ -7,12 +7,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
@@ -23,44 +25,47 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import edu.towson.cosc435.mnrva.model.Entry
+import edu.towson.cosc435.mnrva.data.Event
+import edu.towson.cosc435.mnrva.ui.EventViewModel
 import edu.towson.cosc435.mnrva.ui.nav.Routes
 import edu.towson.cosc435.mnrva.ui.theme.Envy
 import edu.towson.cosc435.mnrva.ui.theme.FringyFlower
-import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
 @Composable
-fun HomeView(nav: NavHostController) {
-
-    Box(contentAlignment = Alignment.Center) {
+fun HomeView(nav: NavHostController, vm: EventViewModel = viewModel()) {
+    Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.padding(20.dp)) {
+
+            Button(onClick = { vm.addEvent() }) {
+                Text(text = "Add test event")
+            }
+
             Text("Hello Friend!", fontSize = 36.sp)
             Text("Here are your upcoming plans:", fontSize = 15.sp)
 
             Spacer(modifier = Modifier.height(10.dp))
             Text("This week:", fontSize = 15.sp)
 
-            val entry01 = Entry(
-                0,
-                "Job Interview",
-                date = LocalDateTime.of(2023, 4, 15, 0, 0),
-                startTime = null,
-                endTime = null,
-                description = "interview with Apples and Oranges",
-                tag = "Job Interview"
-            )
-            val entries = listOf(entry01)
-            LazyColumn(contentPadding = PaddingValues(bottom = 48.dp)) { items(entries) { TaskCard(it, nav) } }
+
+            LazyColumn(contentPadding = PaddingValues(bottom = 48.dp)) {
+                items(vm.allEvents.value.orEmpty()) {
+                    TaskCard(
+                        it,
+                        nav
+                    )
+                }
+            }
         }
     }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun TaskCard(entry: Entry, nav: NavHostController) {
+fun TaskCard(entry: Event, nav: NavHostController) {
     val horizontalGradientBrush = Brush.horizontalGradient(colors = listOf(FringyFlower, Envy))
     val formatter = DateTimeFormatter.ofPattern("MMMM d, HH:mm", Locale.ENGLISH)
 
@@ -73,15 +78,28 @@ fun TaskCard(entry: Entry, nav: NavHostController) {
             .fillMaxWidth()
     ) {
         Box(modifier = Modifier.background(brush = horizontalGradientBrush)) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
                 Column(modifier = Modifier.weight(1.5f)) {
-                    Row(modifier = Modifier.padding(10.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Row(
+                        modifier = Modifier.padding(10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         Text(entry.title, fontSize = 36.sp, modifier = Modifier.weight(1.0f))
                     }
                     if (entry.description != null) {
                         Row(
-                            modifier = Modifier.padding(10.dp), verticalAlignment = Alignment.CenterVertically
-                        ) { Text(entry.description, fontSize = 18.sp, modifier = Modifier.weight(1.0f)) }
+                            modifier = Modifier.padding(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                entry.description,
+                                fontSize = 18.sp,
+                                modifier = Modifier.weight(1.0f)
+                            )
+                        }
                     }
 
                     Row(
@@ -89,7 +107,7 @@ fun TaskCard(entry: Entry, nav: NavHostController) {
                             .padding(5.dp)
                             .fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
-                    ) { Text(entry.date.format(formatter), modifier = Modifier.weight(1.0f)) }
+                    ) { Text(entry.start.format(formatter), modifier = Modifier.weight(1.0f)) }
                     Row(horizontalArrangement = Arrangement.End) {
                         Spacer(modifier = Modifier.padding(5.dp))
                         Card(
@@ -97,9 +115,13 @@ fun TaskCard(entry: Entry, nav: NavHostController) {
                             modifier = Modifier
                                 .background(Color(25))
                                 .padding(bottom = 10.dp)
-                        ) { Text(entry.tag, modifier = Modifier
-                            .weight(1.0f)
-                            .padding(all = 2.dp)) }
+                        ) {
+                            Text(
+                                entry.tags!!, modifier = Modifier
+                                    .weight(1.0f)
+                                    .padding(all = 2.dp)
+                            )
+                        }
                     }
                 }
             }
