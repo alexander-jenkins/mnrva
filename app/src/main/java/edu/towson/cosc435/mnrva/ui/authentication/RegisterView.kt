@@ -76,7 +76,7 @@ fun RegisterView(vm: AuthenticationViewModel) {
 
         // Submit
         Spacer(Modifier.height(8.dp))
-        Button(vm::clearFields) { Text("Register") }
+        Button(vm::register) { Text("Register") }
 
     }
 }

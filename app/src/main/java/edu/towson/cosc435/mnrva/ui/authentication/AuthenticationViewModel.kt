@@ -56,4 +56,19 @@ class AuthenticationViewModel : ViewModel() {
         clearFields()
     }
 
+    // Register a new account
+    fun register() {
+        viewModelScope.launch {
+            // check if passwords match and aren't empty and that there is a name
+            if ((_password.value == _confirmPassword.value && _password.value != "") && _name.value != "") {
+                // register account
+                val token = requests.register(_name.value, _email.value, _password.value)
+                if (token != "") requests.testCredentials(token)
+            } else {
+                setPassword("")
+                setConfirmPassword("")
+            }
+        }
+    }
+
 }

@@ -13,13 +13,13 @@ import okhttp3.RequestBody.Companion.toRequestBody
 // What requests can we make?
 interface IAuthRequests {
     suspend fun login(email: String, password: String): String?
-    suspend fun register(newUser: NewUser)
+    suspend fun register(name: String, email: String, password: String): String
     suspend fun testCredentials(token: String)
 }
 
 class AuthRequests : IAuthRequests {
-    private val client = DependencyGraph.okHttpClient;
-    private val jsonType = "application/json; charset=utf-8".toMediaType();
+    private val client = DependencyGraph.okHttpClient
+    private val jsonType = "application/json; charset=utf-8".toMediaType()
 
     // Login to the server with an email and password
     override suspend fun login(email: String, password: String): String {
@@ -35,8 +35,18 @@ class AuthRequests : IAuthRequests {
     }
 
     // Register a new user
-    override suspend fun register(newUser: NewUser) {
-
+    override suspend fun register(name: String, email: String, password: String): String {
+        return withContext(DependencyGraph.ioDispatcher) {
+            val newUser = NewUser(name, email, password)
+            val gson = Gson()
+            val newUserJson = gson.toJson(newUser)
+            val requestBody = newUserJson.toRequestBody(jsonType)
+            val request = Request.Builder().post(requestBody).url(REGISTER_URL).build()
+            val response = client.newCall(request).execute()
+            val token: String = extractToken(response.headers["set-cookie"].orEmpty())
+            response.close()
+            token
+        }
     }
 
     // Test the current JWT
