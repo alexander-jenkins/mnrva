@@ -18,10 +18,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun LoginView(vm: AuthenticationViewModel) {
-
+fun LoginView(vm: AuthenticationViewModel = viewModel()) {
     // Focus manager to hide keyboard
     val focusManager = LocalFocusManager.current
 
@@ -55,6 +55,9 @@ fun LoginView(vm: AuthenticationViewModel) {
 
         // Submit
         Spacer(Modifier.height(8.dp))
-        Button(vm::bypass) { Text("Login") }
+        Button({
+            focusManager.clearFocus()
+            vm.login()
+        }) { Text("Login") }
     }
 }

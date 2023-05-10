@@ -1,7 +1,6 @@
 package edu.towson.cosc435.mnrva.data
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 
@@ -17,11 +16,10 @@ class SettingsRepository(context: Context) {
     fun setJwt(token: String) {
         _jwt.value = token
         editor.putString(JWT_PREF_KEY, token).apply()
-        Log.d("MNRVA", "JWT changed to {${_jwt.value}}")
     }
 
     // User Name
-    private val _name = mutableStateOf(preferences.getString(USER_NAME, "MNRVA User"))
+    private val _name = mutableStateOf(preferences.getString(USER_NAME, DEFAULT_NAME))
     val name = _name
     fun setName(name: String) {
         _name.value = name
@@ -41,6 +39,6 @@ class SettingsRepository(context: Context) {
         const val REPO_KEY: String = "MNRVA_SETTINGS"
         const val JWT_PREF_KEY: String = "JTW_AUTH_TOKEN"
         const val USER_NAME: String = "USER_NAME"
+        const val DEFAULT_NAME: String = "Friend"
     }
-
 }

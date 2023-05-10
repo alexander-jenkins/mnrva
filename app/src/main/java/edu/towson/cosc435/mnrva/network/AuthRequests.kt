@@ -1,51 +1,68 @@
 package edu.towson.cosc435.mnrva.network
 
-import android.util.Log
 import com.google.gson.Gson
-import kotlinx.coroutines.Dispatchers
+import edu.towson.cosc435.mnrva.DependencyGraph
+import edu.towson.cosc435.mnrva.model.user.ExistingUser
+import edu.towson.cosc435.mnrva.model.user.NewUser
+import edu.towson.cosc435.mnrva.utils.extractToken
 import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
 
+// What requests can we make?
 interface IAuthRequests {
-    suspend fun testAuthenticated(): Boolean
-    suspend fun login(email: String, password: String): Boolean
-    suspend fun register(name: String, email: String, password: String): Boolean
+    suspend fun login(email: String, password: String): String?
+    suspend fun register(newUser: NewUser)
+    suspend fun testCredentials(token: String)
 }
 
 class AuthRequests : IAuthRequests {
+    private val client = DependencyGraph.okHttpClient;
+    private val jsonType = "application/json; charset=utf-8".toMediaType();
 
-    // OkHTTP Client
-    private val client = OkHttpClient()
-
-    // Endpoints
-    companion object Endpoints {
-        private const val BASE_URL: String = "https://mnrva.alexjenkins.dev/api"
-        const val TEST_AUTH: String = "$BASE_URL/auth/test-protected"
-    }
-
-    override suspend fun testAuthenticated(): Boolean {
-        return withContext(Dispatchers.IO) {
-            val request = Request.Builder().get().url(TEST_AUTH).build()
+    // Login to the server with an email and password
+    override suspend fun login(email: String, password: String): String {
+        return withContext(DependencyGraph.ioDispatcher) {
+            val json = "{\"email\":\"$email\", \"password\":\"$password\"}"
+            val body = json.toRequestBody(jsonType)
+            val request = Request.Builder().url(LOGIN_URL).post(body).build()
             val response = client.newCall(request).execute()
-            val responseBody = response.body
-            val status = if (responseBody != null) {
-                val string = responseBody.string()
-                val gson = Gson()
-                gson.fromJson(string, TestAuthResponse::class.java)
-            } else null
-            Log.d(null, "Authenticated: ${status!!.status}")
-            status.status
+            val token: String = extractToken(response.headers["set-cookie"].orEmpty())
+            response.close()
+            token
         }
     }
 
-    override suspend fun login(email: String, password: String): Boolean {
-        TODO("Not yet implemented")
+    // Register a new user
+    override suspend fun register(newUser: NewUser) {
+
     }
 
-    override suspend fun register(name: String, email: String, password: String): Boolean {
-        TODO("Not yet implemented")
+    // Test the current JWT
+    override suspend fun testCredentials(token: String) {
+        withContext(DependencyGraph.ioDispatcher) {
+            val request = Request.Builder().get().url(CHECK_USER).addHeader("Cookie", "jwt=$token").build()
+            val response = client.newCall(request).execute()
+            if (response != null && response.isSuccessful) {
+                val responseBody = response.body
+                if (responseBody != null) {
+                    val jsonString = responseBody.string()
+                    val gson = Gson()
+                    val userData = gson.fromJson(jsonString, ExistingUser::class.java)
+                    DependencyGraph.settingsRepository.setName(userData.name)
+                    DependencyGraph.settingsRepository.setJwt(token)
+                }
+            }
+            response.close()
+        }
+    }
+
+
+    companion object AuthEndpoints {
+        private const val BASE_URL = "https://mnrva.alexjenkins.dev/api"
+        const val LOGIN_URL = "$BASE_URL/auth/login"
+        const val REGISTER_URL = "$BASE_URL/auth/register"
+        const val CHECK_USER = "$BASE_URL/auth/check"
     }
 }
-
-data class TestAuthResponse(val status: Boolean)

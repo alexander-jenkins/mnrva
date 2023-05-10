@@ -6,6 +6,7 @@ import androidx.room.Room
 import edu.towson.cosc435.mnrva.data.EventRepository
 import edu.towson.cosc435.mnrva.data.SettingsRepository
 import edu.towson.cosc435.mnrva.data.room.MnrvaDatabase
+import edu.towson.cosc435.mnrva.network.AuthRequests
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import okhttp3.Cache
@@ -22,6 +23,11 @@ object DependencyGraph {
 
     // Settings
     lateinit var settingsRepository: SettingsRepository
+
+    // Auth Requests
+    val authRequests by lazy {
+        AuthRequests()
+    }
 
     // Repository
     val eventRepository by lazy {

@@ -17,9 +17,7 @@ import edu.towson.cosc435.mnrva.ui.nav.Routes
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Home() {
-    val nav = rememberNavController()
-
+fun Home(nav: NavHostController = rememberNavController()) {
     // Scaffolding for the app
     Scaffold(bottomBar = { BottomBar(nav) }) {
         Box(Modifier.padding(it)) {

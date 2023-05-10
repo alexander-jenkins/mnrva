@@ -4,12 +4,12 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import edu.towson.cosc435.mnrva.DependencyGraph
-import edu.towson.cosc435.mnrva.data.SettingsRepository
+import kotlinx.coroutines.launch
 
 class AuthenticationViewModel : ViewModel() {
-    private val settingsRepository: SettingsRepository = DependencyGraph.settingsRepository
-    private val setToken = settingsRepository::setJwt
+    private val requests = DependencyGraph.authRequests
 
     // User's name
     private val _name: MutableState<String> = mutableStateOf("")
@@ -40,12 +40,20 @@ class AuthenticationViewModel : ViewModel() {
     }
 
     // login
-    fun bypass() {
+    fun clearFields() {
         setName("")
         setEmail("")
         setPassword("")
         setConfirmPassword("")
-        settingsRepository.setJwt("{TESTING_TOKEN}")
+    }
+
+    // Get JWT from API
+    fun login() {
+        viewModelScope.launch {
+            val token = requests.login(_email.value, _password.value)
+            if (token != "") requests.testCredentials(token)
+        }
+        clearFields()
     }
 
 }
