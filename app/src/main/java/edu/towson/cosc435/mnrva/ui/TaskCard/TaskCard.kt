@@ -23,50 +23,60 @@ import java.util.*
 @Composable
 fun TaskCard(event: Event) {
     val horizontalGradientBrush = Brush.horizontalGradient(colors = listOf(FringyFlower, Envy))
-
-    val formatter = DateTimeFormatter.ofPattern("MMMM d, HH:mm", Locale.ENGLISH)
+    val formatter = DateTimeFormatter.ofPattern("EEEE 'at' h:mm a")
     var showDialog by remember { mutableStateOf(false) }
 
-    EditDialogBox(event, showDialog, onDialogueExit = {showDialog = false})
+    EditDialogBox(event, showDialog, onDialogueExit = { showDialog = false })
 
     Card(
         shape = RoundedCornerShape(15.dp),
         elevation = 16.dp,
-        onClick = {
-            showDialog = true
-
-        },
+        onClick = { showDialog = true },
         modifier = Modifier
-            .padding(start = 16.dp, end = 16.dp, top = 5.dp, bottom = 5.dp)
+            .padding(8.dp)
             .fillMaxWidth()
+            .defaultMinSize(minHeight = 120.dp)
     ) {
-        Box(modifier = Modifier.background(brush = horizontalGradientBrush)) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly) {
-                Column(modifier = Modifier.weight(1.5f)) {
-                    Row(modifier = Modifier.padding(10.dp), verticalAlignment = Alignment.CenterVertically) {
-                        Text(event.title, fontSize = 36.sp, modifier = Modifier.weight(1.0f))
+        Box(modifier = Modifier
+            .background(brush = horizontalGradientBrush)
+            .padding(8.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Column {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Start
+                    ) { Text(event.title, fontSize = 36.sp) }
+                    if (event.description != null && event.description != "") Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Start
+                    ) {
+                        Text(
+                            event.description,
+                            fontSize = 18.sp,
+                        )
                     }
                     Row(
-                        modifier = Modifier.padding(10.dp), verticalAlignment = Alignment.CenterVertically
-                    ) { Text(event.description.orEmpty(), fontSize = 18.sp, modifier = Modifier.weight(1.0f)) }
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Start
+                    ) { Text(event.start.format(formatter)) }
+                    if (event.tags != null && event.tags != "") Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        event.tags.split(" ").map {
+                            Card(
+                                shape = RoundedCornerShape(5.dp),
+                                modifier = Modifier
+                                    .background(Color(25))
+                                    .padding(4.dp)
+                            ) { Text(it) }
+                        }
+                    }
 
-                    Row(
-                        modifier = Modifier
-                            .padding(5.dp)
-                            .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) { Text(event.start.format(formatter), modifier = Modifier.weight(1.0f)) }
-                    Row(horizontalArrangement = Arrangement.End) {
-                        Spacer(modifier = Modifier.padding(5.dp))
-                        Card(
-                            shape = RoundedCornerShape(5.dp),
-                            modifier = Modifier
-                                .background(Color(25))
-                                .padding(bottom = 10.dp)
-                        ) { Text(event.tags.orEmpty(), modifier = Modifier
-                            .weight(1.0f)
-                            .padding(all = 2.dp)) }
-                    }
+
                 }
             }
         }

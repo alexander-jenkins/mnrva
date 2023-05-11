@@ -1,6 +1,7 @@
 package edu.towson.cosc435.mnrva.ui.settings
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -32,7 +33,12 @@ fun SettingsView(vm: SettingsViewModel = viewModel()) {
     Column {
 
         // Title
-        Row(modifier = Modifier.padding(start = 8.dp, top = 8.dp, bottom = 16.dp)) {
+        Row(
+            modifier = Modifier
+                .padding(12.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
             Text(
                 stringResource(R.string.settingsHeader),
                 fontSize = 32.sp,
