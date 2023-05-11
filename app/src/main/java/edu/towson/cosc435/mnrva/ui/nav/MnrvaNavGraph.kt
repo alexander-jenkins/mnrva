@@ -19,7 +19,7 @@ fun MnrvaNavGraph(navController: NavHostController = rememberNavController()) {
     NavHost(navController = navController, startDestination = Routes.HomeView.route) {
 
         // Schedule
-        composable(Routes.ScheduleView.route) { ScheduleView(navController) }
+        composable(Routes.ScheduleView.route) { ScheduleView() }
 
         // New Entry
         composable(Routes.NewEntryView.route) { NewEntryView() }

@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.data
+package edu.towson.cosc435.mnrva.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

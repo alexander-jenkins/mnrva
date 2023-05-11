@@ -11,20 +11,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import edu.towson.cosc435.mnrva.data.Event
-import edu.towson.cosc435.mnrva.ui.home.TaskCard
+import edu.towson.cosc435.mnrva.model.Event
+import edu.towson.cosc435.mnrva.ui.TaskCard
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun ScheduleView(nav: NavHostController) {
+fun ScheduleView() {
     //TODO -- Get entry list from main and replace this test code
     val entries: MutableList<Event> = mutableListOf()
     for (x in 1..5) {
         entries.add(
             Event(
-                "testid", "me", "title", null, LocalDateTime.now(), null, ""
+                id = "testid",
+                owner = "me",
+                title = "title",
+                description = null,
+                start = LocalDateTime.now(),
+                end = null,
+                tags = ""
             )
 
         )
@@ -53,7 +58,7 @@ fun ScheduleView(nav: NavHostController) {
             }
 
             //Draw the task card
-            TaskCard(entry, nav)
+            TaskCard(entry)
         }
     }
 

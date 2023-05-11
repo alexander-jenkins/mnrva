@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import edu.towson.cosc435.mnrva.data.room.EventDao
+import edu.towson.cosc435.mnrva.model.Event
 
 class EventRepository(private val eventDao: EventDao) {
 

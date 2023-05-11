@@ -1,34 +1,29 @@
 package edu.towson.cosc435.mnrva.ui.calenderView
 
+import android.content.res.Configuration
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.himanshoe.kalendar.Kalendar
 import com.himanshoe.kalendar.model.KalendarType
-import edu.towson.cosc435.mnrva.data.Event
-import edu.towson.cosc435.mnrva.ui.home.TaskCard
+import edu.towson.cosc435.mnrva.model.Event
+import edu.towson.cosc435.mnrva.ui.EntryList.EntryList
 import kotlinx.datetime.toJavaLocalDate
-import java.time.LocalDate
+import kotlinx.datetime.toKotlinLocalDate
 import java.time.LocalDateTime
 
-
 @Composable
-fun Calendar(nav: NavHostController) {
+fun Calendar(nav: NavHostController, vm: CalendarViewModel = viewModel()) {
 
-    val entry = Event(
+    val event = Event(
         id = "0",
         owner = "me",
         title = "Job Interview",
@@ -38,34 +33,52 @@ fun Calendar(nav: NavHostController) {
         tags = "my tag"
     )
 
-    val entries = listOf(entry, entry, entry, entry, entry)
+    val entries = listOf(event, event, event, event, event)
 
-    val myEntriesToShow: List<Event> = emptyList()
-    var entriesToShow by rememberSaveable { mutableStateOf(myEntriesToShow) }
+    val configuration = LocalConfiguration.current
+    when (configuration.orientation) {
+        //PORTRAIT MODE
+        Configuration.ORIENTATION_PORTRAIT -> {
+            Column {
+                Kalendar(
+                    onCurrentDayClick = { kDay, kEvents ->
+                        vm.selectedDay = kDay.localDate.toJavaLocalDate()
+                        vm.entriesToShow =
+                            vm.entries.filter { event -> event.start.toLocalDate() == vm.selectedDay }
+                        println("${kDay.localDate} has the following events: $vm.entriesToShow")
+                    },
+                    kalendarType = KalendarType.Firey,
+                    kalendarEvents = emptyList(),
+                    takeMeToDate = vm.selectedDay?.toKotlinLocalDate()
+                )
+                EntryList(vm.entriesToShow, vm.selectedDay)
+            }
+        }
 
-    //Note that selectedDay cant utilize 'rememberSavable' because it'll crash when rotating
-    //the screen.  --TODO fix this problem?
-    var selectedDay: LocalDate?
+        else -> {//LANDSCAPE MODE
+            BoxWithConstraints {
+                val boxWithConstraintsScope = this
+                Row(
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    Kalendar(
+                        modifier = Modifier
+                            .width(boxWithConstraintsScope.maxWidth / 2)
+                            .height(boxWithConstraintsScope.maxHeight * 0.9f),
+                        onCurrentDayClick = { kDay, kEvents ->
 
-    Column {
-        Kalendar(
-            onCurrentDayClick = { kDay, kEvents ->
-                println("${kDay.localDate} has the following events: $kEvents")
-                selectedDay = kDay.localDate.toJavaLocalDate()
-                entriesToShow = entries.filter { event -> event.start.toLocalDate() == selectedDay }
-            }, kalendarType = KalendarType.Firey, kalendarEvents = emptyList()
-
-        )
-        if (entriesToShow.isNotEmpty()) {
-            Text(
-                text = "Scheduled Events",
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight(500),
-            )
-            LazyColumn(
-                contentPadding = PaddingValues(bottom = 64.dp)
-            ) { items(entriesToShow) { TaskCard(it, nav) } }
+                            vm.selectedDay = kDay.localDate.toJavaLocalDate()
+                            vm.entriesToShow =
+                                vm.entries.filter { event -> event.start.toLocalDate() == vm.selectedDay }
+                            println("${kDay.localDate} has the following events: $vm.entriesToShow")
+                        },
+                        kalendarType = KalendarType.Firey,
+                        kalendarEvents = emptyList(),
+                        takeMeToDate = vm.selectedDay?.toKotlinLocalDate()
+                    )
+                    EntryList(vm.entriesToShow, vm.selectedDay)
+                }
+            }
         }
     }
 }
