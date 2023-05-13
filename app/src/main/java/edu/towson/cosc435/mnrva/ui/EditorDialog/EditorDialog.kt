@@ -2,6 +2,7 @@ package edu.towson.cosc435.mnrva.ui
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.util.Log
 import android.widget.DatePicker
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -25,13 +26,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.lifecycle.viewmodel.compose.viewModel
+import edu.towson.cosc435.mnrva.DependencyGraph
 import edu.towson.cosc435.mnrva.model.Event
+import edu.towson.cosc435.mnrva.ui.EditorDialog.EditorDialogViewModel
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun EditDialogBox(entry: Event, showDialog: Boolean, onDialogueExit: () -> Unit){
+fun EditDialogBox(entry: Event, showDialog: Boolean, onDialogueExit: () -> Unit, vm: EditorDialogViewModel = viewModel()){
 
     var tempTitle by remember { mutableStateOf(entry.title) }
     var tempDate by remember { mutableStateOf(entry.start) }
@@ -141,6 +145,19 @@ fun EditDialogBox(entry: Event, showDialog: Boolean, onDialogueExit: () -> Unit)
                     //Confirmation Button
                     Button(onClick = {
                         onDialogueExit()
+                        Log.d("MNRVA", "Edit event: ${entry.id}")
+
+                        val theUpdate = Event(
+                            id = entry.id,
+                            owner = "USER",
+                            title = tempTitle,
+                            description = tempDescription,
+                            start = tempStartTime,
+                            end = tempEndTime,
+                            tags = tempTag,
+                        )
+                        vm.updateEvent(theUpdate)
+
                         //todo Update entry in db here
                         //Should be a coroutine action as it is updating the database; this should also trigger
                         //refreshes of components that use Entries

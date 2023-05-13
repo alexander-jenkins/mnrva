@@ -26,4 +26,8 @@ class EventRepository(private val eventDao: EventDao) {
     suspend fun clearEvents() {
         eventDao.clearEvents()
     }
+
+    suspend fun updateEvent(event: Event) {
+        eventDao.update(event)
+    }
 }
