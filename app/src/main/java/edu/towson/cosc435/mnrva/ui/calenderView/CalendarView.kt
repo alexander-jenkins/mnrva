@@ -1,37 +1,45 @@
 package edu.towson.cosc435.mnrva.ui.calenderView
 
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.himanshoe.kalendar.Kalendar
 import com.himanshoe.kalendar.model.KalendarType
+import edu.towson.cosc435.mnrva.model.Event
 import edu.towson.cosc435.mnrva.ui.EntryList.EntryList
+import edu.towson.cosc435.mnrva.ui.EventViewModel
 import kotlinx.datetime.toJavaLocalDate
 import kotlinx.datetime.toKotlinLocalDate
+import java.time.LocalDate
 
 @Composable
-fun Calendar(vm: CalendarViewModel = viewModel()) {
+fun Calendar(eventVM: EventViewModel = viewModel()) {
     val orientation = LocalConfiguration.current.orientation
+
+    val entries: List<Event> by eventVM.allEvents
+    var entriesToShow: List<Event> by remember{mutableStateOf(emptyList())}
+    var selectedDay by remember {mutableStateOf(LocalDate.now())}
+    entriesToShow = entries.filter { event -> event.start.toLocalDate().toKotlinLocalDate() == selectedDay.toKotlinLocalDate() }
 
     if (orientation == Configuration.ORIENTATION_PORTRAIT) Column {
         Kalendar(
             onCurrentDayClick = { kDay, kEvents ->
-                vm.selectedDay = kDay.localDate.toJavaLocalDate()
-                vm.entriesToShow =
-                    vm.entries.filter { event -> event.start.toLocalDate() == vm.selectedDay }
-                println("${kDay.localDate} has the following events: $vm.entriesToShow")
+                selectedDay = kDay.localDate.toJavaLocalDate()
+                entriesToShow =
+                    entries.filter { event -> event.start.toLocalDate().toKotlinLocalDate() == selectedDay.toKotlinLocalDate() }
             },
             kalendarType = KalendarType.Firey,
             kalendarEvents = emptyList(),
-            takeMeToDate = vm.selectedDay.toKotlinLocalDate()
+            takeMeToDate = selectedDay.toKotlinLocalDate()
         )
-        EntryList(vm.entriesToShow, vm.selectedDay)
+        EntryList(entriesToShow, selectedDay)
     }
     else if ((orientation == Configuration.ORIENTATION_LANDSCAPE) || (orientation == Configuration.ORIENTATION_UNDEFINED)) Row {
         Row(
@@ -41,18 +49,17 @@ fun Calendar(vm: CalendarViewModel = viewModel()) {
         ) {
             Kalendar(
                 onCurrentDayClick = { kDay, kEvents ->
-                    vm.selectedDay = kDay.localDate.toJavaLocalDate()
-                    vm.entriesToShow =
-                        vm.entries.filter { event -> event.start.toLocalDate() == vm.selectedDay }
-                    println("${kDay.localDate} has the following events: $vm.entriesToShow")
+                    selectedDay = kDay.localDate.toJavaLocalDate()
+                    entriesToShow =
+                        entries.filter { event -> event.start.toLocalDate().toKotlinLocalDate() == selectedDay.toKotlinLocalDate() }
                 },
                 kalendarType = KalendarType.Firey,
                 kalendarEvents = emptyList(),
-                takeMeToDate = vm.selectedDay.toKotlinLocalDate()
+                takeMeToDate = selectedDay.toKotlinLocalDate()
             )
         }
         Row {
-            EntryList(vm.entriesToShow, vm.selectedDay)
+            EntryList(entriesToShow, selectedDay)
 
         }
     }

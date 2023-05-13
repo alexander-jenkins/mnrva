@@ -9,7 +9,5 @@ import java.time.LocalDate
 
 class CalendarViewModel : ViewModel(){
 
-    var entries by mutableStateOf(emptyList<Event>())
-    var entriesToShow: List<Event> by mutableStateOf(emptyList())
-    var selectedDay: LocalDate by mutableStateOf(LocalDate.now())
+    
 }
