@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -44,6 +46,7 @@ fun EditDialogBox(entry: Event, showDialog: Boolean, onDialogueExit: () -> Unit,
     var tempDescription by remember { mutableStateOf(entry.description) }
     var tempTag by remember { mutableStateOf(entry.tags) }
 
+    val scrollState = rememberScrollState()
 
     val format = DateTimeFormatter.ofPattern("yyyy/M/d")
     val timeFormat = DateTimeFormatter.ofPattern("h:mm a")
@@ -83,7 +86,8 @@ fun EditDialogBox(entry: Event, showDialog: Boolean, onDialogueExit: () -> Unit,
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(0.90f)
-                    .background(color = MaterialTheme.colors.background),
+                    .background(color = MaterialTheme.colors.background)
+                    .verticalScroll(scrollState),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
