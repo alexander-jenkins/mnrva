@@ -5,18 +5,8 @@ import android.app.TimePickerDialog
 import android.util.Log
 import android.widget.DatePicker
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -146,27 +137,47 @@ fun EditDialogBox(entry: Event, showDialog: Boolean, onDialogueExit: () -> Unit,
 
                     Spacer(modifier = Modifier.padding(all = 15.dp))
 
-                    //Confirmation Button
-                    Button(onClick = {
-                        onDialogueExit()
-                        Log.d("MNRVA", "Edit event: ${entry.id}")
 
-                        val theUpdate = Event(
-                            id = entry.id,
-                            owner = "USER",
-                            title = tempTitle,
-                            description = tempDescription,
-                            start = tempStartTime,
-                            end = tempEndTime,
-                            tags = tempTag,
-                        )
-                        vm.updateEvent(theUpdate)
+                    Row(verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center) {
+                        //Confirmation Button
+                        Button(onClick = {
+                            onDialogueExit()
+                            Log.d("MNRVA", "Edit event: ${entry.id}")
 
-                        //todo Update entry in db here
-                        //Should be a coroutine action as it is updating the database; this should also trigger
-                        //refreshes of components that use Entries
-                    }) {
-                        Text(text = "Confirm Changes")
+                            val theUpdate = Event(
+                                id = entry.id,
+                                owner = "USER",
+                                title = tempTitle,
+                                description = tempDescription,
+                                start = tempStartTime,
+                                end = tempEndTime,
+                                tags = tempTag,
+                            )
+                            vm.updateEvent(theUpdate)
+
+                            //todo Update entry in db here
+                            //Should be a coroutine action as it is updating the database; this should also trigger
+                            //refreshes of components that use Entries
+                        }) {
+                            Text(text = "Confirm")
+                        }
+
+                        Spacer(modifier = Modifier.width(20.dp))
+
+                        //Delete Button
+                        Button(
+                            onClick = {
+                                onDialogueExit()
+                                Log.d("MNRVA", "Delete event: ${entry.id}")
+                                vm.deleteEvent(entry)
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = Color.Red
+                            )
+                        ) {
+                            Text(text = "Delete")
+                        }
                     }
                 }
             }

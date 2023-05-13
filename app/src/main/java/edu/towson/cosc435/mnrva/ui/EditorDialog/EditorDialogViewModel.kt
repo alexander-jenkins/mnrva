@@ -14,6 +14,13 @@ class EditorDialogViewModel: ViewModel() {
         viewModelScope.launch {
             eventRepository.updateEvent(event)
         }
+
+
     }
 
+    fun deleteEvent(event: Event) {
+        viewModelScope.launch {
+            eventRepository.deleteEvent(event)
+        }
+    }
 }
