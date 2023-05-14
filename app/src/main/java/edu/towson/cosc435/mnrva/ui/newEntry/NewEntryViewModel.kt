@@ -1,5 +1,7 @@
 package edu.towson.cosc435.mnrva.ui.newEntry
 
+import android.widget.DatePicker
+import android.widget.TimePicker
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -28,14 +30,38 @@ class NewEntryViewModel : ViewModel() {
 
     private val _start = mutableStateOf(LocalDateTime.now())
     val start = _start
-    fun setStart(start: LocalDateTime) {
+    private fun setStart(start: LocalDateTime) {
         _start.value = start
+    }
+
+    fun setStart(view: DatePicker, year: Int, month: Int, day: Int) {
+        setStart(LocalDateTime.of(year, month + 1, day, _start.value.hour, _start.value.minute))
+    }
+
+    fun setStart(view: TimePicker?, hour: Int, minute: Int) {
+        setStart(
+            LocalDateTime.of(
+                _start.value.year, _start.value.month, _start.value.dayOfMonth, hour, minute
+            )
+        )
     }
 
     private val _end = mutableStateOf(LocalDateTime.now())
     val end = _end
-    fun setEnd(end: LocalDateTime) {
+    private fun setEnd(end: LocalDateTime) {
         _end.value = end
+    }
+
+    fun setEnd(view: DatePicker, year: Int, month: Int, day: Int) {
+        setEnd(LocalDateTime.of(year, month + 1, day, _end.value.hour, _end.value.minute))
+    }
+
+    fun setEnd(view: TimePicker?, hour: Int, minute: Int) {
+        setEnd(
+            LocalDateTime.of(
+                _start.value.year, _start.value.month, _start.value.dayOfMonth, hour, minute
+            )
+        )
     }
 
     // should show the pickers

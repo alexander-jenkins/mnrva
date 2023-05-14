@@ -3,7 +3,6 @@ package edu.towson.cosc435.mnrva.ui.newEntry
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
-import android.widget.DatePicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
@@ -32,72 +31,39 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import edu.towson.cosc435.mnrva.MnrvaApplication
 import edu.towson.cosc435.mnrva.R
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 
 @Composable
 fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
+    val localContext = LocalContext.current
+    val calendarInstance = Calendar.getInstance()
+
+    val dateFormatter = DateTimeFormatter.ofPattern("yyyy/M/d")
     val date: MutableState<LocalDate> = remember { mutableStateOf(LocalDate.now()) }
-    val endTime: MutableState<String> = remember { mutableStateOf("") }
-
-    val mContext = LocalContext.current
-    val mCalendar = Calendar.getInstance()
-
-    val format = DateTimeFormatter.ofPattern("yyyy/M/d")
-    val timeFormat = DateTimeFormatter.ofPattern("h:mm a")
-
-    var tempDate = LocalDate.now()
-
 
     // finds current time/date
-    val mYear = mCalendar.get(Calendar.YEAR)
-    val mMonth = mCalendar.get(Calendar.MONTH)
-    val mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
-    val mHour = mCalendar[Calendar.HOUR_OF_DAY]
-    val mMinute = mCalendar[Calendar.MINUTE]
+    val mYear = calendarInstance.get(Calendar.YEAR)
+    val mMonth = calendarInstance.get(Calendar.MONTH)
+    val mDay = calendarInstance.get(Calendar.DAY_OF_MONTH)
+    val mHour = calendarInstance[Calendar.HOUR_OF_DAY]
+    val mMinute = calendarInstance[Calendar.MINUTE]
 
-    val context = LocalContext.current
 
-    mCalendar.time = Date()
+    calendarInstance.time = Date()
 
     //declares date picker
-    val mDatePickerDialog = DatePickerDialog(
-        mContext, { _: DatePicker, year: Int, month: Int, day: Int ->
-            tempDate = LocalDate.parse("$year/${month + 1}/$day", format)
-        }, mYear, mMonth, mDay
-    )
+    val datePicker = DatePickerDialog(localContext, vm::setStart, mYear, mMonth, mDay)
 
     //declares start time picker
     val sTimePickerDialog = TimePickerDialog(
-        mContext, { _, mHour: Int, mMinute: Int ->
-            vm.setStart(
-                LocalDateTime.of(
-                    tempDate.year,
-                    tempDate.month,
-                    tempDate.dayOfMonth,
-                    mHour,
-                    mMinute
-                )
-            )
-        }, mHour, mMinute, false
+        localContext, vm::setStart, mHour, mMinute, false
     )
 
     //declares end time picker
     val eTimePickerDialog = TimePickerDialog(
-        mContext, { _, mHour: Int, mMinute: Int ->
-            vm.setEnd(
-                LocalDateTime.of(
-                    tempDate.year,
-                    tempDate.month,
-                    tempDate.dayOfMonth,
-                    mHour,
-                    mMinute
-                )
-            )
-            //endTime.value = "$mHour:$mMinute"
-        }, mHour, mMinute, false
+        localContext, vm::setEnd, mHour, mMinute, false
     )
 
     Column(
@@ -126,7 +92,7 @@ fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
         ) {
             Button(
                 modifier = Modifier.width(130.dp),
-                onClick = mDatePickerDialog::show,
+                onClick = datePicker::show,
                 contentPadding = PaddingValues(
                     start = 20.dp, top = 12.dp, end = 20.dp, bottom = 12.dp
                 )
@@ -136,7 +102,7 @@ fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
                 )
             }
 
-            Text(text = "    Date: ${date.value}", fontSize = 15.sp)
+            Text(text = "    Date: ${vm.start.value}", fontSize = 15.sp)
         }
 
         //Checkboxes for showing start and end time
@@ -208,12 +174,10 @@ fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
 
         //create button
         Button(
-            modifier = Modifier.width(130.dp),
-            onClick = {
+            modifier = Modifier.width(130.dp), onClick = {
                 vm.createEvent()
-                showNotification(context)
-            },
-            contentPadding = PaddingValues(
+                showNotification(localContext)
+            }, contentPadding = PaddingValues(
                 top = 12.dp, bottom = 12.dp
             )
         ) {
@@ -227,11 +191,9 @@ fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
 
 private fun showNotification(ctx: Context) {
     val notificationManager = MnrvaApplication.notificationManager
-    val notification = NotificationCompat.Builder(ctx, MnrvaApplication.channel_id)
-        .setContentText("Hello text")
-        .setContentTitle("hello title")
-        .setSmallIcon(R.drawable.notification_settings)
-        .build()
+    val notification =
+        NotificationCompat.Builder(ctx, MnrvaApplication.channel_id).setContentText("Hello text")
+            .setContentTitle("hello title").setSmallIcon(R.drawable.notification_settings).build()
     notificationManager.notify(1, notification)
 }
 
