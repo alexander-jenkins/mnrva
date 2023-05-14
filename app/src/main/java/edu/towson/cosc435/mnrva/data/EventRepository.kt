@@ -7,16 +7,29 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import edu.towson.cosc435.mnrva.data.room.EventDao
 import edu.towson.cosc435.mnrva.model.Event
+import java.time.LocalDateTime
 
 class EventRepository(private val eventDao: EventDao) {
 
     private val _events: MutableState<List<Event>> = mutableStateOf(listOf())
     val events: State<List<Event>> = _events
 
+    private val _todayEvents: MutableState<List<Event>> = mutableStateOf(listOf())
+    val todayEvents: State<List<Event>> = _todayEvents
+
+    private val _nextThree: MutableState<List<Event>> = mutableStateOf(listOf())
+    val nextThree: State<List<Event>> = _nextThree
+
     private val liveEventList: LiveData<List<Event>> = eventDao.getEvents().asLiveData()
 
     init {
-        liveEventList.observeForever { _events.value = it }
+        liveEventList.observeForever { allEvents ->
+            _events.value = allEvents.sortedBy { events -> events.start }
+            _todayEvents.value = allEvents.sortedBy { events -> events.start }
+                .filter { sortedEvent -> LocalDateTime.now().dayOfYear == sortedEvent.start.dayOfYear && sortedEvent.start.year == LocalDateTime.now().year }
+            _nextThree.value = allEvents.sortedBy { events -> events.start }
+                .filter { sortedEvent -> sortedEvent.start.isAfter(LocalDateTime.now()) }.take(3)
+        }
     }
 
     suspend fun addEvent(event: Event) {

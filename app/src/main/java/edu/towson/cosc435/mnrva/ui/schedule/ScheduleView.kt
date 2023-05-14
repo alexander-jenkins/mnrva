@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -22,7 +21,7 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun ScheduleView(vm: EventViewModel = viewModel()) {
-    val eventsList: List<Event> by vm.allEvents
+    val eventsList: List<Event> = vm.todayEvents
 
     val format: DateTimeFormatter = DateTimeFormatter.ofPattern("h a")
     var lastSeenHour: Int? = null

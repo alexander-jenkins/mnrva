@@ -73,7 +73,7 @@ fun TaskCard(event: Event) {
                                 modifier = Modifier
                                     .background(Color(25))
                                     .padding(4.dp)
-                            ) { Text(it) }
+                            ) { Text(it, Modifier.padding(1.dp)) }
                         }
                     }
 

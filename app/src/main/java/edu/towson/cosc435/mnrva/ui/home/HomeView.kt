@@ -21,7 +21,7 @@ import edu.towson.cosc435.mnrva.ui.taskCard.TaskCard
 
 @Composable
 fun HomeView(vm: EventViewModel = viewModel()) {
-    val eventsList: List<Event> by vm.allEvents
+    val eventsList: List<Event> = vm.nextThree
     val name by DependencyGraph.settingsRepository.name
     Column {
         Column(

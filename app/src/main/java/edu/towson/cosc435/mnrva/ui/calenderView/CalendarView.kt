@@ -1,12 +1,15 @@
 package edu.towson.cosc435.mnrva.ui.calenderView
 
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -23,8 +26,8 @@ import java.time.LocalDate
 fun Calendar(eventVM: EventViewModel = viewModel()) {
     val orientation = LocalConfiguration.current.orientation
 
-    val entries: List<Event> by eventVM.allEvents
-    var entriesToShow: List<Event> by remember{mutableStateOf(emptyList())}
+    val entries = eventVM.allEvents
+    var entriesToShow: List<Event> by remember { mutableStateOf(emptyList()) }
     var selectedDay by remember {mutableStateOf(LocalDate.now())}
     entriesToShow = entries.filter { event -> event.start.toLocalDate().toKotlinLocalDate() == selectedDay.toKotlinLocalDate() }
 
