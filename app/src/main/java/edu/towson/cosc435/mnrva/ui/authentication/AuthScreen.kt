@@ -11,6 +11,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -30,7 +32,7 @@ fun AuthScreen(vm: AuthenticationViewModel = viewModel()) {
 
 @Composable
 fun AuthBottomBar(nav: NavHostController) {
-    BottomNavigation {
+    BottomNavigation(backgroundColor = Color(0xFF2F3B52), elevation = 20.dp) {
         BottomNavigationItem(selected = false,
             icon = { Icon(Icons.Default.AccountCircle, "") },
             label = { Text("Login") },

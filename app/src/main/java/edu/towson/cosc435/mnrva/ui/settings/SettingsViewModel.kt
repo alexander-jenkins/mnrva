@@ -9,9 +9,16 @@ class SettingsViewModel : ViewModel() {
     private val settingsRepository = DependencyGraph.settingsRepository
     private val eventRepository = DependencyGraph.eventRepository
 
+    private val _useNotifications = settingsRepository.useNotifications
+    val useNotifications = _useNotifications
+    fun setUseNotifications(status: Boolean) {
+        settingsRepository.setUseNotifications(status)
+    }
+
     fun logout() = viewModelScope.launch {
         settingsRepository.setName("")
         settingsRepository.setJwt("")
+        setUseNotifications(true)
         eventRepository.clearEvents()
     }
 

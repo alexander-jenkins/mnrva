@@ -17,7 +17,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import edu.towson.cosc435.mnrva.DependencyGraph
 import edu.towson.cosc435.mnrva.model.Event
 import edu.towson.cosc435.mnrva.ui.EventViewModel
-import edu.towson.cosc435.mnrva.ui.TaskCard
+import edu.towson.cosc435.mnrva.ui.taskCard.TaskCard
 
 @Composable
 fun HomeView(vm: EventViewModel = viewModel()) {

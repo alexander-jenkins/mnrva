@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.ui
+package edu.towson.cosc435.mnrva.ui.taskCard
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import edu.towson.cosc435.mnrva.model.Event
+import edu.towson.cosc435.mnrva.ui.EditDialogBox
 import edu.towson.cosc435.mnrva.ui.theme.Envy
 import edu.towson.cosc435.mnrva.ui.theme.FringyFlower
 import java.time.format.DateTimeFormatter
