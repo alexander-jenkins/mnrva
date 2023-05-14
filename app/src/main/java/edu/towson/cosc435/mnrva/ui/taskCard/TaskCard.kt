@@ -24,7 +24,8 @@ import java.util.*
 @Composable
 fun TaskCard(event: Event) {
     val horizontalGradientBrush = Brush.horizontalGradient(colors = listOf(FringyFlower, Envy))
-    val formatter = DateTimeFormatter.ofPattern("EEEE 'at' h:mm a")
+    val dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE h:mm a")
+    val timeFormatter = DateTimeFormatter.ofPattern("h:mm a")
     var showDialog by remember { mutableStateOf(false) }
 
     EditDialogBox(event, showDialog, onDialogueExit = { showDialog = false })
@@ -38,9 +39,11 @@ fun TaskCard(event: Event) {
             .fillMaxWidth()
             .defaultMinSize(minHeight = 120.dp)
     ) {
-        Box(modifier = Modifier
-            .background(brush = horizontalGradientBrush)
-            .padding(8.dp)) {
+        Box(
+            modifier = Modifier
+                .background(brush = horizontalGradientBrush)
+                .padding(8.dp)
+        ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -62,10 +65,16 @@ fun TaskCard(event: Event) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.Start
-                    ) { Text(event.start.format(formatter)) }
+                    ) {
+                        val time = if (event.end != null) Text(
+                            "${event.start.format(dateTimeFormatter)} - ${
+                                event.end.format(timeFormatter)
+                            }"
+                        ) else Text(event.start.format(dateTimeFormatter))
+
+                    }
                     if (event.tags != null && event.tags != "") Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End
+                        modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End
                     ) {
                         event.tags.split(" ").map {
                             Card(

@@ -27,8 +27,11 @@ class EventRepository(private val eventDao: EventDao) {
             _events.value = allEvents.sortedBy { events -> events.start }
             _todayEvents.value = allEvents.sortedBy { events -> events.start }
                 .filter { sortedEvent -> LocalDateTime.now().dayOfYear == sortedEvent.start.dayOfYear && sortedEvent.start.year == LocalDateTime.now().year }
-            _nextThree.value = allEvents.sortedBy { events -> events.start }
-                .filter { sortedEvent -> sortedEvent.start.isAfter(LocalDateTime.now()) }.take(3)
+            _nextThree.value = allEvents.sortedBy { events -> events.start }.filter { sortedEvent ->
+                sortedEvent.start.isAfter(LocalDateTime.now()) || (LocalDateTime.now()
+                    .isBefore(sortedEvent.end)) && LocalDateTime.now()
+                    .isAfter(sortedEvent.start)
+            }.take(3)
         }
     }
 
