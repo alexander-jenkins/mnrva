@@ -27,16 +27,26 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 
 @Composable
 fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
-    val date: MutableState<String> = remember { mutableStateOf("") }
+    val date: MutableState<LocalDate> = remember { mutableStateOf(LocalDate.now()) }
     val endTime: MutableState<String> = remember { mutableStateOf("") }
 
     val mContext = LocalContext.current
     val mCalendar = Calendar.getInstance()
+
+    val format = DateTimeFormatter.ofPattern("yyyy/M/d")
+    val timeFormat = DateTimeFormatter.ofPattern("h:mm a")
+
+    var tempDate = LocalDate.now();
+
+
 
     // finds current time/date
     val mYear = mCalendar.get(Calendar.YEAR)
@@ -49,22 +59,23 @@ fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
 
     //declares date picker
     val mDatePickerDialog = DatePickerDialog(
-        mContext, { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
-            date.value = "$mDayOfMonth/${mMonth + 1}/$mYear"
+        mContext, { _: DatePicker, year: Int, month: Int, day: Int ->
+            tempDate = LocalDate.parse("$year/${month+1}/$day", format)
         }, mYear, mMonth, mDay
     )
 
     //declares start time picker
     val sTimePickerDialog = TimePickerDialog(
         mContext, { _, mHour: Int, mMinute: Int ->
-            vm.setStart("$mHour:$mMinute")
+            vm.setStart(LocalDateTime.of(tempDate.year,tempDate.month,tempDate.dayOfMonth,mHour, mMinute))
         }, mHour, mMinute, false
     )
 
     //declares end time picker
     val eTimePickerDialog = TimePickerDialog(
         mContext, { _, mHour: Int, mMinute: Int ->
-            endTime.value = "$mHour:$mMinute"
+            vm.setEnd(LocalDateTime.of(tempDate.year,tempDate.month,tempDate.dayOfMonth,mHour, mMinute))
+            //endTime.value = "$mHour:$mMinute"
         }, mHour, mMinute, false
     )
 

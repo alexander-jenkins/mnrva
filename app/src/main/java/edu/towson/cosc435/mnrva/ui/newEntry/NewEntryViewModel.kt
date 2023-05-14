@@ -26,15 +26,15 @@ class NewEntryViewModel : ViewModel() {
         _description.value = description
     }
 
-    private val _start = mutableStateOf("")
+    private val _start = mutableStateOf(LocalDateTime.now())
     val start = _start
-    fun setStart(start: String) {
+    fun setStart(start: LocalDateTime) {
         _start.value = start
     }
 
-    private val _end = mutableStateOf("")
+    private val _end = mutableStateOf(LocalDateTime.now())
     val end = _end
-    fun setEnd(end: String) {
+    fun setEnd(end: LocalDateTime) {
         _end.value = end
     }
 
@@ -58,8 +58,8 @@ class NewEntryViewModel : ViewModel() {
                 owner = owner!!,
                 title = _title.value,
                 description = _description.value,
-                start = LocalDateTime.now(),
-                end = null,
+                start = start.value,
+                end = end.value,
                 tags = null
             )
             eventRepository.addEvent(newEvent)
@@ -70,8 +70,8 @@ class NewEntryViewModel : ViewModel() {
     private fun clearFields() {
         setTitle("")
         setDescription("")
-        setStart("")
-        setEnd("")
+        setStart(LocalDateTime.now())
+        setEnd(LocalDateTime.now())
         _showStart.value = false
         _showEnd.value = false
     }
