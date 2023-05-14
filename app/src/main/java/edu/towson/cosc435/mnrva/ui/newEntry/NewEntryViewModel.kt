@@ -10,11 +10,14 @@ import edu.towson.cosc435.mnrva.DependencyGraph
 import edu.towson.cosc435.mnrva.model.Event
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.UUID
 
 class NewEntryViewModel : ViewModel() {
     private val eventRepository = DependencyGraph.eventRepository
     private val owner by DependencyGraph.settingsRepository.name
+
+    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("MMMM d',' y 'at' h:mm a")
 
     private val _title = mutableStateOf("")
     val title = _title
@@ -34,11 +37,12 @@ class NewEntryViewModel : ViewModel() {
         _start.value = start
     }
 
-    fun setStart(view: DatePicker, year: Int, month: Int, day: Int) {
+
+    fun setStart(picker: DatePicker, year: Int, month: Int, day: Int) {
         setStart(LocalDateTime.of(year, month + 1, day, _start.value.hour, _start.value.minute))
     }
 
-    fun setStart(view: TimePicker?, hour: Int, minute: Int) {
+    fun setStart(picker: TimePicker, hour: Int, minute: Int) {
         setStart(
             LocalDateTime.of(
                 _start.value.year, _start.value.month, _start.value.dayOfMonth, hour, minute
