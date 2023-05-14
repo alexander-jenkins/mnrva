@@ -1,6 +1,5 @@
 package edu.towson.cosc435.mnrva.network
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import com.google.gson.Gson
 import edu.towson.cosc435.mnrva.DependencyGraph
@@ -21,6 +20,8 @@ interface IEventRequests {
         description: String?,
         tags: String?
     )
+
+    suspend fun deleteEvent(id: String)
 }
 
 class EventRequests : IEventRequests {
@@ -38,9 +39,15 @@ class EventRequests : IEventRequests {
     ) {
         withContext(DependencyGraph.ioDispatcher) {
             val gson = Gson()
-            val body =
-                gson.toJson(NewEvent(title, start.toString(), end.toString(), description, tags))
-                    .toRequestBody(jsonType)
+            val body = gson.toJson(
+                NewEvent(
+                    title = title,
+                    start = start.toString(),
+                    end = end.toString(),
+                    description = description,
+                    tags = tags
+                )
+            ).toRequestBody(jsonType)
             val request =
                 Request.Builder().url(EVENTS).post(body).addHeader("Cookie", "jwt=$token").build()
 
@@ -50,7 +57,6 @@ class EventRequests : IEventRequests {
                 if (responseBody != null) {
                     val gson = Gson()
                     val jsonString = responseBody.string()
-                    Log.d("MNRVA", jsonString)
                     val newEventData = gson.fromJson(jsonString, NewEventResponse::class.java)
                     val eventId = newEventData.id
                     val createdEvent = Event(
@@ -63,6 +69,21 @@ class EventRequests : IEventRequests {
                     )
                     response.close()
                     eventRepository.addEvent(createdEvent)
+                }
+            }
+        }
+    }
+
+    override suspend fun deleteEvent(id: String) {
+        withContext(DependencyGraph.ioDispatcher) {
+            val request =
+                Request.Builder().url("$EVENTS/$id").delete().addHeader("Cookie", "jwt=$token")
+                    .build()
+            val response = client.newCall(request).execute()
+            if (response.isSuccessful) {
+                val event = eventRepository.getById(id)
+                if (event != null) {
+                    eventRepository.deleteEvent(event)
                 }
             }
         }

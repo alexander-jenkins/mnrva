@@ -25,4 +25,7 @@ interface EventDao {
 
     @Query("DELETE FROM EVENTS")
     suspend fun clearEvents()
+
+    @Query("SELECT * FROM events WHERE id = :id")
+    suspend fun getEventById(id: String): Event?
 }

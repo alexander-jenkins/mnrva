@@ -47,6 +47,7 @@ class SettingsRepository(context: Context) {
         const val REPO_KEY: String = "MNRVA_SETTINGS"
         const val JWT_PREF_KEY: String = "JTW_AUTH_TOKEN"
         const val USER_NAME: String = "USER_NAME"
+        const val USER_EMAIL: String = "USER_EMAIL"
         const val DEFAULT_NAME: String = "Friend"
         const val USE_NOTIFICATIONS: String = "USE_NOTIFICATIONS"
     }

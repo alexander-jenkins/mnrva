@@ -50,4 +50,8 @@ class EventRepository(private val eventDao: EventDao) {
     suspend fun deleteEvent(event: Event) {
         eventDao.delete(event)
     }
+
+    suspend fun getById(id: String): Event? {
+        return eventDao.getEventById(id)
+    }
 }
