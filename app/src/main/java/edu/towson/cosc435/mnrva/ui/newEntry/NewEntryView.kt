@@ -1,7 +1,9 @@
 package edu.towson.cosc435.mnrva.ui.newEntry
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
+import android.Manifest
+import android.app.*
+import android.content.Context
+import android.os.Build
 import android.widget.DatePicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
@@ -17,19 +19,25 @@ import androidx.compose.material.Button
 import androidx.compose.material.Checkbox
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.viewmodel.compose.viewModel
+<<<<<<< 20e42f4c3d301c877d99b32903e37445e673ec8e
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+=======
+import edu.towson.cosc435.mnrva.MnrvaApplication
+import edu.towson.cosc435.mnrva.R
+import edu.towson.cosc435.mnrva.ui.MainActivity
+>>>>>>> Setup some basic functions for notifications
 import java.util.Calendar
 import java.util.Date
 
@@ -54,6 +62,8 @@ fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
     val mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
     val mHour = mCalendar[Calendar.HOUR_OF_DAY]
     val mMinute = mCalendar[Calendar.MINUTE]
+
+    val context = LocalContext.current
 
     mCalendar.time = Date()
 
@@ -188,7 +198,10 @@ fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
         //create button
         Button(
             modifier = Modifier.width(130.dp),
-            onClick = vm::createEvent,
+            onClick = {
+                vm.createEvent()
+                showNotification(context)
+                      },
             contentPadding = PaddingValues(
                 top = 12.dp, bottom = 12.dp
             )
@@ -199,6 +212,16 @@ fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
         }
 
     }
+}
+
+private fun showNotification(ctx: Context){
+    val notificationManager = MnrvaApplication.notificationManager
+    val notification = NotificationCompat.Builder(ctx, MnrvaApplication.channel_id)
+        .setContentText("Hello text")
+        .setContentTitle("hello title")
+        .setSmallIcon(R.drawable.notification_settings)
+        .build()
+    notificationManager.notify(1, notification)
 }
 
 
