@@ -35,7 +35,7 @@ class SettingsRepository(context: Context) {
         }
 
     // create notifications?
-    private val _useNotifications = mutableStateOf(preferences.getBoolean(USE_NOTIFICATIONS, false))
+    private val _useNotifications = mutableStateOf(preferences.getBoolean(USE_NOTIFICATIONS, true))
     val useNotifications = _useNotifications
     fun setUseNotifications(status: Boolean) {
         _useNotifications.value = status
