@@ -30,7 +30,7 @@ class EventRepository(private val eventDao: EventDao) {
             _todayEvents.value = allEvents.sortedBy { events -> events.start }
                 .filter { sortedEvent -> LocalDateTime.now().dayOfYear == sortedEvent.start.dayOfYear && sortedEvent.start.year == LocalDateTime.now().year }
             _nextThree.value = allEvents.sortedBy { events -> events.start }.filter { sortedEvent ->
-                sortedEvent.start.isAfter(LocalDateTime.now())
+                sortedEvent.start.isAfter(LocalDateTime.now().minusMinutes(30))
             }.take(3)
         }
     }

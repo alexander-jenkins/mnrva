@@ -92,6 +92,7 @@ class EventRequests : IEventRequests {
                     events = gson.fromJson(json, Array<SyncedEventResponse>::class.java).toList()
                 }
             }
+            response.close()
             events
         }
     }

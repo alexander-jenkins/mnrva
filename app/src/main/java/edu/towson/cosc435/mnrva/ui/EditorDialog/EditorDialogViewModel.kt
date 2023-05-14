@@ -6,9 +6,10 @@ import edu.towson.cosc435.mnrva.DependencyGraph
 import edu.towson.cosc435.mnrva.model.event.Event
 import kotlinx.coroutines.launch
 
-class EditorDialogViewModel: ViewModel() {
+class EditorDialogViewModel : ViewModel() {
 
     private val eventRepository = DependencyGraph.eventRepository
+    private val eventRequests = DependencyGraph.eventRequests
 
     fun updateEvent(event: Event) {
         viewModelScope.launch {
@@ -20,7 +21,7 @@ class EditorDialogViewModel: ViewModel() {
 
     fun deleteEvent(event: Event) {
         viewModelScope.launch {
-            eventRepository.deleteEvent(event)
+            eventRequests.deleteEvent(event.id)
         }
     }
 }
