@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 class SettingsViewModel : ViewModel() {
     private val settingsRepository = DependencyGraph.settingsRepository
     private val eventRepository = DependencyGraph.eventRepository
+    private val eventRequests = DependencyGraph.eventRequests
 
     private val _useNotifications = settingsRepository.useNotifications
     val useNotifications = _useNotifications
@@ -20,6 +21,11 @@ class SettingsViewModel : ViewModel() {
         settingsRepository.setJwt("")
         setUseNotifications(true)
         eventRepository.clearEvents()
+    }
+
+    fun downloadEvents() = viewModelScope.launch {
+        val events = eventRequests.downloadEvents()
+        eventRepository.addManyEvents(events)
     }
 
 }

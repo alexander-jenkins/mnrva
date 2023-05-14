@@ -7,7 +7,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import edu.towson.cosc435.mnrva.data.room.EventDao
 import edu.towson.cosc435.mnrva.model.event.Event
+import edu.towson.cosc435.mnrva.model.event.SyncedEventResponse
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class EventRepository(private val eventDao: EventDao) {
 
@@ -28,9 +30,7 @@ class EventRepository(private val eventDao: EventDao) {
             _todayEvents.value = allEvents.sortedBy { events -> events.start }
                 .filter { sortedEvent -> LocalDateTime.now().dayOfYear == sortedEvent.start.dayOfYear && sortedEvent.start.year == LocalDateTime.now().year }
             _nextThree.value = allEvents.sortedBy { events -> events.start }.filter { sortedEvent ->
-                sortedEvent.start.isAfter(LocalDateTime.now()) || (LocalDateTime.now()
-                    .isBefore(sortedEvent.end)) && LocalDateTime.now()
-                    .isAfter(sortedEvent.start)
+                sortedEvent.start.isAfter(LocalDateTime.now())
             }.take(3)
         }
     }
@@ -53,5 +53,21 @@ class EventRepository(private val eventDao: EventDao) {
 
     suspend fun getById(id: String): Event? {
         return eventDao.getEventById(id)
+    }
+
+    suspend fun addManyEvents(responseList: List<SyncedEventResponse>) {
+        val formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
+        responseList.map { event ->
+            eventDao.insert(
+                Event(
+                    id = event.id,
+                    title = event.title,
+                    description = event.description.orEmpty(),
+                    start = LocalDateTime.from(formatter.parse(event.start)),
+                    end = if (event.end.orEmpty() != "") LocalDateTime.from(formatter.parse(event.end)) else null,
+                    tags = event.tags.orEmpty()
+                )
+            )
+        }
     }
 }

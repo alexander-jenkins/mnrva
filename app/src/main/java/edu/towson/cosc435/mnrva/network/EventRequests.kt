@@ -1,11 +1,13 @@
 package edu.towson.cosc435.mnrva.network
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import com.google.gson.Gson
 import edu.towson.cosc435.mnrva.DependencyGraph
 import edu.towson.cosc435.mnrva.model.event.Event
 import edu.towson.cosc435.mnrva.model.event.NewEvent
 import edu.towson.cosc435.mnrva.model.event.NewEventResponse
+import edu.towson.cosc435.mnrva.model.event.SyncedEventResponse
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Request
@@ -21,6 +23,7 @@ interface IEventRequests {
         tags: String?
     )
 
+    suspend fun downloadEvents(): List<SyncedEventResponse>
     suspend fun deleteEvent(id: String)
 }
 
@@ -71,6 +74,25 @@ class EventRequests : IEventRequests {
                     eventRepository.addEvent(createdEvent)
                 }
             }
+        }
+    }
+
+    override suspend fun downloadEvents(): List<SyncedEventResponse> {
+        return withContext(DependencyGraph.ioDispatcher) {
+            val gson = Gson()
+            var events = listOf<SyncedEventResponse>()
+            val request =
+                Request.Builder().url(EVENTS).get().addHeader("Cookie", "jwt=$token").build()
+            val response = client.newCall(request).execute()
+            if (response.isSuccessful) {
+                val responseBody = response.body
+                if (responseBody != null) {
+                    val json = responseBody.string()
+                    Log.d("MNRVA", json)
+                    events = gson.fromJson(json, Array<SyncedEventResponse>::class.java).toList()
+                }
+            }
+            events
         }
     }
 

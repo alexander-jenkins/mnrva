@@ -46,7 +46,7 @@ fun SettingsView(vm: SettingsViewModel = viewModel()) {
             ) {
                 Text(text = "Synchronize with database:", modifier = Modifier.padding(8.dp))
                 Spacer(modifier = Modifier.width(8.dp))
-                Button(onClick = {}, content = { Text(text = "Sync") })
+                Button(onClick = vm::downloadEvents, content = { Text(text = "Sync") })
             }
             Divider()
 
