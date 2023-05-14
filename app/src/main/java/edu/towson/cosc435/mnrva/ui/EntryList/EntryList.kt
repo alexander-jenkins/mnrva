@@ -1,6 +1,10 @@
 package edu.towson.cosc435.mnrva.ui.EntryList
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
@@ -9,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import edu.towson.cosc435.mnrva.model.Event
+import edu.towson.cosc435.mnrva.model.event.Event
 import edu.towson.cosc435.mnrva.ui.taskCard.TaskCard
 import java.time.LocalDate
 
@@ -17,7 +21,7 @@ import java.time.LocalDate
 fun EntryList(entriesToShow: List<Event>, date: LocalDate?){
     Column(
         Modifier
-            .padding(all=2.dp)
+            .padding(all = 2.dp)
             .fillMaxHeight()
     ) {
 //        var displayText = ""

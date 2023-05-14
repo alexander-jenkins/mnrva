@@ -1,6 +1,5 @@
 package edu.towson.cosc435.mnrva.ui.newEntry
 
-import android.content.Context
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,10 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.app.NotificationCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
-import edu.towson.cosc435.mnrva.MnrvaApplication
-import edu.towson.cosc435.mnrva.R
 
 @Composable
 fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
@@ -67,10 +63,9 @@ fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
 
         //create button
         Button(
-            modifier = Modifier.width(130.dp), onClick = {
-                vm.createEvent()
-                showNotification(localContext)
-            }, contentPadding = PaddingValues(
+            modifier = Modifier.width(130.dp),
+            onClick = vm::createEvent,
+            contentPadding = PaddingValues(
                 top = 12.dp, bottom = 12.dp
             )
         ) {
@@ -82,12 +77,12 @@ fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
     }
 }
 
-private fun showNotification(ctx: Context) {
-    val notificationManager = MnrvaApplication.notificationManager
-    val notification =
-        NotificationCompat.Builder(ctx, MnrvaApplication.channel_id).setContentText("Hello text")
-            .setContentTitle("hello title").setSmallIcon(R.drawable.notification_settings).build()
-    notificationManager.notify(1, notification)
-}
+//private fun showNotification(ctx: Context) {
+//    val notificationManager = MnrvaApplication.notificationManager
+//    val notification =
+//        NotificationCompat.Builder(ctx, MnrvaApplication.channel_id).setContentText("Hello text")
+//            .setContentTitle("hello title").setSmallIcon(R.drawable.notification_settings).build()
+//    notificationManager.notify(1, notification)
+//}
 
 

@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
-import edu.towson.cosc435.mnrva.model.Event
+import edu.towson.cosc435.mnrva.model.event.Event
 import edu.towson.cosc435.mnrva.ui.EditorDialog.EditorDialogViewModel
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -159,7 +159,6 @@ fun EditDialogBox(entry: Event, showDialog: Boolean, onDialogueExit: () -> Unit,
 
                             val theUpdate = Event(
                                 id = entry.id,
-                                owner = "USER",
                                 title = tempTitle,
                                 description = tempDescription,
                                 start = tempStartTime,

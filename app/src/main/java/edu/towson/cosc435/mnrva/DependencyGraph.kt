@@ -7,6 +7,7 @@ import edu.towson.cosc435.mnrva.data.EventRepository
 import edu.towson.cosc435.mnrva.data.SettingsRepository
 import edu.towson.cosc435.mnrva.data.room.MnrvaDatabase
 import edu.towson.cosc435.mnrva.network.AuthRequests
+import edu.towson.cosc435.mnrva.network.EventRequests
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import okhttp3.Cache
@@ -27,6 +28,11 @@ object DependencyGraph {
     // Auth Requests
     val authRequests by lazy {
         AuthRequests()
+    }
+
+    // Event Requests
+    val eventRequests by lazy {
+        EventRequests()
     }
 
     // Repository

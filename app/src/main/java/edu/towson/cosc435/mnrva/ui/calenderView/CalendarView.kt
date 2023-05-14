@@ -15,7 +15,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.himanshoe.kalendar.Kalendar
 import com.himanshoe.kalendar.model.KalendarType
-import edu.towson.cosc435.mnrva.model.Event
+import edu.towson.cosc435.mnrva.model.event.Event
 import edu.towson.cosc435.mnrva.ui.EntryList.EntryList
 import edu.towson.cosc435.mnrva.ui.EventViewModel
 import kotlinx.datetime.toJavaLocalDate

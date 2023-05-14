@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.model
+package edu.towson.cosc435.mnrva.model.event
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -9,7 +9,6 @@ import java.time.LocalDateTime
 @Entity("events")
 data class Event(
     @PrimaryKey @SerializedName("_id") val id: String,
-    @ColumnInfo @SerializedName("owner_id") val owner: String,
     @ColumnInfo val title: String,
     @ColumnInfo val description: String?,
     @ColumnInfo val start: LocalDateTime,

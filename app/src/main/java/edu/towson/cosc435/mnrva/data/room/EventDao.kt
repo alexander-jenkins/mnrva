@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import edu.towson.cosc435.mnrva.model.Event
+import edu.towson.cosc435.mnrva.model.event.Event
 import kotlinx.coroutines.flow.Flow
 
 @Dao

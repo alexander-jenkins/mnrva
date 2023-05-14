@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import edu.towson.cosc435.mnrva.DependencyGraph
-import edu.towson.cosc435.mnrva.model.Event
+import edu.towson.cosc435.mnrva.model.event.Event
 import edu.towson.cosc435.mnrva.ui.EventViewModel
 import edu.towson.cosc435.mnrva.ui.taskCard.TaskCard
 

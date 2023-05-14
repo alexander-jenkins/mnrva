@@ -2,20 +2,17 @@ package edu.towson.cosc435.mnrva.ui.newEntry
 
 import android.widget.DatePicker
 import android.widget.TimePicker
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import edu.towson.cosc435.mnrva.DependencyGraph
-import edu.towson.cosc435.mnrva.model.Event
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.UUID
 
 class NewEntryViewModel : ViewModel() {
     private val eventRepository = DependencyGraph.eventRepository
-    private val owner by DependencyGraph.settingsRepository.name
+    private val eventRequests = DependencyGraph.eventRequests
 
     val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("MMMM d',' y 'at' h:mm a")
 
@@ -89,16 +86,13 @@ class NewEntryViewModel : ViewModel() {
 
     fun createEvent() = viewModelScope.launch {
         if (_title.value != "") {
-            val newEvent = Event(
-                id = UUID.randomUUID().toString(),
-                owner = owner!!,
+            eventRequests.newEvent(
                 title = _title.value,
+                start = _start.value,
+                end = _end.value,
                 description = _description.value,
-                start = start.value,
-                end = end.value,
                 tags = _tags.value
             )
-            eventRepository.addEvent(newEvent)
             clearFields()
         }
     }
