@@ -1,9 +1,8 @@
 package edu.towson.cosc435.mnrva.ui.newEntry
 
-import android.Manifest
-import android.app.*
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
-import android.os.Build
 import android.widget.DatePicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
@@ -19,25 +18,22 @@ import androidx.compose.material.Button
 import androidx.compose.material.Checkbox
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.viewmodel.compose.viewModel
-<<<<<<< 20e42f4c3d301c877d99b32903e37445e673ec8e
+import edu.towson.cosc435.mnrva.MnrvaApplication
+import edu.towson.cosc435.mnrva.R
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-=======
-import edu.towson.cosc435.mnrva.MnrvaApplication
-import edu.towson.cosc435.mnrva.R
-import edu.towson.cosc435.mnrva.ui.MainActivity
->>>>>>> Setup some basic functions for notifications
 import java.util.Calendar
 import java.util.Date
 
@@ -52,8 +48,7 @@ fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
     val format = DateTimeFormatter.ofPattern("yyyy/M/d")
     val timeFormat = DateTimeFormatter.ofPattern("h:mm a")
 
-    var tempDate = LocalDate.now();
-
+    var tempDate = LocalDate.now()
 
 
     // finds current time/date
@@ -70,21 +65,37 @@ fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
     //declares date picker
     val mDatePickerDialog = DatePickerDialog(
         mContext, { _: DatePicker, year: Int, month: Int, day: Int ->
-            tempDate = LocalDate.parse("$year/${month+1}/$day", format)
+            tempDate = LocalDate.parse("$year/${month + 1}/$day", format)
         }, mYear, mMonth, mDay
     )
 
     //declares start time picker
     val sTimePickerDialog = TimePickerDialog(
         mContext, { _, mHour: Int, mMinute: Int ->
-            vm.setStart(LocalDateTime.of(tempDate.year,tempDate.month,tempDate.dayOfMonth,mHour, mMinute))
+            vm.setStart(
+                LocalDateTime.of(
+                    tempDate.year,
+                    tempDate.month,
+                    tempDate.dayOfMonth,
+                    mHour,
+                    mMinute
+                )
+            )
         }, mHour, mMinute, false
     )
 
     //declares end time picker
     val eTimePickerDialog = TimePickerDialog(
         mContext, { _, mHour: Int, mMinute: Int ->
-            vm.setEnd(LocalDateTime.of(tempDate.year,tempDate.month,tempDate.dayOfMonth,mHour, mMinute))
+            vm.setEnd(
+                LocalDateTime.of(
+                    tempDate.year,
+                    tempDate.month,
+                    tempDate.dayOfMonth,
+                    mHour,
+                    mMinute
+                )
+            )
             //endTime.value = "$mHour:$mMinute"
         }, mHour, mMinute, false
     )
@@ -201,7 +212,7 @@ fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
             onClick = {
                 vm.createEvent()
                 showNotification(context)
-                      },
+            },
             contentPadding = PaddingValues(
                 top = 12.dp, bottom = 12.dp
             )
@@ -214,7 +225,7 @@ fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
     }
 }
 
-private fun showNotification(ctx: Context){
+private fun showNotification(ctx: Context) {
     val notificationManager = MnrvaApplication.notificationManager
     val notification = NotificationCompat.Builder(ctx, MnrvaApplication.channel_id)
         .setContentText("Hello text")
