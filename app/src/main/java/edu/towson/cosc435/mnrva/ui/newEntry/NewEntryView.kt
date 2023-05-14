@@ -57,6 +57,14 @@ fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
             onValueChange = vm::setDescription,
             label = { Text("Description") })
 
+        // tags
+        OutlinedTextField(modifier = Modifier
+            .fillMaxWidth(),
+            value = vm.tags.value,
+            onValueChange = vm::setTags,
+            singleLine = true,
+            label = { Text("Tags (space separated)") })
+
         //create button
         Button(
             modifier = Modifier.width(130.dp), onClick = {

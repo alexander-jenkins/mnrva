@@ -31,6 +31,12 @@ class NewEntryViewModel : ViewModel() {
         _description.value = description
     }
 
+    private val _tags = mutableStateOf("")
+    val tags = _tags
+    fun setTags(tags: String) {
+        _tags.value = tags
+    }
+
     private val _start = mutableStateOf(LocalDateTime.now())
     val start = _start
     private fun setStart(start: LocalDateTime) {
@@ -90,7 +96,7 @@ class NewEntryViewModel : ViewModel() {
                 description = _description.value,
                 start = start.value,
                 end = end.value,
-                tags = null
+                tags = _tags.value
             )
             eventRepository.addEvent(newEvent)
             clearFields()
