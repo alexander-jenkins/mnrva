@@ -9,8 +9,6 @@ class MnrvaApplication : Application() {
 
         // Inject dependencies into the application at runtime
         DependencyGraph.provide(this)
-    }
-
         NotificationUtility.createNotificationChannel(this)
     }
 }
