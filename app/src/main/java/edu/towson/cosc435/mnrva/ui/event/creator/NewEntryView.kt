@@ -67,7 +67,12 @@ fun NewEntryView(newEntryVM: NewEntryViewModel = viewModel()) {
             modifier = Modifier.width(130.dp),
             onClick = {
                 newEntryVM.createEvent()
-                NotificationUtility.createEventNotification(context, newEntryVM.title.value, newEntryVM.description.value, newEntryVM.start.value)
+                NotificationUtility.createEventNotification(
+                    context,
+                    newEntryVM.title.value,
+                    newEntryVM.description.value,
+                    newEntryVM.start.value
+                )
                       },
             contentPadding = PaddingValues(
                 top = 12.dp, bottom = 12.dp

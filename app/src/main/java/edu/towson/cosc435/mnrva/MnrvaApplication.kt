@@ -12,6 +12,5 @@ class MnrvaApplication : Application() {
     }
 
         NotificationUtility.createNotificationChannel(this)
-
     }
 }

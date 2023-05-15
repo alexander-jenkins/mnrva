@@ -21,7 +21,6 @@ class NotificationUtility {
         private const val channel_id = "ID_MNRVA"
         private const val channel_name = "CHANNEL_MNRVA"
 
-
         fun createNotificationChannel(ctx: Context){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val notificationChannel = NotificationChannel(
@@ -41,7 +40,7 @@ class NotificationUtility {
             Log.d("TEST", "creating notification....")
 
             //Create intent w/ flags that opens MnrvaApp
-            val intent = Intent(ctx, NotificationReciever::class.java).apply {
+            val intent = Intent(ctx, NotificationReceiver::class.java).apply {
                 action = ctx.getString(R.string.notifications)
                 type = "$title, $description"
                 putExtra("Notification_ID", 100)
