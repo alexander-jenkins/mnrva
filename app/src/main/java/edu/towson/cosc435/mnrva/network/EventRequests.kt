@@ -94,6 +94,7 @@ class EventRequests : IEventRequests {
                     eventRepository.deleteEvent(event)
                 }
             }
+            response.close()
         }
     }
 
