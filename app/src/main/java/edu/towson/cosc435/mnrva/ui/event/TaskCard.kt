@@ -14,15 +14,31 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import edu.towson.cosc435.mnrva.data.model.event.Event
-import edu.towson.cosc435.mnrva.ui.theme.Envy
-import edu.towson.cosc435.mnrva.ui.theme.FringyFlower
+import edu.towson.cosc435.mnrva.ui.theme.*
 import java.time.format.DateTimeFormatter
 import java.util.*
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TaskCard(event: Event, setSelected: (String) -> Unit) {
-    val horizontalGradientBrush = Brush.horizontalGradient(colors = listOf(FringyFlower, Envy))
+    val colorNum = (1..4).random()
+
+    var horizontalGradientBrush = Brush.horizontalGradient(colors = listOf(FringyFlower, Envy))
+
+    if(colorNum == 1) {
+        horizontalGradientBrush = Brush.horizontalGradient(colors = listOf(LightSteelBlue, SteelBlue))
+    }
+
+    else if(colorNum == 2) {
+        horizontalGradientBrush = Brush.horizontalGradient(colors = listOf(LightPurp, Purp))
+    }
+
+    else if(colorNum == 3) {
+        horizontalGradientBrush = Brush.horizontalGradient(colors = listOf(LightScandal, Scandal))
+    }
+
+
+
     val dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE h:mm a")
     val timeFormatter = DateTimeFormatter.ofPattern("h:mm a")
 
