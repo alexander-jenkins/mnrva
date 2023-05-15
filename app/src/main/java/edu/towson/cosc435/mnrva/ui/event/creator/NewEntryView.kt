@@ -13,12 +13,16 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import edu.towson.cosc435.mnrva.notifications.NotificationUtility
 
 @Composable
 fun NewEntryView(newEntryVM: NewEntryViewModel = viewModel()) {
+    var context = LocalContext.current
+
     Column(
         modifier = Modifier
             .padding(50.dp)
@@ -61,7 +65,10 @@ fun NewEntryView(newEntryVM: NewEntryViewModel = viewModel()) {
         //create button
         Button(
             modifier = Modifier.width(130.dp),
-            onClick = newEntryVM::createEvent,
+            onClick = {
+                newEntryVM.createEvent()
+                NotificationUtility.CreateEventNotification(context, newEntryVM.title.value, newEntryVM.description.value)
+                      },
             contentPadding = PaddingValues(
                 top = 12.dp, bottom = 12.dp
             )
