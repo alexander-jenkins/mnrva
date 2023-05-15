@@ -22,22 +22,14 @@ import java.util.*
 @Composable
 fun TaskCard(event: Event, setSelected: (String) -> Unit) {
     val colorNum = (1..4).random()
-
     var horizontalGradientBrush = Brush.horizontalGradient(colors = listOf(FringyFlower, Envy))
-
-    if(colorNum == 1) {
+    if (colorNum == 1) {
         horizontalGradientBrush = Brush.horizontalGradient(colors = listOf(LightSteelBlue, SteelBlue))
-    }
-
-    else if(colorNum == 2) {
+    } else if (colorNum == 2) {
         horizontalGradientBrush = Brush.horizontalGradient(colors = listOf(LightPurp, Purp))
-    }
-
-    else if(colorNum == 3) {
+    } else if (colorNum == 3) {
         horizontalGradientBrush = Brush.horizontalGradient(colors = listOf(LightScandal, Scandal))
     }
-
-
 
     val dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE h:mm a")
     val timeFormatter = DateTimeFormatter.ofPattern("h:mm a")
@@ -57,17 +49,14 @@ fun TaskCard(event: Event, setSelected: (String) -> Unit) {
                 .padding(8.dp)
         ) {
             Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceEvenly
+                verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 Column {
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Start
+                        modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start
                     ) { Text(event.title, fontSize = 36.sp) }
                     if (event.description != null && event.description != "") Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Start
+                        modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start
                     ) {
                         Text(
                             event.description,
@@ -75,8 +64,7 @@ fun TaskCard(event: Event, setSelected: (String) -> Unit) {
                         )
                     }
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Start
+                        modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start
                     ) {
                         val time = if (event.end != null) Text(
                             "${event.start.format(dateTimeFormatter)} - ${
