@@ -51,7 +51,7 @@ class NotificationUtility {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 
             //Create the pending intent
-            val pendingIntent = PendingIntent.getBroadcast(ctx, 0, intent, 0)
+            val pendingIntent = PendingIntent.getBroadcast(ctx, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
             val delay = Duration.between(LocalDateTime.now(), time).toMillis()
 
