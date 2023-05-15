@@ -27,9 +27,6 @@ import edu.towson.cosc435.mnrva.ui.settings.SettingsView
 @Composable
 fun MnrvaNavGraph(navController: NavHostController = rememberNavController()) {
     val authenticated by DependencyGraph.settingsRepository.authenticated
-    val eventVM: EventViewModel = viewModel()
-    val editorVM: EditorDialogViewModel = viewModel()
-    val authViewModel: AuthenticationViewModel = viewModel()
 
     Scaffold(bottomBar = {
         if (authenticated) AuthenticatedBottomBar(nav = navController)
@@ -37,6 +34,8 @@ fun MnrvaNavGraph(navController: NavHostController = rememberNavController()) {
     }) {
         Box(modifier = Modifier.padding(it)) {
             if (authenticated) {
+                val eventVM: EventViewModel = viewModel()
+                val editorVM: EditorDialogViewModel = viewModel()
                 EditDialogBox(editorVM)
                 NavHost(navController = navController, startDestination = Routes.HomeView.route) {
                     composable(Routes.ScheduleView.route) { ScheduleView(eventVM, editorVM) }
@@ -45,13 +44,13 @@ fun MnrvaNavGraph(navController: NavHostController = rememberNavController()) {
                     composable(Routes.SettingsView.route) { SettingsView() }
                     composable(Routes.HomeView.route) { HomeView(eventVM, editorVM) }
                 }
-            } else NavHost(navController = navController, Routes.LoginView.route) {
-                composable(Routes.LoginView.route) { LoginView() }
-                composable(Routes.RegisterView.route) { RegisterView(authViewModel) }
+            } else {
+                val authViewModel: AuthenticationViewModel = viewModel()
+                NavHost(navController = navController, Routes.LoginView.route) {
+                    composable(Routes.LoginView.route) { LoginView() }
+                    composable(Routes.RegisterView.route) { RegisterView(authViewModel) }
+                }
             }
-
         }
-
     }
-
 }
