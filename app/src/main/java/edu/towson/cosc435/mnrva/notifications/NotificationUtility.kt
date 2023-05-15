@@ -37,13 +37,10 @@ class NotificationUtility {
         }
 
         fun createEventNotification(ctx: Context, title:String, description:String, time: LocalDateTime){
-            Log.d("TEST", "creating notification....")
-
             //Create intent w/ flags that opens MnrvaApp
             val intent = Intent(ctx, NotificationReceiver::class.java).apply {
                 action = ctx.getString(R.string.notifications)
                 type = "$title, $description"
-                putExtra("Notification_ID", 100)
                 putExtra("Notification_Title", title)
                 putExtra("Notification_Description", description)
             }

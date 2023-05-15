@@ -67,12 +67,14 @@ fun NewEntryView(newEntryVM: NewEntryViewModel = viewModel()) {
             modifier = Modifier.width(130.dp),
             onClick = {
                 newEntryVM.createEvent()
-                NotificationUtility.createEventNotification(
-                    context,
-                    newEntryVM.title.value,
-                    newEntryVM.description.value,
-                    newEntryVM.start.value
-                )
+                if (newEntryVM.title.value != ""){
+                    NotificationUtility.createEventNotification(
+                        context,
+                        newEntryVM.title.value,
+                        newEntryVM.description.value,
+                        newEntryVM.start.value
+                    )
+                }
                       },
             contentPadding = PaddingValues(
                 top = 12.dp, bottom = 12.dp
@@ -85,11 +87,3 @@ fun NewEntryView(newEntryVM: NewEntryViewModel = viewModel()) {
 
     }
 }
-
-//private fun showNotification(ctx: Context) {
-//    val notificationManager = MnrvaApplication.notificationManager
-//    val notification =
-//        NotificationCompat.Builder(ctx, MnrvaApplication.channel_id).setContentText("Hello text")
-//            .setContentTitle("hello title").setSmallIcon(R.drawable.notification_settings).build()
-//    notificationManager.notify(1, notification)
-//}

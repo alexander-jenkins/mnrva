@@ -28,7 +28,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
-        Log.d("TEST", "registered receiver")
         registerReceiver(receiver, IntentFilter("Notification"))
     }
 
