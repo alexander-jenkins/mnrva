@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
+fun NewEntryView(newEntryVM: NewEntryViewModel = viewModel()) {
     Column(
         modifier = Modifier
             .padding(50.dp)
@@ -32,36 +32,36 @@ fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
         //Entry Title Field*
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = vm.title.value,
-            onValueChange = vm::setTitle,
+            value = newEntryVM.title.value,
+            onValueChange = newEntryVM::setTitle,
             label = { Text("Title") },
             singleLine = true
         )
 
-        StartDateTimePicker()
-        EndDateTimePicker()
+        StartDateTimePicker(newEntryVM)
+        EndDateTimePicker(newEntryVM)
 
 
         //set description
         OutlinedTextField(modifier = Modifier
             .height(200.dp)
             .fillMaxWidth(),
-            value = vm.description.value,
-            onValueChange = vm::setDescription,
+            value = newEntryVM.description.value,
+            onValueChange = newEntryVM::setDescription,
             label = { Text("Description") })
 
         // tags
         OutlinedTextField(modifier = Modifier
             .fillMaxWidth(),
-            value = vm.tags.value,
-            onValueChange = vm::setTags,
+            value = newEntryVM.tags.value,
+            onValueChange = newEntryVM::setTags,
             singleLine = true,
             label = { Text("Tags (space separated)") })
 
         //create button
         Button(
             modifier = Modifier.width(130.dp),
-            onClick = vm::createEvent,
+            onClick = newEntryVM::createEvent,
             contentPadding = PaddingValues(
                 top = 12.dp, bottom = 12.dp
             )
@@ -81,5 +81,3 @@ fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
 //            .setContentTitle("hello title").setSmallIcon(R.drawable.notification_settings).build()
 //    notificationManager.notify(1, notification)
 //}
-
-

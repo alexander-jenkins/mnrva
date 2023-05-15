@@ -14,11 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 
 @Composable
-fun StartDateTimePicker(vm: NewEntryViewModel = viewModel()) {
+fun StartDateTimePicker(vm: NewEntryViewModel) {
     val time by vm.start
     val timePicker = TimePickerDialog(
         LocalContext.current, vm::setStart, time.hour, time.minute, false
@@ -42,7 +41,7 @@ fun StartDateTimePicker(vm: NewEntryViewModel = viewModel()) {
     ) {
         Text(text = "Start:", fontSize = 18.sp)
         Button(datePicker::show) {
-            Text(text = vm.start.value.format(vm.formatter))
+            Text(text = vm.start.value.format(vm.startFormat))
         }
     }
 }

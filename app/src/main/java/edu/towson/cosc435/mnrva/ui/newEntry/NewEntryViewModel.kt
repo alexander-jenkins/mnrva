@@ -14,7 +14,8 @@ class NewEntryViewModel : ViewModel() {
     private val eventRepository = DependencyGraph.eventRepository
     private val eventRequests = DependencyGraph.eventRequests
 
-    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("MMMM d',' y 'at' h:mm a")
+    val startFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("MMMM d',' y 'at' h:mm a")
+    val endFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("'at' h:mm a")
 
     private val _title = mutableStateOf("")
     val title = _title

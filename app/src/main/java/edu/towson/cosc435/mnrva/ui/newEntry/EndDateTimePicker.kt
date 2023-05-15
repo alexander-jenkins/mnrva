@@ -12,14 +12,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 
 @Composable
-fun EndDateTimePicker(vm: NewEntryViewModel = viewModel()) {
+fun EndDateTimePicker(vm: NewEntryViewModel) {
     val time by vm.end
     val timePicker = TimePickerDialog(
-        LocalContext.current, vm::setStart, time.hour, time.minute, false
+        LocalContext.current, vm::setEnd, time.hour, time.minute, false
     )
 
     Row(
@@ -29,7 +28,7 @@ fun EndDateTimePicker(vm: NewEntryViewModel = viewModel()) {
     ) {
         Text(text = "  End:", fontSize = 18.sp)
         Button(timePicker::show) {
-            Text(text = vm.end.value.format(vm.formatter))
+            Text(text = vm.end.value.format(vm.endFormat))
         }
     }
 }
