@@ -82,12 +82,3 @@ fun SettingsView(vm: SettingsViewModel = viewModel()) {
 
     }
 }
-
-
-// TODO logout btn -- logout from api
-
-// TODO sync button -- push/pull from mongo
-
-// TODO Change password
-
-// TODO notifications -- on/off

@@ -16,9 +16,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import edu.towson.cosc435.mnrva.ui.EditDialogBox
-import edu.towson.cosc435.mnrva.ui.EditorDialog.EditorDialogViewModel
 import edu.towson.cosc435.mnrva.ui.EventViewModel
 import edu.towson.cosc435.mnrva.ui.calenderView.Calendar
+import edu.towson.cosc435.mnrva.ui.editorDialog.EditorDialogViewModel
 import edu.towson.cosc435.mnrva.ui.nav.Routes
 import edu.towson.cosc435.mnrva.ui.newEntry.NewEntryView
 import edu.towson.cosc435.mnrva.ui.schedule.ScheduleView

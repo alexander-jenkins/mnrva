@@ -11,7 +11,6 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class NewEntryViewModel : ViewModel() {
-    private val eventRepository = DependencyGraph.eventRepository
     private val eventRequests = DependencyGraph.eventRequests
 
     val startFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("MMMM d',' y 'at' h:mm a")

@@ -15,15 +15,15 @@ import androidx.compose.ui.platform.LocalConfiguration
 import com.himanshoe.kalendar.Kalendar
 import com.himanshoe.kalendar.model.KalendarType
 import edu.towson.cosc435.mnrva.model.event.Event
-import edu.towson.cosc435.mnrva.ui.EditorDialog.EditorDialogViewModel
 import edu.towson.cosc435.mnrva.ui.EntryList.EntryList
 import edu.towson.cosc435.mnrva.ui.EventViewModel
+import edu.towson.cosc435.mnrva.ui.editorDialog.EditorDialogViewModel
 import kotlinx.datetime.toJavaLocalDate
 import kotlinx.datetime.toKotlinLocalDate
 import java.time.LocalDate
 
 @Composable
-fun Calendar(eventVM: EventViewModel, editorVM: EditorDialogViewModel) {
+fun Calendar(eventVM: EventViewModel, eventEditorVM: EditorDialogViewModel) {
     val orientation = LocalConfiguration.current.orientation
 
     val entries = eventVM.allEvents
@@ -37,17 +37,15 @@ fun Calendar(eventVM: EventViewModel, editorVM: EditorDialogViewModel) {
         Kalendar(
             onCurrentDayClick = { kDay, kEvents ->
                 selectedDay = kDay.localDate.toJavaLocalDate()
-                entriesToShow =
-                    entries.filter { event ->
-                        event.start.toLocalDate()
-                            .toKotlinLocalDate() == selectedDay.toKotlinLocalDate()
-                    }
+                entriesToShow = entries.filter { event ->
+                    event.start.toLocalDate().toKotlinLocalDate() == selectedDay.toKotlinLocalDate()
+                }
             },
             kalendarType = KalendarType.Firey,
             kalendarEvents = emptyList(),
             takeMeToDate = selectedDay.toKotlinLocalDate()
         )
-        EntryList(entriesToShow, selectedDay, editorVM::setSelected)
+        EntryList(entriesToShow, selectedDay, eventEditorVM::setSelected)
     }
     else if ((orientation == Configuration.ORIENTATION_LANDSCAPE) || (orientation == Configuration.ORIENTATION_UNDEFINED)) Row {
         Row(
@@ -58,11 +56,9 @@ fun Calendar(eventVM: EventViewModel, editorVM: EditorDialogViewModel) {
             Kalendar(
                 onCurrentDayClick = { kDay, kEvents ->
                     selectedDay = kDay.localDate.toJavaLocalDate()
-                    entriesToShow =
-                        entries.filter { event ->
-                            event.start.toLocalDate()
-                                .toKotlinLocalDate() == selectedDay.toKotlinLocalDate()
-                        }
+                    entriesToShow = entries.filter { event ->
+                        event.start.toLocalDate().toKotlinLocalDate() == selectedDay.toKotlinLocalDate()
+                    }
                 },
                 kalendarType = KalendarType.Firey,
                 kalendarEvents = emptyList(),
@@ -70,7 +66,7 @@ fun Calendar(eventVM: EventViewModel, editorVM: EditorDialogViewModel) {
             )
         }
         Row {
-            EntryList(entriesToShow, selectedDay, editorVM::setSelected)
+            EntryList(entriesToShow, selectedDay, eventEditorVM::setSelected)
 
         }
     }

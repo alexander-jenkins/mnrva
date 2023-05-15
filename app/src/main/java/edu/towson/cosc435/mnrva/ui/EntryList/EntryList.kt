@@ -24,7 +24,6 @@ fun EntryList(entriesToShow: List<Event>, date: LocalDate?, setSelected: (String
             .padding(all = 2.dp)
             .fillMaxHeight()
     ) {
-//        var displayText = ""
         val displayText = if (date == null) {
             "Scheduled Events"
         } else {

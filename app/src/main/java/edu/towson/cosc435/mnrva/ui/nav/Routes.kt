@@ -15,9 +15,6 @@ sealed class Routes(val route: String) {
     // View where user can alter their settings
     object SettingsView : Routes("settings")
 
-    // View of a specific entry when a user clicks on it
-    object ViewEntryView : Routes("viewEntry")
-
     // View for creating a new entry
     object NewEntryView : Routes("newEntry")
 

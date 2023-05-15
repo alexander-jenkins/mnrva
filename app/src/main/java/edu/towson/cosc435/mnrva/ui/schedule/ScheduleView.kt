@@ -14,8 +14,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import edu.towson.cosc435.mnrva.model.event.Event
-import edu.towson.cosc435.mnrva.ui.EditorDialog.EditorDialogViewModel
 import edu.towson.cosc435.mnrva.ui.EventViewModel
+import edu.towson.cosc435.mnrva.ui.editorDialog.EditorDialogViewModel
 import edu.towson.cosc435.mnrva.ui.taskCard.TaskCard
 import java.time.format.DateTimeFormatter
 

@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.ui.EditorDialog
+package edu.towson.cosc435.mnrva.ui.editorDialog
 
 import android.app.TimePickerDialog
 import androidx.compose.foundation.layout.Arrangement

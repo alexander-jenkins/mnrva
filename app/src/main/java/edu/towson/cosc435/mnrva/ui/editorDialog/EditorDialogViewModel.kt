@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.ui.EditorDialog
+package edu.towson.cosc435.mnrva.ui.editorDialog
 
 import android.util.Log
 import android.widget.DatePicker
@@ -18,8 +18,6 @@ class EditorDialogViewModel : ViewModel() {
     private val repository = DependencyGraph.eventRepository
 
     // formatting for displaying the datetime objects
-    val dateFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/M/d")
-    val timeFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("h:mm a")
     val startFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("MMMM d',' y 'at' h:mm a")
     val endFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("'at' h:mm a")
 
@@ -34,7 +32,6 @@ class EditorDialogViewModel : ViewModel() {
     fun setSelected(id: String) {
         viewModelScope.launch {
             _selectedEvent.value = repository.getById(id)
-
             val event = _selectedEvent.value
             if (event != null) {
                 setTitle(event.title)

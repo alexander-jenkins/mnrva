@@ -26,9 +26,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import edu.towson.cosc435.mnrva.ui.EditorDialog.EditEndTimeDialog
-import edu.towson.cosc435.mnrva.ui.EditorDialog.EditStartTimeDialog
-import edu.towson.cosc435.mnrva.ui.EditorDialog.EditorDialogViewModel
+import edu.towson.cosc435.mnrva.ui.editorDialog.EditEndTimeDialog
+import edu.towson.cosc435.mnrva.ui.editorDialog.EditStartTimeDialog
+import edu.towson.cosc435.mnrva.ui.editorDialog.EditorDialogViewModel
 
 @Composable
 fun EditDialogBox(eventEditorVM: EditorDialogViewModel) {
