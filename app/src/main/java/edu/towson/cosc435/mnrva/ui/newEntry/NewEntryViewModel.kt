@@ -71,19 +71,6 @@ class NewEntryViewModel : ViewModel() {
         )
     }
 
-    // should show the pickers
-    private val _showStart = mutableStateOf(false)
-    val showStart = _showStart
-    fun toggleShowStart() {
-        _showStart.value = !_showStart.value
-    }
-
-    private val _showEnd = mutableStateOf(false)
-    val showEnd = _showEnd
-    fun toggleShowEnd(value: Boolean) {
-        _showEnd.value = value
-    }
-
     fun createEvent() = viewModelScope.launch {
         if (_title.value != "") {
             eventRequests.newEvent(
@@ -103,7 +90,5 @@ class NewEntryViewModel : ViewModel() {
         setStart(LocalDateTime.now())
         setEnd(LocalDateTime.now())
         setTags("")
-        _showStart.value = false
-        _showEnd.value = false
     }
 }
