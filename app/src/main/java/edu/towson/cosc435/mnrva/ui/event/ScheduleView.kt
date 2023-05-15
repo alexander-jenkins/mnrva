@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.ui.schedule
+package edu.towson.cosc435.mnrva.ui.event
 
 
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,9 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import edu.towson.cosc435.mnrva.data.model.event.Event
-import edu.towson.cosc435.mnrva.ui.EventViewModel
-import edu.towson.cosc435.mnrva.ui.editorDialog.EditorDialogViewModel
-import edu.towson.cosc435.mnrva.ui.taskCard.TaskCard
+import edu.towson.cosc435.mnrva.ui.event.editor.EditorDialogViewModel
 import java.time.format.DateTimeFormatter
 
 @Composable

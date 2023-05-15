@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.ui.editorDialog
+package edu.towson.cosc435.mnrva.ui.event.editor
 
 import android.util.Log
 import android.widget.DatePicker

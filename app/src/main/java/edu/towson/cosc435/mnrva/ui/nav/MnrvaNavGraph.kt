@@ -12,16 +12,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import edu.towson.cosc435.mnrva.DependencyGraph
-import edu.towson.cosc435.mnrva.ui.EditDialogBox
-import edu.towson.cosc435.mnrva.ui.EventViewModel
+import edu.towson.cosc435.mnrva.ui.HomeView
 import edu.towson.cosc435.mnrva.ui.authentication.AuthenticationViewModel
 import edu.towson.cosc435.mnrva.ui.authentication.LoginView
 import edu.towson.cosc435.mnrva.ui.authentication.RegisterView
-import edu.towson.cosc435.mnrva.ui.calenderView.Calendar
-import edu.towson.cosc435.mnrva.ui.editorDialog.EditorDialogViewModel
-import edu.towson.cosc435.mnrva.ui.home.HomeView
-import edu.towson.cosc435.mnrva.ui.newEntry.NewEntryView
-import edu.towson.cosc435.mnrva.ui.schedule.ScheduleView
+import edu.towson.cosc435.mnrva.ui.event.Calendar
+import edu.towson.cosc435.mnrva.ui.event.EventViewModel
+import edu.towson.cosc435.mnrva.ui.event.ScheduleView
+import edu.towson.cosc435.mnrva.ui.event.creator.NewEntryView
+import edu.towson.cosc435.mnrva.ui.event.editor.EditDialogBox
+import edu.towson.cosc435.mnrva.ui.event.editor.EditorDialogViewModel
 import edu.towson.cosc435.mnrva.ui.settings.SettingsView
 
 @Composable

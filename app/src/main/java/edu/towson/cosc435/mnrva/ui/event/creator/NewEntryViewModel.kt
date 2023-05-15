@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.ui.newEntry
+package edu.towson.cosc435.mnrva.ui.event.creator
 
 import android.widget.DatePicker
 import android.widget.TimePicker

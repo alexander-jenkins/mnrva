@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.ui
+package edu.towson.cosc435.mnrva.ui.event.editor
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,9 +26,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import edu.towson.cosc435.mnrva.ui.editorDialog.EditEndTimeDialog
-import edu.towson.cosc435.mnrva.ui.editorDialog.EditStartTimeDialog
-import edu.towson.cosc435.mnrva.ui.editorDialog.EditorDialogViewModel
 
 @Composable
 fun EditDialogBox(eventEditorVM: EditorDialogViewModel) {

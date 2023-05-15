@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.ui.newEntry
+package edu.towson.cosc435.mnrva.ui.event.creator
 
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column

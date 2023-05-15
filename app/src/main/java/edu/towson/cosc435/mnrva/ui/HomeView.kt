@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.ui.home
+package edu.towson.cosc435.mnrva.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,9 +15,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import edu.towson.cosc435.mnrva.DependencyGraph
 import edu.towson.cosc435.mnrva.data.model.event.Event
-import edu.towson.cosc435.mnrva.ui.EventViewModel
-import edu.towson.cosc435.mnrva.ui.editorDialog.EditorDialogViewModel
-import edu.towson.cosc435.mnrva.ui.taskCard.TaskCard
+import edu.towson.cosc435.mnrva.ui.event.EventViewModel
+import edu.towson.cosc435.mnrva.ui.event.TaskCard
+import edu.towson.cosc435.mnrva.ui.event.editor.EditorDialogViewModel
 
 @Composable
 fun HomeView(eventVM: EventViewModel, editorVM: EditorDialogViewModel) {

@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.ui.editorDialog
+package edu.towson.cosc435.mnrva.ui.event.creator
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -15,18 +15,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.sp
 
-@Composable
-fun EditStartTimeDialog(eventEditorVM: EditorDialogViewModel) {
-    val time by eventEditorVM.start
 
+@Composable
+fun StartDateTimePicker(vm: NewEntryViewModel) {
+    val time by vm.start
     val timePicker = TimePickerDialog(
-        LocalContext.current, eventEditorVM::setStart, time.hour, time.minute, false
+        LocalContext.current, vm::setStart, time.hour, time.minute, false
     )
 
     val datePicker = DatePickerDialog(
         LocalContext.current, { picker: DatePicker, year: Int, month: Int, day: Int ->
             run {
-                eventEditorVM.setStart(
+                vm.setStart(
                     picker, year, month, day
                 )
                 timePicker.show()
@@ -41,7 +41,7 @@ fun EditStartTimeDialog(eventEditorVM: EditorDialogViewModel) {
     ) {
         Text(text = "Start:", fontSize = 18.sp)
         Button(datePicker::show) {
-            Text(text = eventEditorVM.start.value.format(eventEditorVM.startFormatter))
+            Text(text = vm.start.value.format(vm.startFormat))
         }
     }
 }

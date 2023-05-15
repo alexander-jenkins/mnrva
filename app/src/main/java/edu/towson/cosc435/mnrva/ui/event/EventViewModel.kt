@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.ui
+package edu.towson.cosc435.mnrva.ui.event
 
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel

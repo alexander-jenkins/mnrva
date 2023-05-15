@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.ui.calenderView
+package edu.towson.cosc435.mnrva.ui.event
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
@@ -15,9 +15,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import com.himanshoe.kalendar.Kalendar
 import com.himanshoe.kalendar.model.KalendarType
 import edu.towson.cosc435.mnrva.data.model.event.Event
-import edu.towson.cosc435.mnrva.ui.EntryList.EntryList
-import edu.towson.cosc435.mnrva.ui.EventViewModel
-import edu.towson.cosc435.mnrva.ui.editorDialog.EditorDialogViewModel
+import edu.towson.cosc435.mnrva.ui.event.editor.EditorDialogViewModel
 import kotlinx.datetime.toJavaLocalDate
 import kotlinx.datetime.toKotlinLocalDate
 import java.time.LocalDate

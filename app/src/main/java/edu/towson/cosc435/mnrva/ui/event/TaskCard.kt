@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.ui.taskCard
+package edu.towson.cosc435.mnrva.ui.event
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
