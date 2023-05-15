@@ -13,15 +13,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import edu.towson.cosc435.mnrva.DependencyGraph
 import edu.towson.cosc435.mnrva.model.event.Event
+import edu.towson.cosc435.mnrva.ui.EditorDialog.EditorDialogViewModel
 import edu.towson.cosc435.mnrva.ui.EventViewModel
 import edu.towson.cosc435.mnrva.ui.taskCard.TaskCard
 
 @Composable
-fun HomeView(vm: EventViewModel = viewModel()) {
-    val eventsList: List<Event> = vm.nextThree
+fun HomeView(eventVM: EventViewModel, editorVM: EditorDialogViewModel) {
+    val eventsList: List<Event> = eventVM.nextThree
     val name by DependencyGraph.settingsRepository.name
     Column {
         Column(
@@ -34,7 +34,7 @@ fun HomeView(vm: EventViewModel = viewModel()) {
             Text("Here are your next 3 events:", fontSize = 15.sp)
         }
         LazyColumn(contentPadding = PaddingValues(16.dp)) {
-            items(eventsList) { event -> TaskCard(event) }
+            items(eventsList) { event -> TaskCard(event, editorVM::setSelected) }
         }
     }
 }

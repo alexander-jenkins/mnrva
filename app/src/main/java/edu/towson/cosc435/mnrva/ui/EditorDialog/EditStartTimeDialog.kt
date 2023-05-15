@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.ui.newEntry
+package edu.towson.cosc435.mnrva.ui.EditorDialog
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -16,10 +16,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
-
 @Composable
-fun StartDateTimePicker(vm: NewEntryViewModel = viewModel()) {
+fun EditStartTimeDialog(vm: EditorDialogViewModel = viewModel()) {
     val time by vm.start
+
     val timePicker = TimePickerDialog(
         LocalContext.current, vm::setStart, time.hour, time.minute, false
     )

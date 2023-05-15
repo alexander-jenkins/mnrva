@@ -18,16 +18,16 @@ import edu.towson.cosc435.mnrva.ui.taskCard.TaskCard
 import java.time.LocalDate
 
 @Composable
-fun EntryList(entriesToShow: List<Event>, date: LocalDate?){
+fun EntryList(entriesToShow: List<Event>, date: LocalDate?, setSelected: (String) -> Unit) {
     Column(
         Modifier
             .padding(all = 2.dp)
             .fillMaxHeight()
     ) {
 //        var displayText = ""
-        val displayText = if (date == null){
+        val displayText = if (date == null) {
             "Scheduled Events"
-        } else{
+        } else {
             "Scheduled Events on ${date.monthValue}/${date.dayOfMonth}"
         }
         Text(
@@ -39,8 +39,8 @@ fun EntryList(entriesToShow: List<Event>, date: LocalDate?){
         LazyColumn(
             contentPadding = PaddingValues(bottom = 64.dp)
         ) {
-            items(entriesToShow) {
-                TaskCard(it)
+            items(entriesToShow) { event ->
+                TaskCard(event, setSelected)
             }
         }
     }

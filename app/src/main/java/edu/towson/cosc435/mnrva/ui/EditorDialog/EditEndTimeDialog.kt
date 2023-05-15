@@ -1,39 +1,30 @@
-package edu.towson.cosc435.mnrva.ui.newEntry
+package edu.towson.cosc435.mnrva.ui.EditorDialog
 
-import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.widget.DatePicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-
+import java.time.LocalDateTime
 
 @Composable
-fun StartDateTimePicker(vm: NewEntryViewModel = viewModel()) {
-    val time by vm.start
+fun EditEndTimeDialog(vm: EditorDialogViewModel = viewModel()) {
+    val time = vm.end.value
     val timePicker = TimePickerDialog(
-        LocalContext.current, vm::setStart, time.hour, time.minute, false
+        LocalContext.current,
+        vm::setEnd,
+        time?.hour ?: LocalDateTime.now().hour,
+        time?.minute ?: LocalDateTime.now().minute,
+        false
     )
 
-    val datePicker = DatePickerDialog(
-        LocalContext.current, { picker: DatePicker, year: Int, month: Int, day: Int ->
-            run {
-                vm.setStart(
-                    picker, year, month, day
-                )
-                timePicker.show()
-            }
-        }, time.year, (time.monthValue - 1), time.dayOfMonth
-    )
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -41,8 +32,9 @@ fun StartDateTimePicker(vm: NewEntryViewModel = viewModel()) {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(text = "Start:", fontSize = 18.sp)
-        Button(datePicker::show) {
-            Text(text = vm.start.value.format(vm.formatter))
+        Button(timePicker::show) {
+            Text(text = "${time?.format(vm.formatter) ?: ""}")
         }
     }
+
 }

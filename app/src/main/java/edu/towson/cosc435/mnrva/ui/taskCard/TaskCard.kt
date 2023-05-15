@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import edu.towson.cosc435.mnrva.model.event.Event
-import edu.towson.cosc435.mnrva.ui.EditDialogBox
 import edu.towson.cosc435.mnrva.ui.theme.Envy
 import edu.towson.cosc435.mnrva.ui.theme.FringyFlower
 import java.time.format.DateTimeFormatter
@@ -22,18 +21,15 @@ import java.util.*
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun TaskCard(event: Event) {
+fun TaskCard(event: Event, setSelected: (String) -> Unit) {
     val horizontalGradientBrush = Brush.horizontalGradient(colors = listOf(FringyFlower, Envy))
     val dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE h:mm a")
     val timeFormatter = DateTimeFormatter.ofPattern("h:mm a")
-    var showDialog by remember { mutableStateOf(false) }
-
-    EditDialogBox(event, showDialog, onDialogueExit = { showDialog = false })
 
     Card(
         shape = RoundedCornerShape(15.dp),
         elevation = 16.dp,
-        onClick = { showDialog = true },
+        onClick = { setSelected(event.id) },
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()

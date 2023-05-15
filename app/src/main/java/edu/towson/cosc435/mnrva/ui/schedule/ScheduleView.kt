@@ -13,15 +13,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import edu.towson.cosc435.mnrva.model.event.Event
+import edu.towson.cosc435.mnrva.ui.EditorDialog.EditorDialogViewModel
 import edu.towson.cosc435.mnrva.ui.EventViewModel
 import edu.towson.cosc435.mnrva.ui.taskCard.TaskCard
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun ScheduleView(vm: EventViewModel = viewModel()) {
-    val eventsList: List<Event> = vm.todayEvents
+fun ScheduleView(eventVM: EventViewModel, editorVM: EditorDialogViewModel) {
+    val eventsList: List<Event> = eventVM.todayEvents
 
     val format: DateTimeFormatter = DateTimeFormatter.ofPattern("h a")
     var lastSeenHour: Int? = null
@@ -44,7 +44,7 @@ fun ScheduleView(vm: EventViewModel = viewModel()) {
             }
 
             //Draw the task card
-            TaskCard(entry)
+            TaskCard(entry, editorVM::setSelected)
         }
     }
 

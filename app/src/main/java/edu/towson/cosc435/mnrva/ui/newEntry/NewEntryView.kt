@@ -13,15 +13,12 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun NewEntryView(vm: NewEntryViewModel = viewModel()) {
-    val localContext = LocalContext.current
-
     Column(
         modifier = Modifier
             .padding(50.dp)

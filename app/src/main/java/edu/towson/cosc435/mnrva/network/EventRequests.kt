@@ -25,6 +25,7 @@ interface IEventRequests {
 
     suspend fun downloadEvents(): List<SyncedEventResponse>
     suspend fun deleteEvent(id: String)
+    suspend fun updateEvent(event: Event)
 }
 
 class EventRequests : IEventRequests {
@@ -109,6 +110,22 @@ class EventRequests : IEventRequests {
                     eventRepository.deleteEvent(event)
                 }
             }
+        }
+    }
+
+    override suspend fun updateEvent(event: Event) {
+        withContext(DependencyGraph.ioDispatcher) {
+            val json =
+                "{\"id\": \"${event.id}\", \"title\": \"${event.title}\", \"description\": \"${event.description}\", \"start\": \"${event.start}\", \"end\": \"${event.end}\", \"tags\": \"${event.tags}\"}"
+            val body = json.toRequestBody(jsonType)
+            Log.d("MNRVA", json)
+            val request = Request.Builder().url("$EVENTS/${event.id}").put(body)
+                .addHeader("Cookie", "jwt=$token").build()
+            val response = client.newCall(request).execute()
+            if (response.isSuccessful) {
+                eventRepository.updateEvent(event)
+            }
+            response.close()
         }
     }
 

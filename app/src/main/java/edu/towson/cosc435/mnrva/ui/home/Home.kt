@@ -10,18 +10,37 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import edu.towson.cosc435.mnrva.ui.nav.MnrvaNavGraph
+import edu.towson.cosc435.mnrva.ui.EditDialogBox
+import edu.towson.cosc435.mnrva.ui.EditorDialog.EditorDialogViewModel
+import edu.towson.cosc435.mnrva.ui.EventViewModel
+import edu.towson.cosc435.mnrva.ui.calenderView.Calendar
 import edu.towson.cosc435.mnrva.ui.nav.Routes
+import edu.towson.cosc435.mnrva.ui.newEntry.NewEntryView
+import edu.towson.cosc435.mnrva.ui.schedule.ScheduleView
+import edu.towson.cosc435.mnrva.ui.settings.SettingsView
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Home(nav: NavHostController = rememberNavController()) {
+    val eventVM: EventViewModel = viewModel()
+    val editorVM: EditorDialogViewModel = viewModel()
+
     // Scaffolding for the app
     Scaffold(bottomBar = { BottomBar(nav) }) {
+        EditDialogBox(editorVM)
         Box(Modifier.padding(it)) {
-            MnrvaNavGraph(nav)
+            NavHost(navController = nav, startDestination = Routes.HomeView.route) {
+                composable(Routes.ScheduleView.route) { ScheduleView(eventVM, editorVM) }
+                composable(Routes.NewEntryView.route) { NewEntryView() }
+                composable(Routes.CalendarView.route) { Calendar(eventVM, editorVM) }
+                composable(Routes.SettingsView.route) { SettingsView() }
+                composable(Routes.HomeView.route) { HomeView(eventVM, editorVM) }
+            }
         }
     }
 }
