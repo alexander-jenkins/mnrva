@@ -5,12 +5,11 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 
 class SettingsRepository(context: Context) {
-
     // References to the preferences
     private val preferences = context.getSharedPreferences(REPO_KEY, Context.MODE_PRIVATE)
     private val editor = preferences.edit()
 
-    // JWT Auth
+    // manage the JWT used to talk to the API
     private val _jwt = mutableStateOf(preferences.getString(JWT_PREF_KEY, "")!!)
     val jwt: State<String> = _jwt
     fun setJwt(token: String) {
@@ -18,7 +17,7 @@ class SettingsRepository(context: Context) {
         editor.putString(JWT_PREF_KEY, token).apply()
     }
 
-    // User Name
+    // Store the user's name in memory; shown on the home screen
     private val _name = mutableStateOf(preferences.getString(USER_NAME, DEFAULT_NAME))
     val name = _name
     fun setName(name: String) {
@@ -26,7 +25,7 @@ class SettingsRepository(context: Context) {
         editor.putString(USER_NAME, name)
     }
 
-    // Authentication status
+    // Track the login status of the user; determines which state to show
     private val _authenticated = mutableStateOf(true)
     val authenticated: State<Boolean>
         get() {
@@ -34,7 +33,7 @@ class SettingsRepository(context: Context) {
             return _authenticated
         }
 
-    // create notifications?
+    // Track whether the user wants to create a notification for each new event
     private val _useNotifications = mutableStateOf(preferences.getBoolean(USE_NOTIFICATIONS, true))
     val useNotifications = _useNotifications
     fun setUseNotifications(status: Boolean) {
@@ -42,12 +41,11 @@ class SettingsRepository(context: Context) {
         editor.putBoolean(USE_NOTIFICATIONS, _useNotifications.value)
     }
 
-    // Keys
+    // Keys to references Settings objects
     companion object PreferenceKeys {
         const val REPO_KEY: String = "MNRVA_SETTINGS"
         const val JWT_PREF_KEY: String = "JTW_AUTH_TOKEN"
         const val USER_NAME: String = "USER_NAME"
-        const val USER_EMAIL: String = "USER_EMAIL"
         const val DEFAULT_NAME: String = "Friend"
         const val USE_NOTIFICATIONS: String = "USE_NOTIFICATIONS"
     }

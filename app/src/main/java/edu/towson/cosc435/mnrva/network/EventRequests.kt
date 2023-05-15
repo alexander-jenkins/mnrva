@@ -16,11 +16,7 @@ import java.time.LocalDateTime
 
 interface IEventRequests {
     suspend fun newEvent(
-        title: String,
-        start: LocalDateTime,
-        end: LocalDateTime?,
-        description: String?,
-        tags: String?
+        title: String, start: LocalDateTime, end: LocalDateTime?, description: String?, tags: String?
     )
 
     suspend fun downloadEvents(): List<SyncedEventResponse>
@@ -34,12 +30,9 @@ class EventRequests : IEventRequests {
     private val token by DependencyGraph.settingsRepository.jwt
     private val eventRepository = DependencyGraph.eventRepository
 
+    // Insert a new event from the given parameters into the API; store event in SQLite if successful
     override suspend fun newEvent(
-        title: String,
-        start: LocalDateTime,
-        end: LocalDateTime?,
-        description: String?,
-        tags: String?
+        title: String, start: LocalDateTime, end: LocalDateTime?, description: String?, tags: String?
     ) {
         withContext(DependencyGraph.ioDispatcher) {
             val gson = Gson()
@@ -52,9 +45,7 @@ class EventRequests : IEventRequests {
                     tags = tags
                 )
             ).toRequestBody(jsonType)
-            val request =
-                Request.Builder().url(EVENTS).post(body).addHeader("Cookie", "jwt=$token").build()
-
+            val request = Request.Builder().url(EVENTS).post(body).addHeader("Cookie", "jwt=$token").build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
                 val responseBody = response.body
@@ -63,12 +54,7 @@ class EventRequests : IEventRequests {
                     val newEventData = gson.fromJson(jsonString, NewEventResponse::class.java)
                     val eventId = newEventData.id
                     val createdEvent = Event(
-                        id = eventId,
-                        title = title,
-                        start = start,
-                        end = end,
-                        description = description,
-                        tags = tags
+                        id = eventId, title = title, start = start, end = end, description = description, tags = tags
                     )
                     response.close()
                     eventRepository.addEvent(createdEvent)
@@ -77,12 +63,12 @@ class EventRequests : IEventRequests {
         }
     }
 
+    // Download and store a local copy of all events currently on the API in the SQLite database
     override suspend fun downloadEvents(): List<SyncedEventResponse> {
         return withContext(DependencyGraph.ioDispatcher) {
             val gson = Gson()
             var events = listOf<SyncedEventResponse>()
-            val request =
-                Request.Builder().url(EVENTS).get().addHeader("Cookie", "jwt=$token").build()
+            val request = Request.Builder().url(EVENTS).get().addHeader("Cookie", "jwt=$token").build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
                 val responseBody = response.body
@@ -97,11 +83,10 @@ class EventRequests : IEventRequests {
         }
     }
 
+    // Delete an event from the API; removes the local copy from SQLite database if successful
     override suspend fun deleteEvent(id: String) {
         withContext(DependencyGraph.ioDispatcher) {
-            val request =
-                Request.Builder().url("$EVENTS/$id").delete().addHeader("Cookie", "jwt=$token")
-                    .build()
+            val request = Request.Builder().url("$EVENTS/$id").delete().addHeader("Cookie", "jwt=$token").build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
                 val event = eventRepository.getById(id)
@@ -112,14 +97,15 @@ class EventRequests : IEventRequests {
         }
     }
 
+    // Update the details of an event on the API; stores the changes in local SQLite database if successful
     override suspend fun updateEvent(event: Event) {
         withContext(DependencyGraph.ioDispatcher) {
             val json =
                 "{\"id\": \"${event.id}\", \"title\": \"${event.title}\", \"description\": \"${event.description}\", \"start\": \"${event.start}\", \"end\": \"${event.end}\", \"tags\": \"${event.tags}\"}"
             val body = json.toRequestBody(jsonType)
             Log.d("MNRVA", json)
-            val request = Request.Builder().url("$EVENTS/${event.id}").put(body)
-                .addHeader("Cookie", "jwt=$token").build()
+            val request =
+                Request.Builder().url("$EVENTS/${event.id}").put(body).addHeader("Cookie", "jwt=$token").build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
                 eventRepository.updateEvent(event)
@@ -128,6 +114,7 @@ class EventRequests : IEventRequests {
         }
     }
 
+    // Object holding string constants for the API endpoints
     companion object EventEndpoints {
         private const val BASE_URL = "https://mnrva.alexjenkins.dev/api"
         const val EVENTS = "$BASE_URL/events"

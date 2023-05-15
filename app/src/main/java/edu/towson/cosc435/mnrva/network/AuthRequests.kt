@@ -21,7 +21,7 @@ class AuthRequests : IAuthRequests {
     private val client = DependencyGraph.okHttpClient
     private val jsonType = "application/json; charset=utf-8".toMediaType()
 
-    // Login to the server with an email and password
+    // Send the email and password to the API, set JWT if successful
     override suspend fun login(email: String, password: String): String {
         return withContext(DependencyGraph.ioDispatcher) {
             val json = "{\"email\":\"$email\", \"password\":\"$password\"}"
@@ -34,7 +34,7 @@ class AuthRequests : IAuthRequests {
         }
     }
 
-    // Register a new user
+    // Register a new user to the API, set JWT if successful
     override suspend fun register(name: String, email: String, password: String): String {
         return withContext(DependencyGraph.ioDispatcher) {
             val newUser = NewUser(name, email, password)
@@ -49,7 +49,7 @@ class AuthRequests : IAuthRequests {
         }
     }
 
-    // Test the current JWT
+    // Send the current JWT to the API to check for validity; stores name and JWT if successful
     override suspend fun testCredentials(token: String) {
         withContext(DependencyGraph.ioDispatcher) {
             val request = Request.Builder().get().url(CHECK_USER).addHeader("Cookie", "jwt=$token").build()
@@ -68,7 +68,7 @@ class AuthRequests : IAuthRequests {
         }
     }
 
-
+    // Object holding string constants for API endpoints
     companion object AuthEndpoints {
         private const val BASE_URL = "https://mnrva.alexjenkins.dev/api"
         const val LOGIN_URL = "$BASE_URL/auth/login"
