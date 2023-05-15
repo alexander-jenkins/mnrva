@@ -7,17 +7,12 @@ import android.util.Log
 
 class NotificationReciever : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        Log.d("TEST", "testing broadcast reciever A")
         if (context != null && intent != null){
-            Log.d("TEST", "testing broadcast reciever B")
-        }
-
-        if (intent != null){
-            when(intent.action){
-                "Notification" ->{
-                    Log.d("TEST", "test broadcast c")
-                }
-            }
+            intent.getIntExtra("Notification_ID", 0).toString()
+            val title = intent.getStringExtra("Notification_Title")
+            val description = intent.getStringExtra("Notification_Description")
+            Log.d("TEST", "Notification received with title: $title, and description: $description")
+            NotificationUtility.sendNotification(context, title!!, description!!)
         }
     }
 }

@@ -11,7 +11,7 @@ class MnrvaApplication : Application() {
         DependencyGraph.provide(this)
     }
 
-        NotificationUtility.CreateNotificationChannel(this)
+        NotificationUtility.createNotificationChannel(this)
 
     }
 }

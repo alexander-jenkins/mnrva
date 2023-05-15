@@ -24,10 +24,11 @@
             android:name=".notifications.NotificationReciever"
             android:enabled="true"
             android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.BATTERY_LOW" />-->
-<!--                <action android:name="android.intent.action.BATTERY_OKAY" />-->
-<!--            </intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.BATTERY_LOW" />
+                <action android:name="android.intent.action.BATTERY_OKAY" />
+                <action android:name="Notification" />
+            </intent-filter>
         </receiver>
 
         <activity
