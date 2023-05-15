@@ -4,10 +4,10 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import com.google.gson.Gson
 import edu.towson.cosc435.mnrva.DependencyGraph
-import edu.towson.cosc435.mnrva.model.event.Event
-import edu.towson.cosc435.mnrva.model.event.NewEvent
-import edu.towson.cosc435.mnrva.model.event.NewEventResponse
-import edu.towson.cosc435.mnrva.model.event.SyncedEventResponse
+import edu.towson.cosc435.mnrva.data.model.event.Event
+import edu.towson.cosc435.mnrva.data.model.event.NewEvent
+import edu.towson.cosc435.mnrva.data.model.event.NewEventResponse
+import edu.towson.cosc435.mnrva.data.model.event.SyncedEventResponse
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Request

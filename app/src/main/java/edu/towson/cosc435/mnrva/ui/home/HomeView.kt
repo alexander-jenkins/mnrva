@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import edu.towson.cosc435.mnrva.DependencyGraph
-import edu.towson.cosc435.mnrva.model.event.Event
+import edu.towson.cosc435.mnrva.data.model.event.Event
 import edu.towson.cosc435.mnrva.ui.EventViewModel
 import edu.towson.cosc435.mnrva.ui.editorDialog.EditorDialogViewModel
 import edu.towson.cosc435.mnrva.ui.taskCard.TaskCard

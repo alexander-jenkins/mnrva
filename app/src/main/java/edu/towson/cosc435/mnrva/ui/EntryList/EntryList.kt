@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import edu.towson.cosc435.mnrva.model.event.Event
+import edu.towson.cosc435.mnrva.data.model.event.Event
 import edu.towson.cosc435.mnrva.ui.taskCard.TaskCard
 import java.time.LocalDate
 

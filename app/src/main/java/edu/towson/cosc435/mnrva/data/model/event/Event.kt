@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.model.event
+package edu.towson.cosc435.mnrva.data.model.event
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

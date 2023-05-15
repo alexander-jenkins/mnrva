@@ -2,8 +2,8 @@ package edu.towson.cosc435.mnrva.network
 
 import com.google.gson.Gson
 import edu.towson.cosc435.mnrva.DependencyGraph
-import edu.towson.cosc435.mnrva.model.user.ExistingUser
-import edu.towson.cosc435.mnrva.model.user.NewUser
+import edu.towson.cosc435.mnrva.data.model.user.ExistingUser
+import edu.towson.cosc435.mnrva.data.model.user.NewUser
 import edu.towson.cosc435.mnrva.utils.extractToken
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType

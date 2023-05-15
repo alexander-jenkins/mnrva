@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.model.event
+package edu.towson.cosc435.mnrva.data.model.event
 
 import com.google.gson.annotations.SerializedName
 

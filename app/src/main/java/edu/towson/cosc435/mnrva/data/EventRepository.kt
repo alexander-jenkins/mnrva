@@ -5,9 +5,9 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
+import edu.towson.cosc435.mnrva.data.model.event.Event
+import edu.towson.cosc435.mnrva.data.model.event.SyncedEventResponse
 import edu.towson.cosc435.mnrva.data.room.EventDao
-import edu.towson.cosc435.mnrva.model.event.Event
-import edu.towson.cosc435.mnrva.model.event.SyncedEventResponse
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 

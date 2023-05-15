@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import com.himanshoe.kalendar.Kalendar
 import com.himanshoe.kalendar.model.KalendarType
-import edu.towson.cosc435.mnrva.model.event.Event
+import edu.towson.cosc435.mnrva.data.model.event.Event
 import edu.towson.cosc435.mnrva.ui.EntryList.EntryList
 import edu.towson.cosc435.mnrva.ui.EventViewModel
 import edu.towson.cosc435.mnrva.ui.editorDialog.EditorDialogViewModel

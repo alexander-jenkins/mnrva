@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.model.user
+package edu.towson.cosc435.mnrva.data.model.user
 
 data class NewUser(
     val name: String,
