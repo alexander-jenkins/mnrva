@@ -102,6 +102,7 @@ class NewEntryViewModel : ViewModel() {
         setDescription("")
         setStart(LocalDateTime.now())
         setEnd(LocalDateTime.now())
+        setTags("")
         _showStart.value = false
         _showEnd.value = false
     }

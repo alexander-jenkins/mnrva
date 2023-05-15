@@ -1,4 +1,4 @@
-package edu.towson.cosc435.mnrva.data
+package edu.towson.cosc435.mnrva.data.repository
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State

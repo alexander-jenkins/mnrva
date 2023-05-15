@@ -3,8 +3,8 @@ package edu.towson.cosc435.mnrva
 import android.content.Context
 import android.util.Log
 import androidx.room.Room
-import edu.towson.cosc435.mnrva.data.EventRepository
-import edu.towson.cosc435.mnrva.data.SettingsRepository
+import edu.towson.cosc435.mnrva.data.repository.EventRepository
+import edu.towson.cosc435.mnrva.data.repository.SettingsRepository
 import edu.towson.cosc435.mnrva.data.room.MnrvaDatabase
 import edu.towson.cosc435.mnrva.network.AuthRequests
 import edu.towson.cosc435.mnrva.network.EventRequests

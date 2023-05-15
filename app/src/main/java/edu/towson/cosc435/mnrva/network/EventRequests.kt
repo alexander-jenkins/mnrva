@@ -56,10 +56,9 @@ class EventRequests : IEventRequests {
                 Request.Builder().url(EVENTS).post(body).addHeader("Cookie", "jwt=$token").build()
 
             val response = client.newCall(request).execute()
-            if (response != null && response.isSuccessful) {
+            if (response.isSuccessful) {
                 val responseBody = response.body
                 if (responseBody != null) {
-                    val gson = Gson()
                     val jsonString = responseBody.string()
                     val newEventData = gson.fromJson(jsonString, NewEventResponse::class.java)
                     val eventId = newEventData.id
