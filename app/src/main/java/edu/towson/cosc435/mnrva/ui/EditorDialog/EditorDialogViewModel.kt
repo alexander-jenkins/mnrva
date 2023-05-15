@@ -20,7 +20,8 @@ class EditorDialogViewModel : ViewModel() {
     // formatting for displaying the datetime objects
     val dateFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/M/d")
     val timeFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("h:mm a")
-    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("MMMM d',' y 'at' h:mm a")
+    val startFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("MMMM d',' y 'at' h:mm a")
+    val endFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("'at' h:mm a")
 
     private val _showEditor = mutableStateOf(false)
     val showEditor = _showEditor

@@ -1,7 +1,15 @@
 package edu.towson.cosc435.mnrva.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
@@ -23,15 +31,15 @@ import edu.towson.cosc435.mnrva.ui.EditorDialog.EditStartTimeDialog
 import edu.towson.cosc435.mnrva.ui.EditorDialog.EditorDialogViewModel
 
 @Composable
-fun EditDialogBox(vm: EditorDialogViewModel) {
-    val title by remember { vm.title }
-    val description by remember { vm.description }
-    val tags by remember { vm.tags }
+fun EditDialogBox(eventEditorVM: EditorDialogViewModel) {
+    val title by remember { eventEditorVM.title }
+    val description by remember { eventEditorVM.description }
+    val tags by remember { eventEditorVM.tags }
     val scrollState = rememberScrollState()
 
-    if (vm.showEditor.value) {
+    if (eventEditorVM.showEditor.value) {
         Dialog(
-            onDismissRequest = { vm.setShowEditor(false) }, properties = DialogProperties(
+            onDismissRequest = { eventEditorVM.setShowEditor(false) }, properties = DialogProperties(
                 dismissOnBackPress = true, dismissOnClickOutside = true
             )
         ) {
@@ -51,28 +59,28 @@ fun EditDialogBox(vm: EditorDialogViewModel) {
                     verticalArrangement = Arrangement.Center
                 ) {
                     Spacer(modifier = Modifier.height(20.dp))
-                    OutlinedTextField(value = title, onValueChange = vm::setTitle, label = {
+                    OutlinedTextField(value = title, onValueChange = eventEditorVM::setTitle, label = {
                         Text(text = "Title")
                     })
 
                     Spacer(modifier = Modifier.height(50.dp))
 
-                    EditStartTimeDialog()
+                    EditStartTimeDialog(eventEditorVM)
 
                     Spacer(modifier = Modifier.height(60.dp))
 
-                    EditEndTimeDialog()
+                    EditEndTimeDialog(eventEditorVM)
 
                     Spacer(modifier = Modifier.height(60.dp))
 
                     OutlinedTextField(value = description.orEmpty(),
-                        onValueChange = vm::setDescription,
+                        onValueChange = eventEditorVM::setDescription,
                         label = { Text(text = "Description") })
 
                     Spacer(modifier = Modifier.height(60.dp))
 
                     OutlinedTextField(value = tags.orEmpty(),
-                        onValueChange = vm::setTags,
+                        onValueChange = eventEditorVM::setTags,
                         label = { Text(text = "Tags") })
 
                     Spacer(modifier = Modifier.height(60.dp))
@@ -82,7 +90,7 @@ fun EditDialogBox(vm: EditorDialogViewModel) {
                         horizontalArrangement = Arrangement.Center
                     ) {
                         //Confirmation Button
-                        Button(onClick = vm::updateEvent) {
+                        Button(onClick = eventEditorVM::updateEvent) {
                             Text(text = "Confirm")
                         }
 
@@ -90,7 +98,7 @@ fun EditDialogBox(vm: EditorDialogViewModel) {
 
                         //Delete Button
                         Button(
-                            onClick = vm::deleteEvent, colors = ButtonDefaults.buttonColors(
+                            onClick = eventEditorVM::deleteEvent, colors = ButtonDefaults.buttonColors(
                                 backgroundColor = Color.Red
                             )
                         ) {
