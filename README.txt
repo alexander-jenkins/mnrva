@@ -40,4 +40,7 @@ Kalendar:
 We used this in our calendar view
 https://github.com/hi-manshu/Kalendar/blob/main/docs/Kalendar.md
 
+Test Credentials:
 
+email:demo@example.com
+password: Password123
